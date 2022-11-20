@@ -7,7 +7,7 @@ export default function config(env: any, argv: any) {
     entry: {
       main: {
         import: './src/client/main.ts'
-      },
+      }
     },
     module: {
       rules: [
