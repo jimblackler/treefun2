@@ -1,0 +1,9 @@
+.DS_Store
+/*.iml
+/.idea
+/.vscode/launch.json
+/dist
+/node_modules
+/out
+/package-lock.json
+/static/dist
