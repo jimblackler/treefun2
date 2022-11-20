@@ -16,7 +16,7 @@ export default function config(env: any, argv: any) {
           use: [{
             loader: 'ts-loader',
             options: {
-              configFile: "tsconfig.client.json"
+              configFile: 'tsconfig.client.json'
             }
           }],
         }
