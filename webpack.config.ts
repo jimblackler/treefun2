@@ -12,6 +12,10 @@ export default function config(env: any, argv: any) {
     module: {
       rules: [
         {
+          test: /\.css$/,
+          use: ['style-loader', 'css-loader']
+        },
+        {
           test: /\.ts$/,
           use: [{
             loader: 'ts-loader',

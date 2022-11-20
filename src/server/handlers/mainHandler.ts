@@ -31,9 +31,9 @@ export const mainHandler: RequestHandler = async (req, res, next) => {
   const main = document.createElement('main');
   body.append(main);
 
-  const p = document.createElement('p');
-  main.append(p);
-  p.append('test');
+  const section = document.createElement('section');
+  body.append(section);
+  section.setAttribute('id', 'container');
 
   addScripts(document, body, 'main');
 
