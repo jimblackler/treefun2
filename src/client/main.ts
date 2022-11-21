@@ -1,4 +1,5 @@
 import {ComponentContainer, GoldenLayout, LayoutConfig} from 'golden-layout';
+import {JSONEditor, Mode} from 'vanilla-jsoneditor'
 import {assertNotNull} from '../common/check/null';
 import './style.css'
 
@@ -13,8 +14,8 @@ const layoutConfig: LayoutConfig = {
       width: 60,
       content: [{
         type: 'component',
-        componentType: 'testComponent',
-        title: 'Component 1'
+        componentType: 'editor',
+        title: 'Editor'
       }, {
         type: 'component',
         componentType: 'testComponent',
@@ -43,7 +44,7 @@ const layoutConfig: LayoutConfig = {
 };
 const layout = new GoldenLayout(container);
 
-class Action {
+class TestComponent {
   constructor(container: ComponentContainer) {
     const h2 = document.createElement('h2');
     h2.append('Test');
@@ -51,6 +52,30 @@ class Action {
   }
 }
 
-layout.registerComponentConstructor('testComponent', Action, false);
+layout.registerComponentConstructor('testComponent', TestComponent, false);
+
+class Editor {
+  constructor(container: ComponentContainer) {
+    const data: any = {};
+    for (const key in navigator) {
+      data[key] = (navigator as any)[key];
+    }
+
+    const editor = new JSONEditor({
+      target: container.element,
+      props: {
+        mode: Mode.text,
+        mainMenuBar: false,
+        content: {
+          text: undefined,
+          json: data
+        }
+      }
+    })
+  }
+}
+
+layout.registerComponentConstructor('editor', Editor, false);
+
 layout.loadLayout(layoutConfig);
 
