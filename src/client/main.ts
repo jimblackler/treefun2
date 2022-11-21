@@ -9,13 +9,26 @@ const layoutConfig: LayoutConfig = {
   content: [{
     type: 'row',
     content: [{
-      type: 'component',
-      componentType: 'testComponent',
-      componentState: {title: 'First Item'}
+      type: 'stack',
+      width: 60,
+      content: [{
+        type: 'component',
+        componentType: 'testComponent',
+        title: 'Component 1'
+      }, {
+        type: 'component',
+        componentType: 'testComponent',
+        title: 'Component 2'
+      }]
     }, {
-      type: 'component',
-      componentType: 'testComponent',
-      componentState: {title: 'Second Item'},
+      type: 'column',
+      content: [{
+        type: 'component',
+        componentType: 'testComponent'
+      }, {
+        type: 'component',
+        componentType: 'testComponent'
+      }]
     }]
   }]
 };
