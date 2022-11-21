@@ -1,2 +1,30 @@
 @import '~golden-layout/dist/css/goldenlayout-base.css';
 @import '~golden-layout/dist/css/themes/goldenlayout-light-theme.css';
+
+.lm_header .lm_tab {
+  font-size: 20px;
+}
+
+.lm_header .lm_tab .lm_title {
+  padding-top: 2px;
+}
+
+.lm_header .lm_tab, .lm_header .lm_tab.lm_active {
+  padding-bottom: 14px;
+}
+
+.lm_header .lm_tab .lm_close_tab {
+  top: 8px;
+}
+
+.lm_tab:hover {
+  background: #e6f6ff;
+}
+
+.lm_tab.lm_active {
+  background: #d2f0ff;
+}
+
+.lm_header .lm_controls > * {
+  height: 30px;
+}

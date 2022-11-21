@@ -30,7 +30,12 @@ const layoutConfig: LayoutConfig = {
         componentType: 'testComponent'
       }]
     }]
-  }]
+  }],
+
+  dimensions: {
+    borderWidth: 8,
+    headerHeight: 30
+  }
 };
 const layout = new GoldenLayout(container);
 
