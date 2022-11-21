@@ -35,6 +35,10 @@ const layoutConfig: LayoutConfig = {
   dimensions: {
     borderWidth: 8,
     headerHeight: 30
+  },
+
+  header: {
+    popout: false
   }
 };
 const layout = new GoldenLayout(container);
