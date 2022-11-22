@@ -1,5 +1,6 @@
 import {defaultKeymap} from "@codemirror/commands"
 import {EditorView, keymap, lineNumbers} from "@codemirror/view"
+import {basicLight} from 'cm6-theme-basic-light'
 import {ComponentContainer, GoldenLayout, LayoutConfig} from 'golden-layout';
 import {JSONEditor, Mode} from 'vanilla-jsoneditor'
 import {assertNotNull} from '../common/check/null';
@@ -83,7 +84,7 @@ class Editor2 {
   constructor(container: ComponentContainer) {
     new EditorView({
       doc: "Hello World",
-      extensions: [keymap.of(defaultKeymap), lineNumbers()],
+      extensions: [keymap.of(defaultKeymap), lineNumbers(), basicLight],
       parent: container.element
     });
   }
