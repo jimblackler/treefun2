@@ -1,3 +1,5 @@
+import {defaultKeymap} from "@codemirror/commands"
+import {EditorView, keymap, lineNumbers} from "@codemirror/view"
 import {ComponentContainer, GoldenLayout, LayoutConfig} from 'golden-layout';
 import {JSONEditor, Mode} from 'vanilla-jsoneditor'
 import {assertNotNull} from '../common/check/null';
@@ -25,7 +27,7 @@ const layoutConfig: LayoutConfig = {
       type: 'column',
       content: [{
         type: 'component',
-        componentType: 'testComponent'
+        componentType: 'editor2'
       }, {
         type: 'component',
         componentType: 'testComponent'
@@ -76,6 +78,18 @@ class Editor {
 }
 
 layout.registerComponentConstructor('editor', Editor, false);
+
+class Editor2 {
+  constructor(container: ComponentContainer) {
+    new EditorView({
+      doc: "Hello World",
+      extensions: [keymap.of(defaultKeymap), lineNumbers()],
+      parent: container.element
+    });
+  }
+}
+
+layout.registerComponentConstructor('editor2', Editor2, false);
 
 layout.loadLayout(layoutConfig);
 

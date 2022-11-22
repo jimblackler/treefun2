@@ -10,6 +10,9 @@
     "start:dev": "nodemon dist/server/main.js"
   },
   "dependencies": {
+    "@codemirror/commands": "^6.1.2",
+    "@codemirror/state": "^6.1.4",
+    "@codemirror/view": "^6.5.1",
     "express": "^4.18.2",
     "golden-layout": "^2.6.0",
     "parseurl": "^1.3.3",
