@@ -72,9 +72,17 @@ layout.registerComponentFactoryFunction('editor', container => {
 });
 
 layout.registerComponentFactoryFunction('editor2', container => {
-  new EditorView({
+
+  const updateListenerExtension = EditorView.updateListener.of(update => {
+    if (!update.docChanged) {
+      return;
+    }
+    console.log(editorView.state.doc.toString());
+  });
+
+  const editorView = new EditorView({
     doc: "Hello World",
-    extensions: [keymap.of(defaultKeymap), lineNumbers(), basicLight],
+    extensions: [keymap.of(defaultKeymap), lineNumbers(), basicLight, updateListenerExtension],
     parent: container.element
   });
 });
