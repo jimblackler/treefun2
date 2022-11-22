@@ -65,7 +65,7 @@ class Editor {
       target: container.element,
       props: {
         mode: Mode.text,
-        mainMenuBar: false,
+        mainMenuBar: true,
         content: {
           text: undefined,
           json: data
