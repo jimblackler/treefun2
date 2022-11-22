@@ -47,17 +47,15 @@ const layoutConfig: LayoutConfig = {
 };
 const layout = new GoldenLayout(container);
 
-class TestComponent {
+layout.registerComponentConstructor('testComponent', class {
   constructor(container: ComponentContainer) {
     const h2 = document.createElement('h2');
     h2.append('Test');
     container.element.append(h2);
   }
-}
+}, false);
 
-layout.registerComponentConstructor('testComponent', TestComponent, false);
-
-class Editor {
+layout.registerComponentConstructor('editor', class {
   constructor(container: ComponentContainer) {
     const data: any = {};
     for (const key in navigator) {
@@ -76,11 +74,9 @@ class Editor {
       }
     })
   }
-}
+}, false);
 
-layout.registerComponentConstructor('editor', Editor, false);
-
-class Editor2 {
+layout.registerComponentConstructor('editor2', class {
   constructor(container: ComponentContainer) {
     new EditorView({
       doc: "Hello World",
@@ -88,9 +84,7 @@ class Editor2 {
       parent: container.element
     });
   }
-}
-
-layout.registerComponentConstructor('editor2', Editor2, false);
+}, false);
 
 layout.loadLayout(layoutConfig);
 
