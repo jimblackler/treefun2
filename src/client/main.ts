@@ -74,6 +74,9 @@ layout.registerComponentFactoryFunction('editor2', container => {
 
   function updateDiagram() {
     const tree = textToTree(editorView.state.doc.toString());
+    while (diagramGroup.firstChild) {
+      diagramGroup.firstChild.remove();
+    }
     treeToDiagram(tree, svg, diagramGroup, {
       flipXY: 0,
       width: 950,
