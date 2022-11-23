@@ -81,21 +81,24 @@ layout.registerComponentFactoryFunction('diagram', container => {
 });
 
 layout.registerComponentFactoryFunction('editor', container => {
-  const data: any = {};
-  for (const key in navigator) {
-    data[key] = (navigator as any)[key];
-  }
-  new JSONEditor({
+
+  const jsonEditor = new JSONEditor({
     target: container.element,
     props: {
       mode: Mode.text,
       mainMenuBar: true,
       content: {
-        text: undefined,
-        json: data
+        text: '',
+        json: undefined
       }
     }
-  })
+  });
+
+  dataPromise.then(data => {
+    jsonEditor.update({text: undefined,
+      json: data.options
+    })
+  });
 });
 
 function updateDiagram(treeText: string) {
