@@ -71,10 +71,8 @@ layout.registerComponentFactoryFunction('editor', container => {
 
 layout.registerComponentFactoryFunction('editor2', container => {
   container.element.style.overflow = 'scroll';
-  const updateListenerExtension = EditorView.updateListener.of(update => {
-    if (!update.docChanged) {
-      return;
-    }
+
+  function updateDiagram() {
     const tree = textToTree(editorView.state.doc.toString());
     treeToDiagram(tree, svg, diagramGroup, {
       flipXY: 0,
@@ -94,7 +92,7 @@ layout.registerComponentFactoryFunction('editor2', container => {
       minimumBreadth: 6,
       drawRoot: false
     });
-  });
+  }
 
   const editorView = new EditorView({
     doc: '1\n' +
@@ -200,9 +198,17 @@ layout.registerComponentFactoryFunction('editor2', container => {
         '              16384\n' +
         '               5461\n' +
         '               32768',
-    extensions: [keymap.of(defaultKeymap), lineNumbers(), basicLight, updateListenerExtension],
+    extensions: [keymap.of(defaultKeymap), lineNumbers(), basicLight,
+      EditorView.updateListener.of(update => {
+      if (!update.docChanged) {
+        return;
+      }
+      updateDiagram();
+    })],
     parent: container.element
   });
+
+  updateDiagram();
 });
 
 layout.loadLayout(layoutConfig);
