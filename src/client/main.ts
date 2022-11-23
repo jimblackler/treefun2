@@ -98,33 +98,33 @@ layout.registerComponentFactoryFunction('editor', container => {
   })
 });
 
+function updateDiagram(treeText: string) {
+  const tree = textToTree(treeText);
+  while (diagramGroup.firstChild) {
+    diagramGroup.firstChild.remove();
+  }
+  treeToDiagram(tree, svg, diagramGroup, {
+    flipXY: 0,
+    width: 950,
+    height: 680,
+    labelLineSpacing: 12,
+    cornerRounding: 3,
+    labelPadding: 0,
+    arrowHeadSize: 5,
+    arrowsUp: 1,
+    siblingGap: 0,
+    idealSiblingGap: 0.3,
+    minimumCousinGap: 0.12,
+    idealCousinGap: 1.5,
+    levelsGap: 1.1,
+    minimumDepth: 6,
+    minimumBreadth: 6,
+    drawRoot: false
+  });
+}
+
 layout.registerComponentFactoryFunction('editor2', container => {
   container.element.style.overflow = 'scroll';
-
-  function updateDiagram() {
-    const tree = textToTree(editorView.state.doc.toString());
-    while (diagramGroup.firstChild) {
-      diagramGroup.firstChild.remove();
-    }
-    treeToDiagram(tree, svg, diagramGroup, {
-      flipXY: 0,
-      width: 950,
-      height: 680,
-      labelLineSpacing: 12,
-      cornerRounding: 3,
-      labelPadding: 0,
-      arrowHeadSize: 5,
-      arrowsUp: 1,
-      siblingGap: 0,
-      idealSiblingGap: 0.3,
-      minimumCousinGap: 0.12,
-      idealCousinGap: 1.5,
-      levelsGap: 1.1,
-      minimumDepth: 6,
-      minimumBreadth: 6,
-      drawRoot: false
-    });
-  }
 
   const editorView = new EditorView({
     extensions: [keymap.of(defaultKeymap), lineNumbers(), basicLight,
@@ -132,7 +132,7 @@ layout.registerComponentFactoryFunction('editor2', container => {
         if (!update.docChanged) {
           return;
         }
-        updateDiagram();
+        updateDiagram(editorView.state.doc.toString());
       })],
     parent: container.element
   });
