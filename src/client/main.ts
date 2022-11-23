@@ -16,21 +16,18 @@ const layoutConfig: LayoutConfig = {
     type: 'row',
     content: [{
       type: 'stack',
-      width: 60,
-      content: [{
-        type: 'component',
-        componentType: 'editor',
-        title: 'Editor'
-      }]
-    }, {
-      type: 'column',
+      width: 20,
       content: [{
         type: 'component',
         componentType: 'editor2'
       }, {
         type: 'component',
-        componentType: 'diagram'
+        componentType: 'editor',
+        title: 'Editor'
       }]
+    }, {
+      type: 'component',
+      componentType: 'diagram'
     }]
   }],
 
