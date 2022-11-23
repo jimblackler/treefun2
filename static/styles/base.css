@@ -12,20 +12,3 @@ body {
 section#container {
   height: 100%;
 }
-
-/* Diagram styles */
-text {
-  text-anchor: middle;
-}
-
-rect {
-  fill: linen;
-  stroke: black;
-  stroke-width: 0.3;
-}
-
-line {
-  opacity: 0.30;
-  stroke: black;
-}
-

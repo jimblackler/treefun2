@@ -73,6 +73,8 @@ const diagramGroup = document.createElementNS(svgNs, 'g');
 svg.append(diagramGroup);
 diagramGroup.setAttribute('id', 'diagramGroup');
 
+dataPromise.then(data => {styleSheet.innerHTML = data.styles;});
+
 layout.registerComponentFactoryFunction('diagram', container => {
   container.element.style.background = 'white';
   container.element.append(svg);
