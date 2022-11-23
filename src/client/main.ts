@@ -47,6 +47,7 @@ svg.innerHTML = '<style id="stylesheet"></style><defs><marker id="arrowHead" vie
 const diagramGroup = svg.getElementById('diagramGroup');
 
 layout.registerComponentFactoryFunction('diagram', container => {
+  container.element.style.background = 'white';
   container.element.append(svg);
 });
 
