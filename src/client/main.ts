@@ -82,6 +82,7 @@ layout.registerComponentFactoryFunction('editor', container => {
 });
 
 layout.registerComponentFactoryFunction('editor2', container => {
+  container.element.style.overflow = 'scroll';
   const updateListenerExtension = EditorView.updateListener.of(update => {
     if (!update.docChanged) {
       return;
