@@ -46,9 +46,32 @@ const layoutConfig: LayoutConfig = {
 };
 const layout = new GoldenLayout(container);
 
-const svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
-svg.innerHTML = '<style id="stylesheet"></style><defs><marker id="arrowHead" viewBox="-10 -5 10 10" markerUnits="strokeWidth" markerWidth="6" markerHeight="5" orient="auto"><path d="M -10 -5 L 0 0 L -10 5 z"></path></marker></defs><g id="diagramGroup"></g>';
-const diagramGroup = svg.getElementById('diagramGroup');
+const svgNs = 'http://www.w3.org/2000/svg';
+const svg = document.createElementNS(svgNs, 'svg');
+
+const styleSheet = document.createElementNS(svgNs, 'style');
+svg.append(styleSheet);
+styleSheet.setAttribute('id', 'stylesheet');
+
+const defs = document.createElementNS(svgNs, 'defs');
+svg.append(defs);
+
+const marker = document.createElementNS(svgNs, 'marker');
+defs.append(marker);
+marker.setAttribute('id', 'arrowHead');
+marker.setAttribute('viewBox', '-10 -5 10 10');
+marker.setAttribute('markerUnits', 'strokeWidth');
+marker.setAttribute('markerWidth', '6');
+marker.setAttribute('markerHeight', '5');
+marker.setAttribute('orient', 'auto');
+
+const path = document.createElementNS(svgNs, 'path');
+marker.append(path);
+path.setAttribute('d', 'M -10 -5 L 0 0 L -10 5 z');
+
+const diagramGroup = document.createElementNS(svgNs, 'g');
+svg.append(diagramGroup);
+diagramGroup.setAttribute('id', 'diagramGroup');
 
 layout.registerComponentFactoryFunction('diagram', container => {
   container.element.style.background = 'white';
