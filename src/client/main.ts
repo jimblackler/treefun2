@@ -147,13 +147,10 @@ layout.registerComponentFactoryFunction('textEditor', container => {
           return;
         }
         const text = editorView.state.doc.toString();
-        if (lastState && text === lastState.treeText) {
+        if (!lastState || text === lastState.treeText) {
           return;
         }
-        setState({
-          ...(assertDefined(lastState)),
-          treeText: assertString(text)
-        });
+        setState({...lastState, treeText: assertString(text)});
       })],
     parent: container.element
   });
