@@ -1,4 +1,6 @@
 import {defaultKeymap} from "@codemirror/commands"
+import {css} from '@codemirror/lang-css';
+import {Extension} from '@codemirror/state';
 import {EditorView, keymap, lineNumbers} from "@codemirror/view"
 import '@vaadin/menu-bar';
 import {MenuBarItem} from '@vaadin/menu-bar';
@@ -166,7 +168,7 @@ layout.registerComponentFactoryFunction('jsonEditor', container => {
   });
 });
 
-function getTextEditorComponent(textFromState: (state: State) => string,
+function getTextEditorComponent(extensions: Extension[], textFromState: (state: State) => string,
                                 updateStateFromText: (text: string) => Partial<State>) {
   return (container: ComponentContainer) => {
     let lastState: State | undefined;
@@ -182,7 +184,7 @@ function getTextEditorComponent(textFromState: (state: State) => string,
           if (text !== textFromState(lastState)) {
             setState({...lastState, ...updateStateFromText(assertString(text))});
           }
-        })],
+        }), ...extensions],
       parent: container.element
     });
 
@@ -199,10 +201,10 @@ function getTextEditorComponent(textFromState: (state: State) => string,
 }
 
 layout.registerComponentFactoryFunction('textEditorTree',
-    getTextEditorComponent(state => state.treeText, text => ({treeText: text})));
+    getTextEditorComponent([], state => state.treeText, text => ({treeText: text})));
 
 layout.registerComponentFactoryFunction('textEditorCss',
-    getTextEditorComponent(state => state.css, text => ({css: text})));
+    getTextEditorComponent([css()], state => state.css, text => ({css: text})));
 
 layout.loadLayout(layoutConfig);
 

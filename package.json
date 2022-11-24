@@ -11,6 +11,7 @@
   },
   "dependencies": {
     "@codemirror/commands": "^6.1.2",
+    "@codemirror/lang-css": "^6.0.1",
     "@codemirror/state": "^6.1.4",
     "@codemirror/view": "^6.5.1",
     "@vaadin/menu-bar": "^23.2.10",
