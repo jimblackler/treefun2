@@ -19,7 +19,7 @@ const layoutConfig: LayoutConfig = {
   content: [{
     type: 'row',
     content: [{
-      type: 'stack',
+      type: 'column',
       width: 20,
       content: [{
         type: 'component',
