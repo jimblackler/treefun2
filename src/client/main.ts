@@ -23,15 +23,17 @@ const layoutConfig: LayoutConfig = {
       width: 20,
       content: [{
         type: 'component',
-        componentType: 'editor2'
+        componentType: 'editor2',
+        title: 'Data (text)'
       }, {
         type: 'component',
         componentType: 'editor',
-        title: 'Editor'
+        title: 'Options'
       }]
     }, {
       type: 'component',
-      componentType: 'diagram'
+      componentType: 'diagram',
+      title: 'Diagram'
     }]
   }],
 
