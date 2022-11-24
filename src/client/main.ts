@@ -12,12 +12,11 @@ import './style.css'
 import {textToTree} from './textToTree';
 
 axios.get('/sampleData/animals.json').then(response => response.data).then(data => {
-  const state: State = {
+  setState({
     treeText: data.tree,
     css: data.styles,
     options: data.options
-  };
-  setState(state);
+  });
 });
 
 const container = assertNotNull(document.getElementById('container'));
