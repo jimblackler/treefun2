@@ -15,32 +15,6 @@ import {listen, setState, State} from './state';
 import './style.css'
 import {textToTree} from './textToTree';
 
-const menuBar = assertNotNull(document.querySelector('vaadin-menu-bar'));
-
-const actions = new Map<MenuBarItem, () => void>();
-
-const items: MenuBarItem[] = [];
-['animals', 'army', 'collatz', 'java', 'numbers', 'realms', 'unix', 'wow'].forEach(name => {
-  const item = {text: name};
-  items.push(item);
-  actions.set(item, () => {
-    axios.get(`/sampleData/${name}.json`).then(response => response.data).then(data => {
-      setState({
-        treeText: data.tree,
-        css: data.styles,
-        options: data.options
-      });
-    });
-  });
-});
-menuBar.items = [
-  {text: 'Examples', children: items},
-];
-
-menuBar.addEventListener('item-selected',
-    evt => (actions.get(evt.detail.value) || (() => {
-    }))());
-
 const container = assertNotNull(document.getElementById('container'));
 
 const layoutConfig: LayoutConfig = {
@@ -53,20 +27,16 @@ const layoutConfig: LayoutConfig = {
       content: [{
         type: 'component',
         componentType: 'textEditorTree',
-        title: 'Data (text)'
       }, {
         type: 'component',
         componentType: 'jsonEditor',
-        title: 'Options'
       }, {
         type: 'component',
         componentType: 'textEditorCss',
-        title: 'CSS'
       }]
     }, {
       type: 'component',
-      componentType: 'diagram',
-      title: 'Diagram'
+      componentType: 'diagram'
     }]
   }],
 
@@ -81,7 +51,55 @@ const layoutConfig: LayoutConfig = {
 };
 const layout = new GoldenLayout(container);
 
+const menuBar = assertNotNull(document.querySelector('vaadin-menu-bar'));
+
+const actions = new Map<MenuBarItem, () => void>();
+
+const exampleItems: MenuBarItem[] = [];
+['animals', 'army', 'collatz', 'java', 'numbers', 'realms', 'unix', 'wow'].forEach(name => {
+  const item = {text: name};
+  exampleItems.push(item);
+  actions.set(item, () => {
+    axios.get(`/sampleData/${name}.json`).then(response => response.data).then(data => {
+      setState({
+        treeText: data.tree,
+        css: data.styles,
+        options: data.options
+      });
+    });
+  });
+});
+
+interface View {
+  name: string;
+  componentType: string,
+}
+
+const views: View[] = [
+  {componentType: 'textEditorTree', name: 'Data (text)'},
+  {componentType: 'textEditorCss', name: 'Style'},
+  {componentType: 'jsonEditor', name: 'Options'},
+  {componentType: 'diagram', name: 'Diagram'}
+];
+
+const viewItems: MenuBarItem[] = [];
+views.forEach(view => {
+  const item = {text: view.name};
+  viewItems.push(item);
+  actions.set(item, () => layout.addItem({type: 'component', componentType: view.componentType}));
+});
+
+menuBar.items = [
+  {text: 'Examples', children: exampleItems},
+  {text: 'View', children: viewItems},
+];
+
+menuBar.addEventListener('item-selected',
+    evt => (actions.get(evt.detail.value) || (() => {
+    }))());
+
 layout.registerComponentFactoryFunction('diagram', container => {
+  container.setTitle('Diagram');
   container.element.classList.add('diagramContainer');
 
   const wrapper = document.createElement('div');
@@ -127,6 +145,7 @@ layout.registerComponentFactoryFunction('diagram', container => {
 });
 
 layout.registerComponentFactoryFunction('jsonEditor', container => {
+  container.setTitle('Options');
   let lastState: State | undefined;
   const jsonEditor = new JSONEditor({
     target: container.element,
@@ -171,9 +190,11 @@ layout.registerComponentFactoryFunction('jsonEditor', container => {
   });
 });
 
-function getTextEditorComponent(extensions: Extension[], textFromState: (state: State) => string,
+function getTextEditorComponent(title: string, extensions: Extension[],
+                                textFromState: (state: State) => string,
                                 updateStateFromText: (text: string) => Partial<State>) {
   return (container: ComponentContainer) => {
+    container.setTitle(title);
     let lastState: State | undefined;
     container.element.style.overflow = 'scroll';
 
@@ -204,10 +225,10 @@ function getTextEditorComponent(extensions: Extension[], textFromState: (state: 
 }
 
 layout.registerComponentFactoryFunction('textEditorTree',
-    getTextEditorComponent([], state => state.treeText, text => ({treeText: text})));
+    getTextEditorComponent('Data (text)', [], state => state.treeText, text => ({treeText: text})));
 
 layout.registerComponentFactoryFunction('textEditorCss',
-    getTextEditorComponent([css()], state => state.css, text => ({css: text})));
+    getTextEditorComponent('CSS', [css()], state => state.css, text => ({css: text})));
 
 layout.loadLayout(layoutConfig);
 
