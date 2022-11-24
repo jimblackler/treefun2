@@ -117,31 +117,27 @@ layout.registerComponentFactoryFunction('jsonEditor', container => {
         if (!lastState) {
           return;
         }
-        const optionsChanged = JSON.stringify(json) !== JSON.stringify(lastState.options);
-        if (!optionsChanged) {
-          return;
+        if (JSON.stringify(json) !== JSON.stringify(lastState.options)) {
+          setState({...lastState, options: json});
         }
-        setState({...lastState, options: json});
       }
     }
   });
 
   listen(state => {
-    let json;
-    try {
-      json = toJSONContent(jsonEditor.get()).json;
-    } catch (e) {
-
-    }
-    const optionsChanged = JSON.stringify(state.options) !== JSON.stringify(json);
     lastState = state;
-    if (!optionsChanged) {
-      return;
+    let oldJson;
+    try {
+      oldJson = toJSONContent(jsonEditor.get()).json;
+    } catch (e) {
+      // Invalid JSON.
     }
-    jsonEditor.update({
-      text: undefined,
-      json: state.options
-    })
+    if (JSON.stringify(state.options) !== JSON.stringify(oldJson)) {
+      jsonEditor.update({
+        text: undefined,
+        json: state.options
+      })
+    }
   });
 });
 
@@ -152,34 +148,25 @@ layout.registerComponentFactoryFunction('textEditor', container => {
   const editorView = new EditorView({
     extensions: [keymap.of(defaultKeymap), lineNumbers(), basicLight,
       EditorView.updateListener.of(update => {
-        if (!update.docChanged) {
-          return;
-        }
-        if (!lastState) {
+        if (!update.docChanged || !lastState) {
           return;
         }
         const text = editorView.state.doc.toString();
-        const textChanged = text !== lastState.treeText;
-        if (!textChanged) {
-          return;
+        if (text !== lastState.treeText) {
+          setState({...lastState, treeText: assertString(text)});
         }
-        setState({...lastState, treeText: assertString(text)});
       })],
     parent: container.element
   });
 
   listen(state => {
     lastState = state;
-    const oldText = editorView.state.doc.toString();
     const newText = assertString(state.treeText);
-    const textChanged = oldText === newText;
-    if (textChanged) {
-      return;
+    if (editorView.state.doc.toString() !== newText) {
+      editorView.dispatch({
+        changes: {from: 0, to: editorView.state.doc.length, insert: newText}
+      });
     }
-
-    editorView.dispatch({
-      changes: {from: 0, to: editorView.state.doc.length, insert: newText}
-    });
   });
 });
 
