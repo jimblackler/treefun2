@@ -114,7 +114,11 @@ layout.registerComponentFactoryFunction('jsonEditor', container => {
         } catch (e) {
           return;
         }
-        if (!lastState || json === lastState.options) {
+        if (!lastState) {
+          return;
+        }
+        const optionsChanged = JSON.stringify(json) !== JSON.stringify(lastState.options);
+        if (!optionsChanged) {
           return;
         }
         setState({...lastState, options: json});
@@ -123,8 +127,13 @@ layout.registerComponentFactoryFunction('jsonEditor', container => {
   });
 
   listen(state => {
-    const optionsChanged =
-        !lastState || JSON.stringify(state.options) === JSON.stringify(lastState.options);
+    let json;
+    try {
+      json = toJSONContent(jsonEditor.get()).json;
+    } catch (e) {
+
+    }
+    const optionsChanged = JSON.stringify(state.options) !== JSON.stringify(json);
     lastState = state;
     if (!optionsChanged) {
       return;
@@ -146,8 +155,12 @@ layout.registerComponentFactoryFunction('textEditor', container => {
         if (!update.docChanged) {
           return;
         }
+        if (!lastState) {
+          return;
+        }
         const text = editorView.state.doc.toString();
-        if (!lastState || text === lastState.treeText) {
+        const textChanged = text !== lastState.treeText;
+        if (!textChanged) {
           return;
         }
         setState({...lastState, treeText: assertString(text)});
@@ -157,8 +170,15 @@ layout.registerComponentFactoryFunction('textEditor', container => {
 
   listen(state => {
     lastState = state;
+    const oldText = editorView.state.doc.toString();
+    const newText = assertString(state.treeText);
+    const textChanged = oldText === newText;
+    if (textChanged) {
+      return;
+    }
+
     editorView.dispatch({
-      changes: {from: 0, to: editorView.state.doc.length, insert: assertString(state.treeText)}
+      changes: {from: 0, to: editorView.state.doc.length, insert: newText}
     });
   });
 });
