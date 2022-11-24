@@ -80,6 +80,8 @@ const layoutConfig: LayoutConfig = {
 const layout = new GoldenLayout(container);
 
 layout.registerComponentFactoryFunction('diagram', container => {
+  container.element.style.overflow = 'scroll';
+
   const svgNs = 'http://www.w3.org/2000/svg';
   const svg = document.createElementNS(svgNs, 'svg');
 
