@@ -1,5 +1,7 @@
 import {defaultKeymap} from "@codemirror/commands"
 import {EditorView, keymap, lineNumbers} from "@codemirror/view"
+import '@vaadin/menu-bar';
+import {MenuBarItem} from '@vaadin/menu-bar';
 import axios from 'axios';
 import {basicLight} from 'cm6-theme-basic-light'
 import {ComponentContainer, GoldenLayout, LayoutConfig} from 'golden-layout';
@@ -11,13 +13,31 @@ import {listen, setState, State} from './state';
 import './style.css'
 import {textToTree} from './textToTree';
 
-axios.get('/sampleData/animals.json').then(response => response.data).then(data => {
-  setState({
-    treeText: data.tree,
-    css: data.styles,
-    options: data.options
+const menuBar = assertNotNull(document.querySelector('vaadin-menu-bar'));
+
+const actions = new Map<MenuBarItem, () => void>();
+
+const items: MenuBarItem[] = [];
+['animals', 'army', 'collatz', 'java', 'numbers', 'realms', 'unix', 'wow'].forEach(name => {
+  const item = {text: name};
+  items.push(item);
+  actions.set(item, () => {
+    axios.get(`/sampleData/${name}.json`).then(response => response.data).then(data => {
+      setState({
+        treeText: data.tree,
+        css: data.styles,
+        options: data.options
+      });
+    });
   });
 });
+menuBar.items = [
+  {text: 'Examples', children: items},
+];
+
+menuBar.addEventListener('item-selected',
+    evt => (actions.get(evt.detail.value) || (() => {
+    }))());
 
 const container = assertNotNull(document.getElementById('container'));
 

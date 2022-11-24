@@ -31,6 +31,9 @@ export const mainHandler: RequestHandler = async (req, res, next) => {
   const main = document.createElement('main');
   body.append(main);
 
+  const menuBar = document.createElement('vaadin-menu-bar');
+  main.append(menuBar);
+
   const section = document.createElement('section');
   body.append(section);
   section.setAttribute('id', 'container');
