@@ -3,7 +3,7 @@ import {EditorView, keymap, lineNumbers} from "@codemirror/view"
 import axios from 'axios';
 import {basicLight} from 'cm6-theme-basic-light'
 import {GoldenLayout, LayoutConfig} from 'golden-layout';
-import {JSONContent, JSONEditor, Mode} from 'vanilla-jsoneditor'
+import {JSONEditor, Mode} from 'vanilla-jsoneditor'
 import {assertDefined} from '../common/check/defined';
 import {assertNotNull} from '../common/check/null';
 import {assertString} from '../common/check/string';
@@ -111,13 +111,10 @@ layout.registerComponentFactoryFunction('jsonEditor', container => {
     }
   });
 
-  listen(state => {
-        let newVar: JSONContent = {
-          text: undefined,
-          json: state.options
-        };
-        return jsonEditor.update(newVar);
-      }
+  listen(state => jsonEditor.update({
+        text: undefined,
+        json: state.options
+      })
   );
 });
 
