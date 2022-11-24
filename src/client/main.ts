@@ -82,10 +82,15 @@ const layoutConfig: LayoutConfig = {
 const layout = new GoldenLayout(container);
 
 layout.registerComponentFactoryFunction('diagram', container => {
-  container.element.style.overflow = 'scroll';
+  container.element.classList.add('diagramContainer');
+
+  const wrapper = document.createElement('div');
+  container.element.append(wrapper);
+  wrapper.setAttribute('class', 'diagramWrapper');
 
   const svgNs = 'http://www.w3.org/2000/svg';
   const svg = document.createElementNS(svgNs, 'svg');
+  wrapper.append(svg);
 
   const styleSheet = document.createElementNS(svgNs, 'style');
   svg.append(styleSheet);
@@ -111,8 +116,6 @@ layout.registerComponentFactoryFunction('diagram', container => {
   svg.append(diagramGroup);
   diagramGroup.setAttribute('id', 'diagramGroup');
 
-  container.element.style.background = 'white';
-  container.element.append(svg);
 
   listen(state => {
     styleSheet.innerHTML = state.css;

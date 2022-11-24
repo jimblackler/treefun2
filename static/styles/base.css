@@ -12,3 +12,20 @@ body {
 section#container {
   height: 100%;
 }
+
+div.diagramContainer {
+  display: flex;
+  justify-content: center;
+  overflow: scroll;
+}
+
+div.diagramWrapper {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  overflow: scroll;
+}
+
+div.diagramWrapper svg {
+  background: white;
+}
