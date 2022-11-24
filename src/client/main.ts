@@ -2,7 +2,7 @@ import {defaultKeymap} from "@codemirror/commands"
 import {EditorView, keymap, lineNumbers} from "@codemirror/view"
 import axios from 'axios';
 import {basicLight} from 'cm6-theme-basic-light'
-import {GoldenLayout, LayoutConfig} from 'golden-layout';
+import {ComponentContainer, GoldenLayout, LayoutConfig} from 'golden-layout';
 import {JSONEditor, Mode, toJSONContent} from 'vanilla-jsoneditor'
 import {assertNotNull} from '../common/check/null';
 import {assertString} from '../common/check/string';
@@ -31,12 +31,16 @@ const layoutConfig: LayoutConfig = {
       width: 20,
       content: [{
         type: 'component',
-        componentType: 'textEditor',
+        componentType: 'textEditorTree',
         title: 'Data (text)'
       }, {
         type: 'component',
         componentType: 'jsonEditor',
         title: 'Options'
+      }, {
+        type: 'component',
+        componentType: 'textEditorCss',
+        title: 'CSS'
       }]
     }, {
       type: 'component',
@@ -141,34 +145,43 @@ layout.registerComponentFactoryFunction('jsonEditor', container => {
   });
 });
 
-layout.registerComponentFactoryFunction('textEditor', container => {
-  let lastState: State | undefined;
-  container.element.style.overflow = 'scroll';
+function getTextEditorComponent(textFromState: (state: State) => string,
+                                updateStateFromText: (text: string) => Partial<State>) {
+  return (container: ComponentContainer) => {
+    let lastState: State | undefined;
+    container.element.style.overflow = 'scroll';
 
-  const editorView = new EditorView({
-    extensions: [keymap.of(defaultKeymap), lineNumbers(), basicLight,
-      EditorView.updateListener.of(update => {
-        if (!update.docChanged || !lastState) {
-          return;
-        }
-        const text = editorView.state.doc.toString();
-        if (text !== lastState.treeText) {
-          setState({...lastState, treeText: assertString(text)});
-        }
-      })],
-    parent: container.element
-  });
+    const editorView = new EditorView({
+      extensions: [keymap.of(defaultKeymap), lineNumbers(), basicLight,
+        EditorView.updateListener.of(update => {
+          if (!update.docChanged || !lastState) {
+            return;
+          }
+          const text = editorView.state.doc.toString();
+          if (text !== textFromState(lastState)) {
+            setState({...lastState, ...updateStateFromText(assertString(text))});
+          }
+        })],
+      parent: container.element
+    });
 
-  listen(state => {
-    lastState = state;
-    const newText = assertString(state.treeText);
-    if (editorView.state.doc.toString() !== newText) {
-      editorView.dispatch({
-        changes: {from: 0, to: editorView.state.doc.length, insert: newText}
-      });
-    }
-  });
-});
+    listen(state => {
+      lastState = state;
+      const newText = assertString(textFromState(state));
+      if (editorView.state.doc.toString() !== newText) {
+        editorView.dispatch({
+          changes: {from: 0, to: editorView.state.doc.length, insert: newText}
+        });
+      }
+    });
+  };
+}
+
+layout.registerComponentFactoryFunction('textEditorTree',
+    getTextEditorComponent(state => state.treeText, text => ({treeText: text})));
+
+layout.registerComponentFactoryFunction('textEditorCss',
+    getTextEditorComponent(state => state.css, text => ({css: text})));
 
 layout.loadLayout(layoutConfig);
 
