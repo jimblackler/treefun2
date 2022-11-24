@@ -3,8 +3,7 @@ import {EditorView, keymap, lineNumbers} from "@codemirror/view"
 import axios from 'axios';
 import {basicLight} from 'cm6-theme-basic-light'
 import {GoldenLayout, LayoutConfig} from 'golden-layout';
-import {JSONEditor, Mode} from 'vanilla-jsoneditor'
-import {assertDefined} from '../common/check/defined';
+import {JSONEditor, Mode, toJSONContent} from 'vanilla-jsoneditor'
 import {assertNotNull} from '../common/check/null';
 import {assertString} from '../common/check/string';
 import {treeToDiagram} from '../treefun/treeToDiagram';
@@ -98,6 +97,7 @@ layout.registerComponentFactoryFunction('diagram', container => {
 });
 
 layout.registerComponentFactoryFunction('jsonEditor', container => {
+  let lastState: State | undefined;
   const jsonEditor = new JSONEditor({
     target: container.element,
     props: {
@@ -106,15 +106,34 @@ layout.registerComponentFactoryFunction('jsonEditor', container => {
       content: {
         text: '',
         json: undefined
+      },
+      onChange: (content, previousContent, status) => {
+        let json;
+        try {
+          json = toJSONContent(content).json;
+        } catch (e) {
+          return;
+        }
+        if (!lastState || json === lastState.options) {
+          return;
+        }
+        setState({...lastState, options: json});
       }
     }
   });
 
-  listen(state => jsonEditor.update({
-        text: undefined,
-        json: state.options
-      })
-  );
+  listen(state => {
+    const optionsChanged =
+        !lastState || JSON.stringify(state.options) === JSON.stringify(lastState.options);
+    lastState = state;
+    if (!optionsChanged) {
+      return;
+    }
+    jsonEditor.update({
+      text: undefined,
+      json: state.options
+    })
+  });
 });
 
 layout.registerComponentFactoryFunction('textEditor', container => {
