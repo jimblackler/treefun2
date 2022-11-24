@@ -23,11 +23,11 @@ const layoutConfig: LayoutConfig = {
       width: 20,
       content: [{
         type: 'component',
-        componentType: 'editor2',
+        componentType: 'textEditor',
         title: 'Data (text)'
       }, {
         type: 'component',
-        componentType: 'editor',
+        componentType: 'jsonEditor',
         title: 'Options'
       }]
     }, {
@@ -82,7 +82,7 @@ layout.registerComponentFactoryFunction('diagram', container => {
   container.element.append(svg);
 });
 
-layout.registerComponentFactoryFunction('editor', container => {
+layout.registerComponentFactoryFunction('jsonEditor', container => {
 
   const jsonEditor = new JSONEditor({
     target: container.element,
@@ -128,7 +128,7 @@ function updateDiagram(treeText: string) {
   });
 }
 
-layout.registerComponentFactoryFunction('editor2', container => {
+layout.registerComponentFactoryFunction('textEditor', container => {
   container.element.style.overflow = 'scroll';
 
   const editorView = new EditorView({
