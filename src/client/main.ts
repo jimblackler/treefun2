@@ -98,7 +98,6 @@ layout.registerComponentFactoryFunction('diagram', container => {
 });
 
 layout.registerComponentFactoryFunction('jsonEditor', container => {
-
   const jsonEditor = new JSONEditor({
     target: container.element,
     props: {
