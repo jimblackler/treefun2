@@ -121,7 +121,6 @@ layout.registerComponentFactoryFunction('jsonEditor', container => {
   );
 });
 
-
 layout.registerComponentFactoryFunction('textEditor', container => {
   let lastState: State | undefined;
   container.element.style.overflow = 'scroll';
