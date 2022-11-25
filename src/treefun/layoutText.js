@@ -1,6 +1,5 @@
-// Splits all the strings in the array by the specified character, without
-// removing that character from the strings. Returns an array of all the split
-// strings.
+// Splits all the strings in the array by the specified character, without removing that character
+// from the strings. Returns an array of all the split strings.
 function splitBy(array, char) {
   const out = [];
   for (let i = 0; i !== array.length; i++) {
@@ -14,9 +13,8 @@ function splitBy(array, char) {
   return out;
 }
 
-// Creates text arranged in rows, with the maximum specified width and height,
-// centered around the 'x' coordinate, and with the specified line spacing.
-// Adds to the specified text node.
+// Creates text arranged in rows, with the maximum specified width and height, centered around the
+// 'x' coordinate, and with the specified line spacing. Adds to the specified text node.
 export function layoutText(textNode, text, width, x, height, dy) {
   const namespace = 'http://www.w3.org/2000/svg';
   let previousFit = '';
@@ -59,8 +57,7 @@ export function layoutText(textNode, text, width, x, height, dy) {
 
       textNode.appendChild(tspan);
       while (tspan.getComputedTextLength() > width) {
-        tspan.textContent =
-            tspan.textContent.substring(0, tspan.textContent.length - 1);
+        tspan.textContent = tspan.textContent.substring(0, tspan.textContent.length - 1);
       }
     }
     previousFit = tspan.textContent;
