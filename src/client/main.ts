@@ -134,7 +134,6 @@ layout.registerComponentFactoryFunction('diagram', container => {
   svg.append(diagramGroup);
   diagramGroup.setAttribute('id', 'diagramGroup');
 
-
   listen(state => {
     styleSheet.innerHTML = state.css;
     while (diagramGroup.firstChild) {
