@@ -296,10 +296,9 @@ export function treeToDiagram(tree: Node, diagramSvg: SVGSVGElement, diagramGrou
         }
 
         // Draw lines to parents.
-        node.line = document.createElementNS(namespace, 'line');
-        diagramGroup.appendChild(node.line);
+        const line = document.createElementNS(namespace, 'line');
+        diagramGroup.appendChild(line);
         const parentOffset = (nodeIdx + 1) / (group.length + 1);
-        const line = node.line;
         const parentY = (levelIdx - 1) * (1 + options.levelsGap);
         let first;
         let second;
