@@ -1,27 +1,28 @@
-export function textToTree(text) {
+import {Node} from '../treefun/node';
 
-  var lines = text.split(/\n/);
-
-  var rootNode = {
-    label: "root",
-    parent: "",
+export function textToTree(text: string): Node {
+  const lines = text.split(/\n/);
+  const rootNode: Node = {
+    label: 'root',
+    parent: undefined,
     children: []
   };
 
-  var stackParents = [rootNode];
-  var stackIndents = [-1];
-  for (var idx = 0; idx != lines.length; idx++) {
-    var line = lines[idx];
-    var content = line.trim();
-    if (!content.length)
+  const stackParents = [rootNode];
+  const stackIndents = [-1];
+  for (let idx = 0; idx !== lines.length; idx++) {
+    const line = lines[idx];
+    const content = line.trim();
+    if (!content.length) {
       continue;
-    var indent = line.indexOf(content);
+    }
+    const indent = line.indexOf(content);
     while (stackIndents[stackIndents.length - 1] >= indent) {
       stackIndents.pop();
       stackParents.pop();
     }
-    var parent = stackParents[stackParents.length - 1];
-    var node = {
+    const parent = stackParents[stackParents.length - 1];
+    const node: Node = {
       label: content,
       parent: parent,
       children: []

@@ -1,18 +1,10 @@
+import * as assert from 'assert';
 import {assertDefined} from '../common/check/defined';
 import {layoutText} from './layoutText';
+import {Node} from './node';
 import {Options} from './options';
 
 type Field = 'x' | 'x0' | 'x1';
-
-interface Node {
-  x: number;
-  x0: number;
-  x1: number;
-  label: string;
-  children: Node[];
-  parent?: Node;
-  line?: SVGLineElement;
-}
 
 function buildNextLevel(groups: Node[][]) {
   const groupsOut = [];
@@ -63,8 +55,9 @@ function sweepLeftToRight(level: Node[][], infield: Field, outfield: Field, opti
     for (let nodeIdx = 0; nodeIdx !== group.length; nodeIdx++) {
       const node = group[nodeIdx];
       let newX;
-      if (infield in node && infield === 'x' ? node.x : node.x1 > minX) {
-        newX = node[infield];
+      const x = node[infield];
+      if (x !== undefined && x > minX) {
+        newX = x;
       } else {
         newX = minX;
       }
@@ -88,8 +81,9 @@ function sweepRightToLeft(level: Node[][], infield: Field, outfield: Field, maxW
     for (let nodeIdx = group.length - 1; nodeIdx >= 0; nodeIdx--) {
       const node = group[nodeIdx];
       let newX;
-      if (infield in node && node[infield] < maxX) {
-        newX = node[infield];
+      const x = node[infield];
+      if (x !== undefined && x < maxX) {
+        newX = x;
       } else {
         newX = maxX;
       }
@@ -114,7 +108,7 @@ function sweepAndAverage(level: Node[][], maxWidth: number, options: Options) {
     const group = level[memberIdx];
     for (let nodeIdx = 0; nodeIdx !== group.length; nodeIdx++) {
       const node = group[nodeIdx];
-      node.x = (node.x0 + node.x1) / 2;
+      node.x = (assertDefined(node.x0) + assertDefined(node.x1)) / 2;
     }
   }
 }
@@ -193,7 +187,7 @@ export function treeToDiagram(tree: Node, diagramSvg: SVGSVGElement, diagramGrou
         let totalX = 0;
         for (let childIdx = 0; childIdx !== node.children.length; childIdx++) {
           const child = node.children[childIdx];
-          totalX += child.x;
+          totalX += assertDefined(child.x);
         }
         node.x = totalX / node.children.length;
       }
@@ -210,7 +204,7 @@ export function treeToDiagram(tree: Node, diagramSvg: SVGSVGElement, diagramGrou
       const parent = assertDefined(group[0].parent);
 
       const groupWidth = (group.length - 1) * (1 + options.idealSiblingGap);
-      let x = parent.x - groupWidth / 2;
+      let x = assertDefined(parent.x) - groupWidth / 2;
       for (let nodeIdx = 0; nodeIdx !== group.length; nodeIdx++) {
         const node = group[nodeIdx];
         node.x = x;
@@ -270,7 +264,7 @@ export function treeToDiagram(tree: Node, diagramSvg: SVGSVGElement, diagramGrou
 
         const yValue = levelIdx * (1 + options.levelsGap);
 
-        rect.setAttribute(xAttribute, Math.floor(node.x * xMultiplier) + 'px');
+        rect.setAttribute(xAttribute, Math.floor(assertDefined(node.x) * xMultiplier) + 'px');
         rect.setAttribute(yAttribute, Math.floor(yValue * yMultiplier) + 'px');
         rect.setAttribute(widthAttribute, Math.floor(xMultiplier) + 'px');
         rect.setAttribute(heightAttribute, Math.floor(yMultiplier) + 'px');
@@ -284,14 +278,14 @@ export function treeToDiagram(tree: Node, diagramSvg: SVGSVGElement, diagramGrou
 
         // Arrange text; method is different for horizontal diagrams.
         if (options.flipXY) {
-          const xPos = Math.floor(node.x * xMultiplier);
+          const xPos = Math.floor(assertDefined(node.x) * xMultiplier);
           const yPos = Math.floor((yValue + 0.5) * yMultiplier);
           text.setAttribute(xAttribute, xPos + 'px');
           text.setAttribute(yAttribute, Math.floor(yValue * yMultiplier) + 'px');
           layoutText(text, node.label, yMultiplier - options.labelPadding, yPos, xMultiplier,
               options.labelLineSpacing);
         } else {
-          const xPos = Math.floor((node.x + 0.5) * xMultiplier);
+          const xPos = Math.floor((assertDefined(node.x) + 0.5) * xMultiplier);
           text.setAttribute(xAttribute, xPos + 'px');
           text.setAttribute(yAttribute, Math.floor(yValue * yMultiplier) + 'px');
           layoutText(text, node.label, xMultiplier - options.labelPadding, xPos, yMultiplier,
@@ -318,9 +312,10 @@ export function treeToDiagram(tree: Node, diagramSvg: SVGSVGElement, diagramGrou
           second = '2';
         }
         line.setAttribute(xAttribute + first,
-            Math.floor((assertDefined(node.parent).x + parentOffset) * xMultiplier) + 'px');
+            Math.floor((assertDefined(node.parent?.x) + parentOffset) * xMultiplier) + 'px');
         line.setAttribute(yAttribute + first, Math.floor((parentY + 1) * yMultiplier) + 'px');
-        line.setAttribute(xAttribute + second, Math.floor((node.x + 0.5) * xMultiplier) + 'px');
+        line.setAttribute(xAttribute + second,
+            Math.floor((assertDefined(node.x) + 0.5) * xMultiplier) + 'px');
         line.setAttribute(yAttribute + second, Math.floor(yValue * yMultiplier) + 'px');
 
         line.setAttribute('marker-end', 'url(#arrowHead)');

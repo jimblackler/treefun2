@@ -1,6 +1,6 @@
 // Splits all the strings in the array by the specified character, without removing that character
 // from the strings. Returns an array of all the split strings.
-function splitBy(array, char) {
+function splitBy(array: string[], char: string) {
   const out = [];
   for (let i = 0; i !== array.length; i++) {
     const word = array[i];
@@ -15,11 +15,12 @@ function splitBy(array, char) {
 
 // Creates text arranged in rows, with the maximum specified width and height, centered around the
 // 'x' coordinate, and with the specified line spacing. Adds to the specified text node.
-export function layoutText(textNode, text, width, x, height, dy) {
+export function layoutText(textNode: SVGTextElement, text: string, width: number, x: number,
+                           height: number, dy: number) {
   const namespace = 'http://www.w3.org/2000/svg';
   let previousFit = '';
   let tspan = document.createElementNS(namespace, 'tspan');
-  tspan.setAttributeNS(null, 'x', x);
+  tspan.setAttributeNS(null, 'x', `${x}`);
   textNode.appendChild(tspan);
   tspan.textContent = '!';
   height -= dy;
@@ -28,7 +29,7 @@ export function layoutText(textNode, text, width, x, height, dy) {
   const firstTspan = tspan;
 
   // Split by split characters.
-  let words = splitBy(text.split(/\s/));
+  let words = text.split(/\s/);
   const splitChars = '.-';
   for (let j = 0; j !== splitChars.length; j++) {
     words = splitBy(words, splitChars[j]);
@@ -50,8 +51,8 @@ export function layoutText(textNode, text, width, x, height, dy) {
         }
         height -= dy;
         tspan = document.createElementNS(namespace, 'tspan');
-        tspan.setAttributeNS(null, 'x', x);
-        tspan.setAttributeNS(null, 'dy', dy);
+        tspan.setAttributeNS(null, 'x', `${x}`);
+        tspan.setAttributeNS(null, 'dy', `${dy}`);
       }
       tspan.textContent = word;
 
@@ -64,5 +65,5 @@ export function layoutText(textNode, text, width, x, height, dy) {
   }
 
   const baselineShift = -2;
-  firstTspan.setAttributeNS(null, 'dy', dy + baselineShift + height / 2);
+  firstTspan.setAttributeNS(null, 'dy', `${dy + baselineShift + height / 2}`);
 }
