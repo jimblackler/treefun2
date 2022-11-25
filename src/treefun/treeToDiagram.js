@@ -16,8 +16,7 @@ function buildNextLevel(groups) {
   return groupsOut;
 }
 
-// Converts the tree structure into an array of levels 0... n of cousin and
-// sibling nodes.
+// Converts the tree structure into an array of levels 0... n of cousin and sibling nodes.
 function makeLevels(tree, drawRoot) {
 
   let groups = [];
@@ -41,8 +40,8 @@ function makeLevels(tree, drawRoot) {
   return levels;
 }
 
-// Sweep from the left to the right along a level, moving nodes along the row
-// if they overlap with a previous node, or the edge of the diagram area.
+// Sweep from the left to the right along a level, moving nodes along the row if they overlap with a
+// previous node, or the edge of the diagram area.
 function sweepLeftToRight(level, infield, outfield, options) {
   let minX = 0;
   for (let memberIdx = 0; memberIdx !== level.length; memberIdx++) {
@@ -65,9 +64,8 @@ function sweepLeftToRight(level, infield, outfield, options) {
   }
 }
 
-// Sweep from the right to the left along a level, moving nodes along the row
-// if they overlap with a previous node, or the edge of the diagram area
-// (specified).
+// Sweep from the right to the left along a level, moving nodes along the row if they overlap with a
+// previous node, or the edge of the diagram area (specified).
 function sweepRightToLeft(level, infield, outfield, maxWidth, options) {
   let maxX = maxWidth - 1;
   for (let memberIdx = level.length - 1; memberIdx >= 0; memberIdx--) {
@@ -90,9 +88,8 @@ function sweepRightToLeft(level, infield, outfield, maxWidth, options) {
   }
 }
 
-// Positions the nodes on a level in a position that is guaranteed not to
-// overlap with other nodes on that level, but as close as possible to the
-// ideal position (if one is set).
+// Positions the nodes on a level in a position that is guaranteed not to overlap with other nodes
+// on that level, but as close as possible to the ideal position (if one is set).
 function sweepAndAverage(level, maxWidth, options) {
   sweepLeftToRight(level, 'x', 'x0', options);
   sweepRightToLeft(level, 'x0', 'x0', maxWidth, options);
@@ -107,8 +104,8 @@ function sweepAndAverage(level, maxWidth, options) {
   }
 }
 
-// Converts the specified tree to a diagram under diagramGroup in the SVG
-// diagramSvg. Options are configured in the specified options object.
+// Converts the specified tree to a diagram under diagramGroup in the SVG diagramSvg. Options are
+// configured in the specified options object.
 export function treeToDiagram(tree, diagramSvg, diagramGroup, options) {
   const levels = makeLevels(tree, options.drawRoot);
 
@@ -135,8 +132,7 @@ export function treeToDiagram(tree, diagramSvg, diagramGroup, options) {
     widths.push(width);
   }
 
-  const maxWidth = Math.max(widths[fixedLevel],
-      options.minimumBreadth * (1 + options.levelsGap));
+  const maxWidth = Math.max(widths[fixedLevel], options.minimumBreadth * (1 + options.levelsGap));
 
   // Position and make elements
   const level = levels[fixedLevel];
@@ -146,8 +142,8 @@ export function treeToDiagram(tree, diagramSvg, diagramGroup, options) {
   let spare = (maxWidth - widths[fixedLevel]);
   let useCousinGap = options.minimumCousinGap;
   if (level.length > 1) {
-    const spareForGroupGaps = Math.min(spare / (level.length - 1),
-        (options.idealCousinGap - options.minimumCousinGap));
+    const spareForGroupGaps =
+        Math.min(spare / (level.length - 1), (options.idealCousinGap - options.minimumCousinGap));
     spare -= spareForGroupGaps * (level.length - 1);
     useCousinGap += spareForGroupGaps;
   }
@@ -209,8 +205,7 @@ export function treeToDiagram(tree, diagramSvg, diagramGroup, options) {
   }
 
   // Now render the tree.
-  diagramSvg.getElementById('arrowHead').setAttribute(
-      'markerHeight', options.arrowHeadSize);
+  diagramSvg.getElementById('arrowHead').setAttribute('markerHeight', options.arrowHeadSize);
 
   // Find height ratio
   const useLevels = Math.max(levels.length, options.minimumDepth);
@@ -273,18 +268,15 @@ export function treeToDiagram(tree, diagramSvg, diagramGroup, options) {
           const xPos = Math.floor(node.x * xMultiplier);
           const yPos = Math.floor((yValue + 0.5) * yMultiplier);
           text.setAttribute(xAttribute, xPos + 'px');
-          text.setAttribute(yAttribute,
-              Math.floor(yValue * yMultiplier) + 'px');
-
-          layoutText(text, node.label, yMultiplier - options.labelPadding, yPos,
-              xMultiplier, options.labelLineSpacing);
+          text.setAttribute(yAttribute, Math.floor(yValue * yMultiplier) + 'px');
+          layoutText(text, node.label, yMultiplier - options.labelPadding, yPos, xMultiplier,
+              options.labelLineSpacing);
         } else {
           const xPos = Math.floor((node.x + 0.5) * xMultiplier);
           text.setAttribute(xAttribute, xPos + 'px');
-          text.setAttribute(yAttribute, Math.floor(yValue * yMultiplier) +
-              'px');
-          layoutText(text, node.label, xMultiplier - options.labelPadding, xPos,
-              yMultiplier, options.labelLineSpacing);
+          text.setAttribute(yAttribute, Math.floor(yValue * yMultiplier) + 'px');
+          layoutText(text, node.label, xMultiplier - options.labelPadding, xPos, yMultiplier,
+              options.labelLineSpacing);
         }
 
         if (levelIdx === 0) {
@@ -307,14 +299,10 @@ export function treeToDiagram(tree, diagramSvg, diagramGroup, options) {
           second = '2';
         }
         line.setAttribute(xAttribute + first,
-            Math.floor((node.parent.x + parentOffset) * xMultiplier) +
-            'px');
-        line.setAttribute(yAttribute + first,
-            Math.floor((parentY + 1) * yMultiplier) + 'px');
-        line.setAttribute(xAttribute + second,
-            Math.floor((node.x + 0.5) * xMultiplier) + 'px');
-        line.setAttribute(yAttribute + second,
-            Math.floor(yValue * yMultiplier) + 'px');
+            Math.floor((node.parent.x + parentOffset) * xMultiplier) + 'px');
+        line.setAttribute(yAttribute + first, Math.floor((parentY + 1) * yMultiplier) + 'px');
+        line.setAttribute(xAttribute + second, Math.floor((node.x + 0.5) * xMultiplier) + 'px');
+        line.setAttribute(yAttribute + second, Math.floor(yValue * yMultiplier) + 'px');
 
         line.setAttribute('marker-end', 'url(#arrowHead)');
       }
