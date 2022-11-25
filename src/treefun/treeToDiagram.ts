@@ -1,4 +1,3 @@
-import * as assert from 'assert';
 import {assertDefined} from '../common/check/defined';
 import {layoutText} from './layoutText';
 import {Node} from './node';
