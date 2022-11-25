@@ -1,6 +1,6 @@
 export interface Node {
   label: string;
-  parent?: Node;
+  parent: Node | undefined;
   children: Node[];
 
   x?: number;
