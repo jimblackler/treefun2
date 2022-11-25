@@ -312,7 +312,7 @@ export function treeToDiagram(tree, diagramSvg, diagramGroup, options) {
         line.setAttribute(yAttribute + first,
             Math.floor((parentY + 1) * yMultiplier) + "px");
         line.setAttribute(xAttribute + second,
-            Math.floor((node.x + .5) * xMultiplier) + "px");
+            Math.floor((node.x + 0.5) * xMultiplier) + "px");
         line.setAttribute(yAttribute + second,
             Math.floor(yValue * yMultiplier) + "px");
 
