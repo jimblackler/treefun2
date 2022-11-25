@@ -320,6 +320,4 @@ export function treeToDiagram(tree, diagramSvg, diagramGroup, options) {
       }
     }
   }
-
-
 }
