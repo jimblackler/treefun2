@@ -2,14 +2,14 @@
 // removing that character from the strings. Returns an array of all the split
 // strings.
 function splitBy(array, char) {
-  var out = [];
-  for (var i = 0; i != array.length; i++) {
-    var word = array[i];
-    var split = word.split(char);
-    for (var j = 0; j != split.length - 1; j++) {
+  const out = [];
+  for (let i = 0; i != array.length; i++) {
+    const word = array[i];
+    const split = word.split(char);
+    for (let j = 0; j != split.length - 1; j++) {
       out.push(split[j] + char);
     }
-    out.push(split[j]);
+    out.push(split[split.length - 1]);
   }
   return out;
 }
@@ -18,25 +18,25 @@ function splitBy(array, char) {
 // centered around the 'x' coordinate, and with the specified line spacing.
 // Adds to the specified text node.
 export function layoutText(textNode, text, width, x, height, dy) {
-  var namespace = "http://www.w3.org/2000/svg";
-  var previousFit = "";
-  var tspan = document.createElementNS(namespace, "tspan");
+  const namespace = "http://www.w3.org/2000/svg";
+  let previousFit = "";
+  let tspan = document.createElementNS(namespace, "tspan");
   tspan.setAttributeNS(null, "x", x);
   textNode.appendChild(tspan);
   tspan.textContent = "!";
   height -= dy;
   tspan.textContent = "";
 
-  var firstTspan = tspan;
+  const firstTspan = tspan;
 
   // Split by split characters.
-  var words = splitBy(text.split(/\s/));
-  var splitChars = ".-";
-  for (var j = 0; j != splitChars.length; j++)
+  let words = splitBy(text.split(/\s/));
+  const splitChars = ".-";
+  for (let j = 0; j != splitChars.length; j++)
     words = splitBy(words, splitChars[j]);
 
-  for (var i = 0; i < words.length; i++) {
-    var word = words[i];
+  for (let i = 0; i < words.length; i++) {
+    const word = words[i];
     if (tspan.textContent &&
         splitChars.indexOf(tspan.textContent[tspan.textContent.length - 1]) == -1)
       tspan.textContent += " ";
@@ -63,6 +63,6 @@ export function layoutText(textNode, text, width, x, height, dy) {
     previousFit = tspan.textContent;
   }
 
-  var baselineShift = -2;
+  const baselineShift = -2;
   firstTspan.setAttributeNS(null, "dy", dy + baselineShift + height / 2);
 }
