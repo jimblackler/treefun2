@@ -18,20 +18,20 @@ function splitBy(array, char) {
 // centered around the 'x' coordinate, and with the specified line spacing.
 // Adds to the specified text node.
 export function layoutText(textNode, text, width, x, height, dy) {
-  const namespace = "http://www.w3.org/2000/svg";
-  let previousFit = "";
-  let tspan = document.createElementNS(namespace, "tspan");
-  tspan.setAttributeNS(null, "x", x);
+  const namespace = 'http://www.w3.org/2000/svg';
+  let previousFit = '';
+  let tspan = document.createElementNS(namespace, 'tspan');
+  tspan.setAttributeNS(null, 'x', x);
   textNode.appendChild(tspan);
-  tspan.textContent = "!";
+  tspan.textContent = '!';
   height -= dy;
-  tspan.textContent = "";
+  tspan.textContent = '';
 
   const firstTspan = tspan;
 
   // Split by split characters.
   let words = splitBy(text.split(/\s/));
-  const splitChars = ".-";
+  const splitChars = '.-';
   for (let j = 0; j !== splitChars.length; j++) {
     words = splitBy(words, splitChars[j]);
   }
@@ -40,7 +40,7 @@ export function layoutText(textNode, text, width, x, height, dy) {
     const word = words[i];
     if (tspan.textContent &&
         splitChars.indexOf(tspan.textContent[tspan.textContent.length - 1]) === -1) {
-      tspan.textContent += " ";
+      tspan.textContent += ' ';
     }
     tspan.textContent += word;
 
@@ -51,9 +51,9 @@ export function layoutText(textNode, text, width, x, height, dy) {
           break;
         }
         height -= dy;
-        tspan = document.createElementNS(namespace, "tspan");
-        tspan.setAttributeNS(null, "x", x);
-        tspan.setAttributeNS(null, "dy", dy);
+        tspan = document.createElementNS(namespace, 'tspan');
+        tspan.setAttributeNS(null, 'x', x);
+        tspan.setAttributeNS(null, 'dy', dy);
       }
       tspan.textContent = word;
 
@@ -67,5 +67,5 @@ export function layoutText(textNode, text, width, x, height, dy) {
   }
 
   const baselineShift = -2;
-  firstTspan.setAttributeNS(null, "dy", dy + baselineShift + height / 2);
+  firstTspan.setAttributeNS(null, 'dy', dy + baselineShift + height / 2);
 }
