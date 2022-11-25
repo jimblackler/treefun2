@@ -114,7 +114,6 @@ export function treeToDiagram(tree, diagramSvg, diagramGroup, options) {
 
   // Decide which level should be fixed.
   let fixedLevel = -1;
-  const spacings = [];
   const widths = [];
 
   for (let levelIdx = 0; levelIdx !== levels.length; levelIdx++) {
@@ -134,7 +133,6 @@ export function treeToDiagram(tree, diagramSvg, diagramGroup, options) {
       fixedLevel = levelIdx;
     }
     widths.push(width);
-    spacings.push(spacing);
   }
 
   const maxWidth = Math.max(widths[fixedLevel],
