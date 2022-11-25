@@ -1,10 +1,10 @@
-import {JSONValue} from 'vanilla-jsoneditor';
+import {Options} from '../treefun/options';
 import {transactionToPromise} from './transactionToPromise';
 
 export interface State {
   treeText: string;
   css: string;
-  options: JSONValue;
+  options: Options;
 }
 
 export const stateDb: Promise<IDBDatabase> = new Promise((resolve, reject) => {

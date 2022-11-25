@@ -7,9 +7,10 @@ import {MenuBarItem} from '@vaadin/menu-bar';
 import axios from 'axios';
 import {basicLight} from 'cm6-theme-basic-light'
 import {ComponentContainer, GoldenLayout, LayoutConfig} from 'golden-layout';
-import {JSONEditor, Mode, toJSONContent} from 'vanilla-jsoneditor'
+import {JSONEditor, JSONValue, Mode, toJSONContent} from 'vanilla-jsoneditor'
 import {assertNotNull} from '../common/check/null';
 import {assertString} from '../common/check/string';
+import {Options} from '../treefun/options';
 import {treeToDiagram} from '../treefun/treeToDiagram';
 import {listen, setState, State} from './state';
 import './style.css'
@@ -166,7 +167,7 @@ layout.registerComponentFactoryFunction('jsonEditor', container => {
           return;
         }
         if (JSON.stringify(json) !== JSON.stringify(lastState.options)) {
-          setState({...lastState, options: json});
+          setState({...lastState, options: json as unknown as Options});
         }
       }
     }
@@ -183,7 +184,7 @@ layout.registerComponentFactoryFunction('jsonEditor', container => {
     if (JSON.stringify(state.options) !== JSON.stringify(oldJson)) {
       jsonEditor.update({
         text: undefined,
-        json: state.options
+        json: state.options as unknown as JSONValue
       })
     }
   });

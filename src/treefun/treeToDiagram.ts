@@ -1,6 +1,20 @@
+import {assertDefined} from '../common/check/defined';
 import {layoutText} from './layoutText';
+import {Options} from './options';
 
-function buildNextLevel(groups) {
+type Field = 'x' | 'x0' | 'x1';
+
+interface Node {
+  x: number;
+  x0: number;
+  x1: number;
+  label: string;
+  children: Node[];
+  parent?: Node;
+  line?: SVGLineElement;
+}
+
+function buildNextLevel(groups: Node[][]) {
   const groupsOut = [];
   for (let groupIdx = 0; groupIdx !== groups.length; groupIdx++) {
     const group = groups[groupIdx];
@@ -17,9 +31,9 @@ function buildNextLevel(groups) {
 }
 
 // Converts the tree structure into an array of levels 0... n of cousin and sibling nodes.
-function makeLevels(tree, drawRoot) {
+function makeLevels(tree: Node, drawRoot: boolean) {
 
-  let groups = [];
+  let groups: Node[][] = [];
   if (drawRoot) {
     groups.push([tree]);
   } else {
@@ -42,14 +56,14 @@ function makeLevels(tree, drawRoot) {
 
 // Sweep from the left to the right along a level, moving nodes along the row if they overlap with a
 // previous node, or the edge of the diagram area.
-function sweepLeftToRight(level, infield, outfield, options) {
+function sweepLeftToRight(level: Node[][], infield: Field, outfield: Field, options: Options) {
   let minX = 0;
   for (let memberIdx = 0; memberIdx !== level.length; memberIdx++) {
     const group = level[memberIdx];
     for (let nodeIdx = 0; nodeIdx !== group.length; nodeIdx++) {
       const node = group[nodeIdx];
       let newX;
-      if (infield in node && node[infield] > minX) {
+      if (infield in node && infield === 'x' ? node.x : node.x1 > minX) {
         newX = node[infield];
       } else {
         newX = minX;
@@ -66,7 +80,8 @@ function sweepLeftToRight(level, infield, outfield, options) {
 
 // Sweep from the right to the left along a level, moving nodes along the row if they overlap with a
 // previous node, or the edge of the diagram area (specified).
-function sweepRightToLeft(level, infield, outfield, maxWidth, options) {
+function sweepRightToLeft(level: Node[][], infield: Field, outfield: Field, maxWidth: number,
+                          options: Options) {
   let maxX = maxWidth - 1;
   for (let memberIdx = level.length - 1; memberIdx >= 0; memberIdx--) {
     const group = level[memberIdx];
@@ -90,7 +105,7 @@ function sweepRightToLeft(level, infield, outfield, maxWidth, options) {
 
 // Positions the nodes on a level in a position that is guaranteed not to overlap with other nodes
 // on that level, but as close as possible to the ideal position (if one is set).
-function sweepAndAverage(level, maxWidth, options) {
+function sweepAndAverage(level: Node[][], maxWidth: number, options: Options) {
   sweepLeftToRight(level, 'x', 'x0', options);
   sweepRightToLeft(level, 'x0', 'x0', maxWidth, options);
   sweepRightToLeft(level, 'x', 'x1', maxWidth, options);
@@ -106,7 +121,8 @@ function sweepAndAverage(level, maxWidth, options) {
 
 // Converts the specified tree to a diagram under diagramGroup in the SVG diagramSvg. Options are
 // configured in the specified options object.
-export function treeToDiagram(tree, diagramSvg, diagramGroup, options) {
+export function treeToDiagram(tree: Node, diagramSvg: SVGSVGElement, diagramGroup: SVGGElement,
+                              options: Options) {
   const levels = makeLevels(tree, options.drawRoot);
 
   // Decide which level should be fixed.
@@ -191,7 +207,7 @@ export function treeToDiagram(tree, diagramSvg, diagramGroup, options) {
     // Find positions
     for (let memberIdx = 0; memberIdx !== level.length; memberIdx++) {
       const group = level[memberIdx];
-      const parent = group[0].parent;
+      const parent = assertDefined(group[0].parent);
 
       const groupWidth = (group.length - 1) * (1 + options.idealSiblingGap);
       let x = parent.x - groupWidth / 2;
@@ -205,7 +221,7 @@ export function treeToDiagram(tree, diagramSvg, diagramGroup, options) {
   }
 
   // Now render the tree.
-  diagramSvg.getElementById('arrowHead').setAttribute('markerHeight', options.arrowHeadSize);
+  diagramSvg.getElementById('arrowHead').setAttribute('markerHeight', `${options.arrowHeadSize}`);
 
   // Find height ratio
   const useLevels = Math.max(levels.length, options.minimumDepth);
@@ -215,24 +231,27 @@ export function treeToDiagram(tree, diagramSvg, diagramGroup, options) {
   let yAttribute;
   let widthAttribute;
   let heightAttribute;
+  let diagramWidth;
+  let diagramHeight;
 
   if (options.flipXY) {
     xAttribute = 'y';
     yAttribute = 'x';
+    diagramWidth = options.height;
+    diagramHeight = options.width;
     widthAttribute = 'height';
     heightAttribute = 'width';
   } else {
     xAttribute = 'x';
     yAttribute = 'y';
+    diagramWidth = options.width;
+    diagramHeight = options.height;
     widthAttribute = 'width';
     heightAttribute = 'height';
   }
 
   diagramSvg.style.width = options.width + 'px';
   diagramSvg.style.height = options.height + 'px';
-
-  const diagramWidth = options[widthAttribute];
-  const diagramHeight = options[heightAttribute];
 
   const xMultiplier = diagramWidth / maxWidth;
   const yMultiplier = diagramHeight / height;
@@ -299,7 +318,7 @@ export function treeToDiagram(tree, diagramSvg, diagramGroup, options) {
           second = '2';
         }
         line.setAttribute(xAttribute + first,
-            Math.floor((node.parent.x + parentOffset) * xMultiplier) + 'px');
+            Math.floor((assertDefined(node.parent).x + parentOffset) * xMultiplier) + 'px');
         line.setAttribute(yAttribute + first, Math.floor((parentY + 1) * yMultiplier) + 'px');
         line.setAttribute(xAttribute + second, Math.floor((node.x + 0.5) * xMultiplier) + 'px');
         line.setAttribute(yAttribute + second, Math.floor(yValue * yMultiplier) + 'px');
