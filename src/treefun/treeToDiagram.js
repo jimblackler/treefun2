@@ -2,10 +2,10 @@ import {layoutText} from './layoutText';
 
 function buildNextLevel(groups) {
   const groupsOut = [];
-  for (let groupIdx = 0; groupIdx != groups.length; groupIdx++) {
+  for (let groupIdx = 0; groupIdx !== groups.length; groupIdx++) {
     const group = groups[groupIdx];
 
-    for (let memberIdx = 0; memberIdx != group.length; memberIdx++) {
+    for (let memberIdx = 0; memberIdx !== group.length; memberIdx++) {
       const member = group[memberIdx];
       if (!member.children.length)
         continue;
@@ -24,7 +24,7 @@ function makeLevels(tree, drawRoot) {
     groups.push([tree]);
   } else {
     const group = tree.children;
-    for (let memberIdx = 0; memberIdx != group.length; memberIdx++)
+    for (let memberIdx = 0; memberIdx !== group.length; memberIdx++)
       groups.push([group[memberIdx]]);
   }
 
@@ -32,7 +32,7 @@ function makeLevels(tree, drawRoot) {
   while (true) {
     levels.push(groups);
     groups = buildNextLevel(groups);
-    if (groups.length == 0)
+    if (groups.length === 0)
       break;
   }
   return levels;
@@ -42,16 +42,16 @@ function makeLevels(tree, drawRoot) {
 // if they overlap with a previous node, or the edge of the diagram area.
 function sweepLeftToRight(level, infield, outfield, options) {
   let minX = 0;
-  for (let memberIdx = 0; memberIdx != level.length; memberIdx++) {
+  for (let memberIdx = 0; memberIdx !== level.length; memberIdx++) {
     const group = level[memberIdx];
-    for (let nodeIdx = 0; nodeIdx != group.length; nodeIdx++) {
+    for (let nodeIdx = 0; nodeIdx !== group.length; nodeIdx++) {
       const node = group[nodeIdx];
       let newX;
       if (infield in node && node[infield] > minX)
         newX = node[infield];
       else
         newX = minX;
-      if (nodeIdx == group.length - 1)
+      if (nodeIdx === group.length - 1)
         minX = newX + 1 + options.minimumCousinGap;
       else
         minX = newX + 1 + options.siblingGap;
@@ -74,7 +74,7 @@ function sweepRightToLeft(level, infield, outfield, maxWidth, options) {
         newX = node[infield];
       else
         newX = maxX;
-      if (nodeIdx == 0)
+      if (nodeIdx === 0)
         maxX = newX - 1 - options.minimumCousinGap;
       else
         maxX = newX - 1 - options.siblingGap;
@@ -91,9 +91,9 @@ function sweepAndAverage(level, maxWidth, options) {
   sweepRightToLeft(level, "x0", "x0", maxWidth, options);
   sweepRightToLeft(level, "x", "x1", maxWidth, options);
   sweepLeftToRight(level, "x1", "x1", options);
-  for (let memberIdx = 0; memberIdx != level.length; memberIdx++) {
+  for (let memberIdx = 0; memberIdx !== level.length; memberIdx++) {
     const group = level[memberIdx];
-    for (let nodeIdx = 0; nodeIdx != group.length; nodeIdx++) {
+    for (let nodeIdx = 0; nodeIdx !== group.length; nodeIdx++) {
       const node = group[nodeIdx];
       node.x = (node.x0 + node.x1) / 2;
     }
@@ -110,12 +110,12 @@ export function treeToDiagram(tree, diagramSvg, diagramGroup, options) {
   const spacings = [];
   const widths = [];
 
-  for (let levelIdx = 0; levelIdx != levels.length; levelIdx++) {
+  for (let levelIdx = 0; levelIdx !== levels.length; levelIdx++) {
     const level = levels[levelIdx];
     let spacing = 0;
     let nodesWidth = 0;
     let groupSpacing = 0;
-    for (let memberIdx = 0; memberIdx != level.length; memberIdx++) {
+    for (let memberIdx = 0; memberIdx !== level.length; memberIdx++) {
       spacing += groupSpacing;
       const group = level[memberIdx];
       nodesWidth += group.length;
@@ -123,7 +123,7 @@ export function treeToDiagram(tree, diagramSvg, diagramGroup, options) {
       groupSpacing = options.minimumCousinGap;
     }
     const width = spacing + nodesWidth;
-    if (fixedLevel == -1 || width > widths[fixedLevel])
+    if (fixedLevel === -1 || width > widths[fixedLevel])
       fixedLevel = levelIdx;
     widths.push(width);
     spacings.push(spacing);
@@ -148,10 +148,10 @@ export function treeToDiagram(tree, diagramSvg, diagramGroup, options) {
   // ... any left is used to center the fixed group.
   let x = spare / 2;
 
-  for (let memberIdx = 0; memberIdx != level.length; memberIdx++) {
+  for (let memberIdx = 0; memberIdx !== level.length; memberIdx++) {
     const group = level[memberIdx];
     let nodeSpacing = 0;
-    for (let nodeIdx = 0; nodeIdx != group.length; nodeIdx++) {
+    for (let nodeIdx = 0; nodeIdx !== group.length; nodeIdx++) {
       x += nodeSpacing;
       const node = group[nodeIdx];
       node.x = x;
@@ -165,14 +165,14 @@ export function treeToDiagram(tree, diagramSvg, diagramGroup, options) {
   for (let levelIdx = fixedLevel - 1; levelIdx >= 0; levelIdx--) {
     const level = levels[levelIdx];
     // Find positions
-    for (let memberIdx = 0; memberIdx != level.length; memberIdx++) {
+    for (let memberIdx = 0; memberIdx !== level.length; memberIdx++) {
       const group = level[memberIdx];
-      for (let nodeIdx = 0; nodeIdx != group.length; nodeIdx++) {
+      for (let nodeIdx = 0; nodeIdx !== group.length; nodeIdx++) {
         const node = group[nodeIdx];
-        if (node.children.length == 0)
+        if (node.children.length === 0)
           continue;
         let totalX = 0;
-        for (let childIdx = 0; childIdx != node.children.length; childIdx++) {
+        for (let childIdx = 0; childIdx !== node.children.length; childIdx++) {
           const child = node.children[childIdx];
           totalX += child.x;
         }
@@ -186,13 +186,13 @@ export function treeToDiagram(tree, diagramSvg, diagramGroup, options) {
   for (let levelIdx = fixedLevel + 1; levelIdx < levels.length; levelIdx++) {
     const level = levels[levelIdx];
     // Find positions
-    for (let memberIdx = 0; memberIdx != level.length; memberIdx++) {
+    for (let memberIdx = 0; memberIdx !== level.length; memberIdx++) {
       const group = level[memberIdx];
       const parent = group[0].parent;
 
       const groupWidth = (group.length - 1) * (1 + options.idealSiblingGap);
       let x = parent.x - groupWidth / 2;
-      for (let nodeIdx = 0; nodeIdx != group.length; nodeIdx++) {
+      for (let nodeIdx = 0; nodeIdx !== group.length; nodeIdx++) {
         const node = group[nodeIdx];
         node.x = x;
         x += 1 + options.idealSiblingGap;
@@ -237,11 +237,11 @@ export function treeToDiagram(tree, diagramSvg, diagramGroup, options) {
 
   // Add visual elements.
   const namespace = "http://www.w3.org/2000/svg";
-  for (let levelIdx = 0; levelIdx != levels.length; levelIdx++) {
+  for (let levelIdx = 0; levelIdx !== levels.length; levelIdx++) {
     const level = levels[levelIdx];
-    for (let memberIdx = 0; memberIdx != level.length; memberIdx++) {
+    for (let memberIdx = 0; memberIdx !== level.length; memberIdx++) {
       const group = level[memberIdx];
-      for (let nodeIdx = 0; nodeIdx != group.length; nodeIdx++) {
+      for (let nodeIdx = 0; nodeIdx !== group.length; nodeIdx++) {
         const node = group[nodeIdx];
 
         const rect = document.createElementNS(namespace, "rect");
@@ -280,7 +280,7 @@ export function treeToDiagram(tree, diagramSvg, diagramGroup, options) {
               yMultiplier, options.labelLineSpacing);
         }
 
-        if (levelIdx == 0)
+        if (levelIdx === 0)
           continue;  // Level 0 nodes don't have parents.
 
         // Draw lines to parents.
