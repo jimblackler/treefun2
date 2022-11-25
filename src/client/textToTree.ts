@@ -30,7 +30,5 @@ export function textToTree(text) {
     stackParents.push(node);
     stackIndents.push(indent);
   }
-
-
   return rootNode;
 }
