@@ -3,22 +3,6 @@ import {layoutText} from './layoutText';
 import {Node} from './node';
 import {Options} from './options';
 
-function buildNextLevel(groups: Node[][]) {
-  const groupsOut = [];
-  for (let groupIdx = 0; groupIdx !== groups.length; groupIdx++) {
-    const group = groups[groupIdx];
-
-    for (let memberIdx = 0; memberIdx !== group.length; memberIdx++) {
-      const member = group[memberIdx];
-      if (!member.children.length) {
-        continue;
-      }
-      groupsOut.push(member.children);
-    }
-  }
-  return groupsOut;
-}
-
 // Converts the tree structure into an array of levels 0... n of cousin and sibling nodes.
 function makeLevels(tree: Node, drawRoot: boolean) {
 
@@ -35,7 +19,8 @@ function makeLevels(tree: Node, drawRoot: boolean) {
   const levels = [];
   while (true) {
     levels.push(groups);
-    groups = buildNextLevel(groups);
+    groups = groups.map(group =>
+        group.filter(member => member.children.length).map(member => member.children)).flat();
     if (groups.length === 0) {
       break;
     }
