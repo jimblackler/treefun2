@@ -15,7 +15,8 @@ const listeners: StateListener[] = [];
 export function listen(listener: StateListener) {
   listeners.push(listener);
   if (activeState) {
-    listener(activeState);
+    const _activeState = activeState;
+    requestAnimationFrame(() => listener(_activeState));
   }
 }
 
