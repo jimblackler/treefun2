@@ -94,10 +94,10 @@ function sweepRightToLeft(level, infield, outfield, maxWidth, options) {
 // overlap with other nodes on that level, but as close as possible to the
 // ideal position (if one is set).
 function sweepAndAverage(level, maxWidth, options) {
-  sweepLeftToRight(level, "x", "x0", options);
-  sweepRightToLeft(level, "x0", "x0", maxWidth, options);
-  sweepRightToLeft(level, "x", "x1", maxWidth, options);
-  sweepLeftToRight(level, "x1", "x1", options);
+  sweepLeftToRight(level, 'x', 'x0', options);
+  sweepRightToLeft(level, 'x0', 'x0', maxWidth, options);
+  sweepRightToLeft(level, 'x', 'x1', maxWidth, options);
+  sweepLeftToRight(level, 'x1', 'x1', options);
   for (let memberIdx = 0; memberIdx !== level.length; memberIdx++) {
     const group = level[memberIdx];
     for (let nodeIdx = 0; nodeIdx !== group.length; nodeIdx++) {
@@ -209,8 +209,8 @@ export function treeToDiagram(tree, diagramSvg, diagramGroup, options) {
   }
 
   // Now render the tree.
-  diagramSvg.getElementById("arrowHead").setAttribute(
-      "markerHeight", options.arrowHeadSize);
+  diagramSvg.getElementById('arrowHead').setAttribute(
+      'markerHeight', options.arrowHeadSize);
 
   // Find height ratio
   const useLevels = Math.max(levels.length, options.minimumDepth);
@@ -222,19 +222,19 @@ export function treeToDiagram(tree, diagramSvg, diagramGroup, options) {
   let heightAttribute;
 
   if (options.flipXY) {
-    xAttribute = "y";
-    yAttribute = "x";
-    widthAttribute = "height";
-    heightAttribute = "width";
+    xAttribute = 'y';
+    yAttribute = 'x';
+    widthAttribute = 'height';
+    heightAttribute = 'width';
   } else {
-    xAttribute = "x";
-    yAttribute = "y";
-    widthAttribute = "width";
-    heightAttribute = "height";
+    xAttribute = 'x';
+    yAttribute = 'y';
+    widthAttribute = 'width';
+    heightAttribute = 'height';
   }
 
-  diagramSvg.style.width = options.width + "px";
-  diagramSvg.style.height = options.height + "px";
+  diagramSvg.style.width = options.width + 'px';
+  diagramSvg.style.height = options.height + 'px';
 
   const diagramWidth = options[widthAttribute];
   const diagramHeight = options[heightAttribute];
@@ -243,7 +243,7 @@ export function treeToDiagram(tree, diagramSvg, diagramGroup, options) {
   const yMultiplier = diagramHeight / height;
 
   // Add visual elements.
-  const namespace = "http://www.w3.org/2000/svg";
+  const namespace = 'http://www.w3.org/2000/svg';
   for (let levelIdx = 0; levelIdx !== levels.length; levelIdx++) {
     const level = levels[levelIdx];
     for (let memberIdx = 0; memberIdx !== level.length; memberIdx++) {
@@ -251,38 +251,38 @@ export function treeToDiagram(tree, diagramSvg, diagramGroup, options) {
       for (let nodeIdx = 0; nodeIdx !== group.length; nodeIdx++) {
         const node = group[nodeIdx];
 
-        const rect = document.createElementNS(namespace, "rect");
+        const rect = document.createElementNS(namespace, 'rect');
         diagramGroup.appendChild(rect);
 
         const yValue = levelIdx * (1 + options.levelsGap);
 
-        rect.setAttribute(xAttribute, Math.floor(node.x * xMultiplier) + "px");
-        rect.setAttribute(yAttribute, Math.floor(yValue * yMultiplier) + "px");
-        rect.setAttribute(widthAttribute, Math.floor(xMultiplier) + "px");
-        rect.setAttribute(heightAttribute, Math.floor(yMultiplier) + "px");
+        rect.setAttribute(xAttribute, Math.floor(node.x * xMultiplier) + 'px');
+        rect.setAttribute(yAttribute, Math.floor(yValue * yMultiplier) + 'px');
+        rect.setAttribute(widthAttribute, Math.floor(xMultiplier) + 'px');
+        rect.setAttribute(heightAttribute, Math.floor(yMultiplier) + 'px');
         if (options.cornerRounding) {
-          rect.setAttribute("rx", options.cornerRounding + "px");
-          rect.setAttribute("ry", options.cornerRounding + "px");
+          rect.setAttribute('rx', options.cornerRounding + 'px');
+          rect.setAttribute('ry', options.cornerRounding + 'px');
         }
 
-        const text = document.createElementNS(namespace, "text");
+        const text = document.createElementNS(namespace, 'text');
         diagramGroup.appendChild(text);
 
         // Arrange text; method is different for horizontal diagrams.
         if (options.flipXY) {
           const xPos = Math.floor(node.x * xMultiplier);
           const yPos = Math.floor((yValue + 0.5) * yMultiplier);
-          text.setAttribute(xAttribute, xPos + "px");
+          text.setAttribute(xAttribute, xPos + 'px');
           text.setAttribute(yAttribute,
-              Math.floor(yValue * yMultiplier) + "px");
+              Math.floor(yValue * yMultiplier) + 'px');
 
           layoutText(text, node.label, yMultiplier - options.labelPadding, yPos,
               xMultiplier, options.labelLineSpacing);
         } else {
           const xPos = Math.floor((node.x + 0.5) * xMultiplier);
-          text.setAttribute(xAttribute, xPos + "px");
+          text.setAttribute(xAttribute, xPos + 'px');
           text.setAttribute(yAttribute, Math.floor(yValue * yMultiplier) +
-              "px");
+              'px');
           layoutText(text, node.label, xMultiplier - options.labelPadding, xPos,
               yMultiplier, options.labelLineSpacing);
         }
@@ -292,7 +292,7 @@ export function treeToDiagram(tree, diagramSvg, diagramGroup, options) {
         }
 
         // Draw lines to parents.
-        node.line = document.createElementNS(namespace, "line");
+        node.line = document.createElementNS(namespace, 'line');
         diagramGroup.appendChild(node.line);
         const parentOffset = (nodeIdx + 1) / (group.length + 1);
         const line = node.line;
@@ -300,23 +300,23 @@ export function treeToDiagram(tree, diagramSvg, diagramGroup, options) {
         let first;
         let second;
         if (options.arrowsUp) {
-          first = "2";
-          second = "1";
+          first = '2';
+          second = '1';
         } else {
-          first = "1";
-          second = "2";
+          first = '1';
+          second = '2';
         }
         line.setAttribute(xAttribute + first,
             Math.floor((node.parent.x + parentOffset) * xMultiplier) +
-            "px");
+            'px');
         line.setAttribute(yAttribute + first,
-            Math.floor((parentY + 1) * yMultiplier) + "px");
+            Math.floor((parentY + 1) * yMultiplier) + 'px');
         line.setAttribute(xAttribute + second,
-            Math.floor((node.x + 0.5) * xMultiplier) + "px");
+            Math.floor((node.x + 0.5) * xMultiplier) + 'px');
         line.setAttribute(yAttribute + second,
-            Math.floor(yValue * yMultiplier) + "px");
+            Math.floor(yValue * yMultiplier) + 'px');
 
-        line.setAttribute("marker-end", "url(#arrowHead)");
+        line.setAttribute('marker-end', 'url(#arrowHead)');
       }
     }
   }
