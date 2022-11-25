@@ -3,10 +3,10 @@
 // strings.
 function splitBy(array, char) {
   const out = [];
-  for (let i = 0; i != array.length; i++) {
+  for (let i = 0; i !== array.length; i++) {
     const word = array[i];
     const split = word.split(char);
-    for (let j = 0; j != split.length - 1; j++) {
+    for (let j = 0; j !== split.length - 1; j++) {
       out.push(split[j] + char);
     }
     out.push(split[split.length - 1]);
@@ -32,13 +32,13 @@ export function layoutText(textNode, text, width, x, height, dy) {
   // Split by split characters.
   let words = splitBy(text.split(/\s/));
   const splitChars = ".-";
-  for (let j = 0; j != splitChars.length; j++)
+  for (let j = 0; j !== splitChars.length; j++)
     words = splitBy(words, splitChars[j]);
 
   for (let i = 0; i < words.length; i++) {
     const word = words[i];
     if (tspan.textContent &&
-        splitChars.indexOf(tspan.textContent[tspan.textContent.length - 1]) == -1)
+        splitChars.indexOf(tspan.textContent[tspan.textContent.length - 1]) === -1)
       tspan.textContent += " ";
     tspan.textContent += word;
 
