@@ -103,13 +103,8 @@ function sweepAndAverage(x: Map<Node, number>, x0: Map<Node, number>, x1: Map<No
   sweepRightToLeft(level, x0, x0, maxWidth, options);
   sweepRightToLeft(level, x, x1, maxWidth, options);
   sweepLeftToRight(level, x1, x1, options);
-  for (let memberIdx = 0; memberIdx !== level.length; memberIdx++) {
-    const group = level[memberIdx];
-    for (let nodeIdx = 0; nodeIdx !== group.length; nodeIdx++) {
-      const node = group[nodeIdx];
-      x.set(node, (assertDefined(x0.get(node)) + assertDefined(x1.get(node))) / 2);
-    }
-  }
+  level.forEach(group => group.forEach(
+      node => x.set(node, (assertDefined(x0.get(node)) + assertDefined(x1.get(node))) / 2)));
 }
 
 // Converts the specified tree to a diagram under diagramGroup in the SVG diagramSvg. Options are
