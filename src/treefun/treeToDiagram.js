@@ -7,8 +7,9 @@ function buildNextLevel(groups) {
 
     for (let memberIdx = 0; memberIdx !== group.length; memberIdx++) {
       const member = group[memberIdx];
-      if (!member.children.length)
+      if (!member.children.length) {
         continue;
+      }
       groupsOut.push(member.children);
     }
   }
@@ -24,16 +25,18 @@ function makeLevels(tree, drawRoot) {
     groups.push([tree]);
   } else {
     const group = tree.children;
-    for (let memberIdx = 0; memberIdx !== group.length; memberIdx++)
+    for (let memberIdx = 0; memberIdx !== group.length; memberIdx++) {
       groups.push([group[memberIdx]]);
+    }
   }
 
   const levels = [];
   while (true) {
     levels.push(groups);
     groups = buildNextLevel(groups);
-    if (groups.length === 0)
+    if (groups.length === 0) {
       break;
+    }
   }
   return levels;
 }
@@ -47,14 +50,16 @@ function sweepLeftToRight(level, infield, outfield, options) {
     for (let nodeIdx = 0; nodeIdx !== group.length; nodeIdx++) {
       const node = group[nodeIdx];
       let newX;
-      if (infield in node && node[infield] > minX)
+      if (infield in node && node[infield] > minX) {
         newX = node[infield];
-      else
+      } else {
         newX = minX;
-      if (nodeIdx === group.length - 1)
+      }
+      if (nodeIdx === group.length - 1) {
         minX = newX + 1 + options.minimumCousinGap;
-      else
+      } else {
         minX = newX + 1 + options.siblingGap;
+      }
       node[outfield] = newX;
     }
   }
@@ -70,14 +75,16 @@ function sweepRightToLeft(level, infield, outfield, maxWidth, options) {
     for (let nodeIdx = group.length - 1; nodeIdx >= 0; nodeIdx--) {
       const node = group[nodeIdx];
       let newX;
-      if (infield in node && node[infield] < maxX)
+      if (infield in node && node[infield] < maxX) {
         newX = node[infield];
-      else
+      } else {
         newX = maxX;
-      if (nodeIdx === 0)
+      }
+      if (nodeIdx === 0) {
         maxX = newX - 1 - options.minimumCousinGap;
-      else
+      } else {
         maxX = newX - 1 - options.siblingGap;
+      }
       node[outfield] = newX;
     }
   }
@@ -123,8 +130,9 @@ export function treeToDiagram(tree, diagramSvg, diagramGroup, options) {
       groupSpacing = options.minimumCousinGap;
     }
     const width = spacing + nodesWidth;
-    if (fixedLevel === -1 || width > widths[fixedLevel])
+    if (fixedLevel === -1 || width > widths[fixedLevel]) {
       fixedLevel = levelIdx;
+    }
     widths.push(width);
     spacings.push(spacing);
   }
@@ -169,8 +177,9 @@ export function treeToDiagram(tree, diagramSvg, diagramGroup, options) {
       const group = level[memberIdx];
       for (let nodeIdx = 0; nodeIdx !== group.length; nodeIdx++) {
         const node = group[nodeIdx];
-        if (node.children.length === 0)
+        if (node.children.length === 0) {
           continue;
+        }
         let totalX = 0;
         for (let childIdx = 0; childIdx !== node.children.length; childIdx++) {
           const child = node.children[childIdx];
@@ -280,8 +289,9 @@ export function treeToDiagram(tree, diagramSvg, diagramGroup, options) {
               yMultiplier, options.labelLineSpacing);
         }
 
-        if (levelIdx === 0)
+        if (levelIdx === 0) {
           continue;  // Level 0 nodes don't have parents.
+        }
 
         // Draw lines to parents.
         node.line = document.createElementNS(namespace, "line");
