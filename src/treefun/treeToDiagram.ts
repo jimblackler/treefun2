@@ -3,8 +3,6 @@ import {layoutText} from './layoutText';
 import {Node} from './node';
 import {Options} from './options';
 
-type Field = 'x' | 'x0' | 'x1';
-
 function buildNextLevel(groups: Node[][]) {
   const groupsOut = [];
   for (let groupIdx = 0; groupIdx !== groups.length; groupIdx++) {
@@ -47,14 +45,15 @@ function makeLevels(tree: Node, drawRoot: boolean) {
 
 // Sweep from the left to the right along a level, moving nodes along the row if they overlap with a
 // previous node, or the edge of the diagram area.
-function sweepLeftToRight(level: Node[][], infield: Field, outfield: Field, options: Options) {
+function sweepLeftToRight(level: Node[][], infields: Map<Node, number>,
+                          outfields: Map<Node, number>, options: Options) {
   let minX = 0;
   for (let memberIdx = 0; memberIdx !== level.length; memberIdx++) {
     const group = level[memberIdx];
     for (let nodeIdx = 0; nodeIdx !== group.length; nodeIdx++) {
       const node = group[nodeIdx];
       let newX;
-      const x = node[infield];
+      const x = infields.get(node);
       if (x !== undefined && x > minX) {
         newX = x;
       } else {
@@ -65,22 +64,22 @@ function sweepLeftToRight(level: Node[][], infield: Field, outfield: Field, opti
       } else {
         minX = newX + 1 + options.siblingGap;
       }
-      node[outfield] = newX;
+      outfields.set(node, newX);
     }
   }
 }
 
 // Sweep from the right to the left along a level, moving nodes along the row if they overlap with a
 // previous node, or the edge of the diagram area (specified).
-function sweepRightToLeft(level: Node[][], infield: Field, outfield: Field, maxWidth: number,
-                          options: Options) {
+function sweepRightToLeft(level: Node[][], infields: Map<Node, number>,
+                          outfields: Map<Node, number>, maxWidth: number, options: Options) {
   let maxX = maxWidth - 1;
   for (let memberIdx = level.length - 1; memberIdx >= 0; memberIdx--) {
     const group = level[memberIdx];
     for (let nodeIdx = group.length - 1; nodeIdx >= 0; nodeIdx--) {
       const node = group[nodeIdx];
       let newX;
-      const x = node[infield];
+      const x = infields.get(node);
       if (x !== undefined && x < maxX) {
         newX = x;
       } else {
@@ -91,23 +90,24 @@ function sweepRightToLeft(level: Node[][], infield: Field, outfield: Field, maxW
       } else {
         maxX = newX - 1 - options.siblingGap;
       }
-      node[outfield] = newX;
+      outfields.set(node, newX);
     }
   }
 }
 
 // Positions the nodes on a level in a position that is guaranteed not to overlap with other nodes
 // on that level, but as close as possible to the ideal position (if one is set).
-function sweepAndAverage(level: Node[][], maxWidth: number, options: Options) {
-  sweepLeftToRight(level, 'x', 'x0', options);
-  sweepRightToLeft(level, 'x0', 'x0', maxWidth, options);
-  sweepRightToLeft(level, 'x', 'x1', maxWidth, options);
-  sweepLeftToRight(level, 'x1', 'x1', options);
+function sweepAndAverage(x: Map<Node, number>, x0: Map<Node, number>, x1: Map<Node, number>,
+                         level: Node[][], maxWidth: number, options: Options) {
+  sweepLeftToRight(level, x, x0, options);
+  sweepRightToLeft(level, x0, x0, maxWidth, options);
+  sweepRightToLeft(level, x, x1, maxWidth, options);
+  sweepLeftToRight(level, x1, x1, options);
   for (let memberIdx = 0; memberIdx !== level.length; memberIdx++) {
     const group = level[memberIdx];
     for (let nodeIdx = 0; nodeIdx !== group.length; nodeIdx++) {
       const node = group[nodeIdx];
-      node.x = (assertDefined(node.x0) + assertDefined(node.x1)) / 2;
+      x.set(node, (assertDefined(x0.get(node)) + assertDefined(x1.get(node))) / 2);
     }
   }
 }
@@ -156,6 +156,11 @@ export function treeToDiagram(tree: Node, diagramSvg: SVGSVGElement, diagramGrou
     spare -= spareForGroupGaps * (level.length - 1);
     useCousinGap += spareForGroupGaps;
   }
+
+  const x_ = new Map<Node, number>();
+  const x0 = new Map<Node, number>();
+  const x1 = new Map<Node, number>();
+
   // ... any left is used to center the fixed group.
   let x = spare / 2;
 
@@ -165,7 +170,7 @@ export function treeToDiagram(tree: Node, diagramSvg: SVGSVGElement, diagramGrou
     for (let nodeIdx = 0; nodeIdx !== group.length; nodeIdx++) {
       x += nodeSpacing;
       const node = group[nodeIdx];
-      node.x = x;
+      x_.set(node, x);
       x += 1;
       nodeSpacing = usesiblingGap;
     }
@@ -186,12 +191,12 @@ export function treeToDiagram(tree: Node, diagramSvg: SVGSVGElement, diagramGrou
         let totalX = 0;
         for (let childIdx = 0; childIdx !== node.children.length; childIdx++) {
           const child = node.children[childIdx];
-          totalX += assertDefined(child.x);
+          totalX += assertDefined(x_.get(child));
         }
-        node.x = totalX / node.children.length;
+        x_.set(node, totalX / node.children.length);
       }
     }
-    sweepAndAverage(level, maxWidth, options);
+    sweepAndAverage(x_, x0, x1, level, maxWidth, options);
   }
 
   // Second level to bottom; children distributed under parent.
@@ -203,14 +208,14 @@ export function treeToDiagram(tree: Node, diagramSvg: SVGSVGElement, diagramGrou
       const parent = assertDefined(group[0].parent);
 
       const groupWidth = (group.length - 1) * (1 + options.idealSiblingGap);
-      let x = assertDefined(parent.x) - groupWidth / 2;
+      let x = assertDefined(x_.get(parent)) - groupWidth / 2;
       for (let nodeIdx = 0; nodeIdx !== group.length; nodeIdx++) {
         const node = group[nodeIdx];
-        node.x = x;
+        x_.set(node, x);
         x += 1 + options.idealSiblingGap;
       }
     }
-    sweepAndAverage(level, maxWidth, options);
+    sweepAndAverage(x_, x0, x1, level, maxWidth, options);
   }
 
   // Now render the tree.
@@ -263,7 +268,7 @@ export function treeToDiagram(tree: Node, diagramSvg: SVGSVGElement, diagramGrou
 
         const yValue = levelIdx * (1 + options.levelsGap);
 
-        rect.setAttribute(xAttribute, Math.floor(assertDefined(node.x) * xMultiplier) + 'px');
+        rect.setAttribute(xAttribute, Math.floor(assertDefined(x_.get(node)) * xMultiplier) + 'px');
         rect.setAttribute(yAttribute, Math.floor(yValue * yMultiplier) + 'px');
         rect.setAttribute(widthAttribute, Math.floor(xMultiplier) + 'px');
         rect.setAttribute(heightAttribute, Math.floor(yMultiplier) + 'px');
@@ -277,14 +282,14 @@ export function treeToDiagram(tree: Node, diagramSvg: SVGSVGElement, diagramGrou
 
         // Arrange text; method is different for horizontal diagrams.
         if (options.flipXY) {
-          const xPos = Math.floor(assertDefined(node.x) * xMultiplier);
+          const xPos = Math.floor(assertDefined(x_.get(node)) * xMultiplier);
           const yPos = Math.floor((yValue + 0.5) * yMultiplier);
           text.setAttribute(xAttribute, xPos + 'px');
           text.setAttribute(yAttribute, Math.floor(yValue * yMultiplier) + 'px');
           layoutText(text, node.label, yMultiplier - options.labelPadding, yPos, xMultiplier,
               options.labelLineSpacing);
         } else {
-          const xPos = Math.floor((assertDefined(node.x) + 0.5) * xMultiplier);
+          const xPos = Math.floor((assertDefined(x_.get(node)) + 0.5) * xMultiplier);
           text.setAttribute(xAttribute, xPos + 'px');
           text.setAttribute(yAttribute, Math.floor(yValue * yMultiplier) + 'px');
           layoutText(text, node.label, xMultiplier - options.labelPadding, xPos, yMultiplier,
@@ -309,11 +314,11 @@ export function treeToDiagram(tree: Node, diagramSvg: SVGSVGElement, diagramGrou
           first = '1';
           second = '2';
         }
-        line.setAttribute(xAttribute + first,
-            Math.floor((assertDefined(node.parent?.x) + parentOffset) * xMultiplier) + 'px');
+        line.setAttribute(xAttribute + first, Math.floor((assertDefined(
+            x_.get(assertDefined(node.parent))) + parentOffset) * xMultiplier) + 'px');
         line.setAttribute(yAttribute + first, Math.floor((parentY + 1) * yMultiplier) + 'px');
         line.setAttribute(xAttribute + second,
-            Math.floor((assertDefined(node.x) + 0.5) * xMultiplier) + 'px');
+            Math.floor((assertDefined(x_.get(node)) + 0.5) * xMultiplier) + 'px');
         line.setAttribute(yAttribute + second, Math.floor(yValue * yMultiplier) + 'px');
 
         line.setAttribute('marker-end', 'url(#arrowHead)');
