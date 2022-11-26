@@ -136,7 +136,7 @@ export function treeToDiagram(tree: Node, diagramSvg: SVGSVGElement, diagramGrou
     sweepAndAverage(x_, level, maxWidth, options);
   }
 
-  // Second level to bottom; children distributed under parent.
+  // Below fixed to bottom; children distributed under parent.
   for (let levelIdx = fixedLevel + 1; levelIdx < levels.length; levelIdx++) {
     const level = levels[levelIdx];
     // Find positions
