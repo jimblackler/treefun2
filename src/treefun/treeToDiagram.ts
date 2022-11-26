@@ -26,7 +26,7 @@ function sweepLeftToRight(level: Node[][], infields: Map<Node, number>,
                           outfields: Map<Node, number>, options: Options) {
   let minX = 0;
   level.forEach(group => {
-    group.forEach((node, nodeIdx) =>  {
+    group.forEach((node, nodeIdx) => {
       const x = infields.get(node);
       const newX = x === undefined || x <= minX ? minX : x;
       if (nodeIdx === group.length - 1) {
