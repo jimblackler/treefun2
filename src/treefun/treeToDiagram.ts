@@ -27,13 +27,8 @@ function sweepLeftToRight(level: Node[][], infields: Map<Node, number>,
   let minX = 0;
   level.forEach(group => {
     group.forEach((node, nodeIdx) =>  {
-      let newX;
       const x = infields.get(node);
-      if (x === undefined || x <= minX) {
-        newX = minX;
-      } else {
-        newX = x;
-      }
+      const newX = x === undefined || x <= minX ? minX : x;
       if (nodeIdx === group.length - 1) {
         minX = newX + 1 + options.minimumCousinGap;
       } else {
@@ -53,13 +48,8 @@ function sweepRightToLeft(level: Node[][], infields: Map<Node, number>,
     const group = level[memberIdx];
     for (let nodeIdx = group.length - 1; nodeIdx >= 0; nodeIdx--) {
       const node = group[nodeIdx];
-      let newX;
       const x = infields.get(node);
-      if (x === undefined || x >= maxX) {
-        newX = maxX;
-      } else {
-        newX = x;
-      }
+      const newX = x === undefined || x >= maxX ? maxX : x;
       if (nodeIdx === 0) {
         maxX = newX - 1 - options.minimumCousinGap;
       } else {
