@@ -53,11 +53,13 @@ function sweepRightToLeft(level: Node[][], inPos: Map<Node, number>,
 function sweepAndAverage(x: Map<Node, number>, level: Node[][], maxWidth: number,
                          options: Options) {
   const x0 = new Map<Node, number>();
-  const x1 = new Map<Node, number>();
   sweepLeftToRight(level, x, x0, options);
   sweepRightToLeft(level, x0, x0, maxWidth, options);
+
+  const x1 = new Map<Node, number>();
   sweepRightToLeft(level, x, x1, maxWidth, options);
   sweepLeftToRight(level, x1, x1, options);
+
   level.forEach(group => group.forEach(
       node => x.set(node, (assertDefined(x0.get(node)) + assertDefined(x1.get(node))) / 2)));
 }
