@@ -71,26 +71,28 @@ export function treeToDiagram(tree: Node, diagramSvg: SVGSVGElement, diagramGrou
   const levels = makeLevels(tree, options.drawRoot);
 
   // Decide which level should be fixed.
-  let fixedLevel = -1;
-  const widths = [];
+  let fixedLevel: number | undefined;
+  const widths: number[] = [];
 
-  for (let levelIdx = 0; levelIdx !== levels.length; levelIdx++) {
-    const level = levels[levelIdx];
+  levels.forEach((level, levelIdx) => {
     let spacing = 0;
     let nodesWidth = 0;
     let groupSpacing = 0;
-    for (let memberIdx = 0; memberIdx !== level.length; memberIdx++) {
+    level.forEach(group => {
       spacing += groupSpacing;
-      const group = level[memberIdx];
       nodesWidth += group.length;
       spacing += (group.length - 1) * options.siblingGap;
       groupSpacing = options.minimumCousinGap;
-    }
+    });
     const width = spacing + nodesWidth;
-    if (fixedLevel === -1 || width > widths[fixedLevel]) {
+    if (fixedLevel === undefined || width > widths[fixedLevel]) {
       fixedLevel = levelIdx;
     }
     widths.push(width);
+  });
+
+  if (fixedLevel === undefined) {
+    throw new Error();
   }
 
   const maxWidth = Math.max(widths[fixedLevel], options.minimumBreadth * (1 + options.levelsGap));
