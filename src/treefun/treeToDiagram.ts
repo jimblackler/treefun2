@@ -122,21 +122,16 @@ export function treeToDiagram(tree: Node, diagramSvg: SVGSVGElement, diagramGrou
   for (let levelIdx = fixedLevel - 1; levelIdx >= 0; levelIdx--) {
     const level = levels[levelIdx];
     // Find positions
-    for (let memberIdx = 0; memberIdx !== level.length; memberIdx++) {
-      const group = level[memberIdx];
-      for (let nodeIdx = 0; nodeIdx !== group.length; nodeIdx++) {
-        const node = group[nodeIdx];
+    level.forEach(group => {
+      group.forEach(node => {
         if (node.children.length === 0) {
-          continue;
+          return;
         }
-        let totalX = 0;
-        for (let childIdx = 0; childIdx !== node.children.length; childIdx++) {
-          const child = node.children[childIdx];
-          totalX += assertDefined(x_.get(child));
-        }
+        const totalX =
+            node.children.map(child => assertDefined(x_.get(child))).reduce((a, b) => a + b, 0);
         x_.set(node, totalX / node.children.length);
-      }
-    }
+      });
+    });
     sweepAndAverage(x_, level, maxWidth, options);
   }
 
