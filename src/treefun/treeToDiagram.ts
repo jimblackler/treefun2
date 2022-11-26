@@ -139,19 +139,17 @@ export function treeToDiagram(tree: Node, diagramSvg: SVGSVGElement, diagramGrou
   // Below fixed to bottom; children distributed under parent.
   for (let levelIdx = fixedLevel + 1; levelIdx < levels.length; levelIdx++) {
     const level = levels[levelIdx];
-    // Find positions
-    for (let memberIdx = 0; memberIdx !== level.length; memberIdx++) {
-      const group = level[memberIdx];
+    // Find positions.
+    level.forEach(group => {
       const parent = assertDefined(group[0].parent);
 
       const groupWidth = (group.length - 1) * (1 + options.idealSiblingGap) + 1;
       let x = assertDefined(x_.get(parent)) - groupWidth / 2 + 0.5;
-      for (let nodeIdx = 0; nodeIdx !== group.length; nodeIdx++) {
-        const node = group[nodeIdx];
+      group.forEach(node => {
         x_.set(node, x);
         x += 1 + options.idealSiblingGap;
-      }
-    }
+      });
+    });
     sweepAndAverage(x_, level, maxWidth, options);
   }
 
