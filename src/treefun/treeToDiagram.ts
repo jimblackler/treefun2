@@ -55,8 +55,10 @@ function sweepRightToLeft(level: Node[][], inPos: Map<Node, number>,
 
 // Positions the nodes on a level in a position that is guaranteed not to overlap with other nodes
 // on that level, but as close as possible to the ideal position (if one is set).
-function sweepAndAverage(x: Map<Node, number>, x0: Map<Node, number>, x1: Map<Node, number>,
-                         level: Node[][], maxWidth: number, options: Options) {
+function sweepAndAverage(x: Map<Node, number>, level: Node[][], maxWidth: number,
+                         options: Options) {
+  const x0 = new Map<Node, number>();
+  const x1 = new Map<Node, number>();
   sweepLeftToRight(level, x, x0, options);
   sweepRightToLeft(level, x0, x0, maxWidth, options);
   sweepRightToLeft(level, x, x1, maxWidth, options);
@@ -111,8 +113,6 @@ export function treeToDiagram(tree: Node, diagramSvg: SVGSVGElement, diagramGrou
   }
 
   const x_ = new Map<Node, number>();
-  const x0 = new Map<Node, number>();
-  const x1 = new Map<Node, number>();
 
   // ... any left is used to center the fixed group.
   let x = spare / 2;
@@ -149,7 +149,7 @@ export function treeToDiagram(tree: Node, diagramSvg: SVGSVGElement, diagramGrou
         x_.set(node, totalX / node.children.length);
       }
     }
-    sweepAndAverage(x_, x0, x1, level, maxWidth, options);
+    sweepAndAverage(x_, level, maxWidth, options);
   }
 
   // Second level to bottom; children distributed under parent.
@@ -168,7 +168,7 @@ export function treeToDiagram(tree: Node, diagramSvg: SVGSVGElement, diagramGrou
         x += 1 + options.idealSiblingGap;
       }
     }
-    sweepAndAverage(x_, x0, x1, level, maxWidth, options);
+    sweepAndAverage(x_, level, maxWidth, options);
   }
 
   // Now render the tree.
