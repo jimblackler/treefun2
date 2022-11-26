@@ -93,7 +93,6 @@ export function treeToDiagram(tree: Node, diagramSvg: SVGSVGElement, diagramGrou
   const level = levels[fixedLevel];
 
   // Use any extra space to increase group gap up to ideal gap...
-  const usesiblingGap = options.siblingGap;
   let spare = maxWidth - fixedLevelWidth;
   let useCousinGap = options.minimumCousinGap;
   if (level.length > 1) {
@@ -116,7 +115,7 @@ export function treeToDiagram(tree: Node, diagramSvg: SVGSVGElement, diagramGrou
       const node = group[nodeIdx];
       x_.set(node, x);
       x += 1;
-      nodeSpacing = usesiblingGap;
+      nodeSpacing = options.siblingGap;
     }
     x += useCousinGap;
   }
