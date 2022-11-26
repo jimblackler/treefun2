@@ -1,12 +1,12 @@
 export interface Options {
-  flipXY: number;
+  flipXY: boolean;
   width: number;
   height: number;
   labelLineSpacing: number;
   cornerRounding: number;
   labelPadding:number;
   arrowHeadSize: number;
-  arrowsUp: number;
+  arrowsUp: boolean;
   siblingGap: number;
   idealSiblingGap: number;
   minimumCousinGap: number;
