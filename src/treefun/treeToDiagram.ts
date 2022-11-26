@@ -66,8 +66,7 @@ function sweepAndAverage(x: Map<Node, number>, level: Node[][], maxWidth: number
 
 // Converts the specified tree to a diagram under diagramGroup in the SVG diagramSvg. Options are
 // configured in the specified options object.
-export function treeToDiagram(tree: Node, diagramSvg: SVGSVGElement, diagramGroup: SVGGElement,
-                              options: Options) {
+export function treeToDiagram(tree: Node, options: Options, css: string) {
   const levels = makeLevels(tree, options.drawRoot);
 
   // Decide which level should be fixed.
@@ -154,7 +153,32 @@ export function treeToDiagram(tree: Node, diagramSvg: SVGSVGElement, diagramGrou
   }
 
   // Now render the tree.
-  diagramSvg.getElementById('arrowHead').setAttribute('markerHeight', `${options.arrowHeadSize}`);
+  const svgNs = 'http://www.w3.org/2000/svg';
+  const svg = document.createElementNS(svgNs, 'svg');
+
+  const styleSheet = document.createElementNS(svgNs, 'style');
+  svg.append(styleSheet);
+  styleSheet.append(css);
+
+  const defs = document.createElementNS(svgNs, 'defs');
+  svg.append(defs);
+
+  const marker = document.createElementNS(svgNs, 'marker');
+  defs.append(marker);
+  marker.setAttribute('id', 'arrowHead');
+  marker.setAttribute('viewBox', '-10 -5 10 10');
+  marker.setAttribute('markerUnits', 'strokeWidth');
+  marker.setAttribute('markerWidth', '6');
+  marker.setAttribute('markerHeight', '5');
+  marker.setAttribute('orient', 'auto');
+
+  const path = document.createElementNS(svgNs, 'path');
+  marker.append(path);
+  path.setAttribute('d', 'M -10 -5 L 0 0 L -10 5 z');
+
+  const diagramGroup = document.createElementNS(svgNs, 'g');
+  svg.append(diagramGroup);
+  svg.getElementById('arrowHead').setAttribute('markerHeight', `${options.arrowHeadSize}`);
 
   // Find height ratio.
   const useLevels = Math.max(levels.length, options.minimumDepth);
@@ -167,8 +191,8 @@ export function treeToDiagram(tree: Node, diagramSvg: SVGSVGElement, diagramGrou
   const widthAttribute = options.flipXY ? 'height' : 'width';
   const heightAttribute = options.flipXY ? 'width' : 'height';
 
-  diagramSvg.style.width = options.width + 'px';
-  diagramSvg.style.height = options.height + 'px';
+  svg.style.width = options.width + 'px';
+  svg.style.height = options.height + 'px';
 
   const xMultiplier = diagramWidth / maxWidth;
   const yMultiplier = diagramHeight / height;
@@ -240,4 +264,5 @@ export function treeToDiagram(tree: Node, diagramSvg: SVGSVGElement, diagramGrou
       });
     });
   });
+  return svg;
 }

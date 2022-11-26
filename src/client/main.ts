@@ -103,40 +103,11 @@ layout.registerComponentFactoryFunction('diagram', container => {
   container.setTitle('Diagram');
   container.element.classList.add('diagramContainer');
 
-  const svgNs = 'http://www.w3.org/2000/svg';
-  const svg = document.createElementNS(svgNs, 'svg');
-  container.element.append(svg);
-
-  const styleSheet = document.createElementNS(svgNs, 'style');
-  svg.append(styleSheet);
-  styleSheet.setAttribute('id', 'stylesheet');
-
-  const defs = document.createElementNS(svgNs, 'defs');
-  svg.append(defs);
-
-  const marker = document.createElementNS(svgNs, 'marker');
-  defs.append(marker);
-  marker.setAttribute('id', 'arrowHead');
-  marker.setAttribute('viewBox', '-10 -5 10 10');
-  marker.setAttribute('markerUnits', 'strokeWidth');
-  marker.setAttribute('markerWidth', '6');
-  marker.setAttribute('markerHeight', '5');
-  marker.setAttribute('orient', 'auto');
-
-  const path = document.createElementNS(svgNs, 'path');
-  marker.append(path);
-  path.setAttribute('d', 'M -10 -5 L 0 0 L -10 5 z');
-
-  const diagramGroup = document.createElementNS(svgNs, 'g');
-  svg.append(diagramGroup);
-  diagramGroup.setAttribute('id', 'diagramGroup');
-
   listen(state => {
-    styleSheet.innerHTML = state.css;
-    while (diagramGroup.firstChild) {
-      diagramGroup.firstChild.remove();
+    while (container.element.firstChild) {
+      container.element.firstChild.remove();
     }
-    treeToDiagram(textToTree(state.treeText), svg, diagramGroup, state.options);
+    container.element.append(treeToDiagram(textToTree(state.treeText), state.options, state.css));
   })
 });
 
