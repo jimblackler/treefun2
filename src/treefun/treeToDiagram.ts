@@ -107,7 +107,7 @@ export function treeToDiagram(tree: Node, diagramSvg: SVGSVGElement, diagramGrou
   // ... any left is used to center the fixed group.
   let x = spare / 2;
 
-  // Default position.
+  // Position fixed level.
   level.forEach(group => {
     group.forEach((node, nodeIdx) => {
       if (nodeIdx > 0) {
