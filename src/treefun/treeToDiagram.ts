@@ -75,16 +75,8 @@ export function treeToDiagram(tree: Node, diagramSvg: SVGSVGElement, diagramGrou
   let fixedLevelWidth: number | undefined;
 
   levels.forEach((level, levelIdx) => {
-    let spacing = 0;
-    let nodesWidth = 0;
-    let groupSpacing = 0;
-    level.forEach(group => {
-      spacing += groupSpacing;
-      nodesWidth += group.length;
-      spacing += (group.length - 1) * options.siblingGap;
-      groupSpacing = options.minimumCousinGap;
-    });
-    const width = spacing + nodesWidth;
+    const width = level.map(group => group.length + (group.length - 1) * options.siblingGap +
+        options.minimumCousinGap).reduce((a, b) => a + b, -options.minimumCousinGap);
     if (fixedLevelWidth === undefined || width > fixedLevelWidth) {
       fixedLevel = levelIdx;
       fixedLevelWidth = width;
