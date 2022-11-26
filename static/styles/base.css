@@ -20,3 +20,7 @@ div.diagramContainer {
 div.diagramContainer svg {
   background: white;
 }
+
+div.diagramServerContainer img {
+  background: white;
+}

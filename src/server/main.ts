@@ -2,6 +2,7 @@ import express, {Express} from 'express';
 import parseurl from 'parseurl';
 import send from 'send';
 import {assertTruthy} from '../common/check/truthy';
+import {diagramHandler} from './handlers/diagramHandler';
 import {mainHandler} from './handlers/mainHandler';
 
 const app: Express = express();
@@ -14,6 +15,7 @@ app.route('/dist/*').get((req, res) => {
   res.set('Cache-control', `public, max-age=${365 * 24 * 60 * 60}`);
   send(req, assertTruthy(parseurl(req)?.pathname), {root: 'static'}).pipe(res);
 });
+app.route('/diagram').get(diagramHandler);
 app.route('*').get((req, res) =>
     send(req, assertTruthy(parseurl(req)?.pathname), {root: 'static'}).pipe(res));
 

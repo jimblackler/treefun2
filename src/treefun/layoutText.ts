@@ -15,8 +15,8 @@ function splitBy(array: string[], char: string) {
 
 // Creates text arranged in rows, with the maximum specified width and height, centered around the
 // 'x' coordinate, and with the specified line spacing. Adds to the specified text node.
-export function layoutText(textNode: SVGTextElement, text: string, width: number, x: number,
-                           height: number, dy: number) {
+export function layoutText(document: Document, textNode: SVGTextElement, text: string,
+                           width: number, x: number, height: number, dy: number) {
   const namespace = 'http://www.w3.org/2000/svg';
   let previousFit = '';
   let tspan = document.createElementNS(namespace, 'tspan');
@@ -43,7 +43,7 @@ export function layoutText(textNode: SVGTextElement, text: string, width: number
     }
     tspan.textContent += word;
 
-    if (tspan.getComputedTextLength() > width) {
+    if (tspan.getComputedTextLength && tspan.getComputedTextLength() > width) {
       if (previousFit) {
         tspan.textContent = previousFit;
         if (height < dy) {

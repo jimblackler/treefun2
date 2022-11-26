@@ -59,7 +59,8 @@ function sweepAndAverage(x: Map<Node, number>, level: Group[], maxWidth: number,
 
 // Converts the specified tree to a diagram under diagramGroup in the SVG diagramSvg. Options are
 // configured in the specified options object.
-export function treeToDiagram(parent: Element, tree: Node, options: Options, css: string) {
+export function treeToDiagram(document: Document, parent: Element, tree: Node, options: Options,
+                              css: string) {
   // Convert the tree structure into an array of levels 0... n of cousin and sibling nodes.
   let groups: Group[] = options.drawRoot ? [{
     parent: undefined,
@@ -163,6 +164,7 @@ export function treeToDiagram(parent: Element, tree: Node, options: Options, css
   const svgNs = 'http://www.w3.org/2000/svg';
   const svg = document.createElementNS(svgNs, 'svg');
   parent.append(svg);
+  svg.setAttribute('xmlns', svgNs);
 
   const styleSheet = document.createElementNS(svgNs, 'style');
   svg.append(styleSheet);
@@ -233,14 +235,14 @@ export function treeToDiagram(parent: Element, tree: Node, options: Options, css
           const yPos = Math.floor((yValue + 0.5) * yMultiplier);
           text.setAttribute(xAttribute, xPos + 'px');
           text.setAttribute(yAttribute, Math.floor(yValue * yMultiplier) + 'px');
-          layoutText(text, node.label, yMultiplier - options.labelPadding, yPos, xMultiplier,
-              options.labelLineSpacing);
+          layoutText(document, text, node.label, yMultiplier - options.labelPadding, yPos,
+              xMultiplier, options.labelLineSpacing);
         } else {
           const xPos = Math.floor((assertDefined(x_.get(node)) + 0.5) * xMultiplier);
           text.setAttribute(xAttribute, xPos + 'px');
           text.setAttribute(yAttribute, Math.floor(yValue * yMultiplier) + 'px');
-          layoutText(text, node.label, xMultiplier - options.labelPadding, xPos, yMultiplier,
-              options.labelLineSpacing);
+          layoutText(document, text, node.label, xMultiplier - options.labelPadding, xPos,
+              yMultiplier, options.labelLineSpacing);
         }
 
         if (levelIdx === 0) {

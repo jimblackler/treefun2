@@ -80,7 +80,8 @@ const views: View[] = [
   {componentType: 'textEditorTree', name: 'Data (text)'},
   {componentType: 'textEditorCss', name: 'Style'},
   {componentType: 'jsonEditor', name: 'Options'},
-  {componentType: 'diagram', name: 'Diagram'}
+  {componentType: 'diagram', name: 'Diagram'},
+  {componentType: 'diagramServer', name: 'Diagram (Server)'}
 ];
 
 const viewItems: MenuBarItem[] = [];
@@ -107,7 +108,26 @@ layout.registerComponentFactoryFunction('diagram', container => {
     while (container.element.firstChild) {
       container.element.firstChild.remove();
     }
-    treeToDiagram(container.element, textToTree(state.treeText), state.options, state.css);
+    treeToDiagram(document, container.element, textToTree(state.treeText), state.options, state.css);
+  })
+});
+
+layout.registerComponentFactoryFunction('diagramServer', container => {
+  container.setTitle('Diagram (Server)');
+  container.element.classList.add('diagramServerContainer');
+
+  const img = document.createElement('img');
+  container.element.append(img);
+
+  const url = new URL(`${window.location.origin}/diagram`);
+
+  listen(state => {
+    url.searchParams.set('tree', JSON.stringify(textToTree(state.treeText)));
+    url.searchParams.set('options', JSON.stringify(state.options));
+    url.searchParams.set('css', state.css);
+    img.setAttribute('src', url.toString());
+    img.width = state.options.width;
+    img.height = state.options.height;
   })
 });
 
