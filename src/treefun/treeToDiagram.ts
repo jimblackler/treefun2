@@ -22,33 +22,33 @@ function makeLevels(tree: Node, drawRoot: boolean) {
 
 // Sweep from the left to the right along a level, moving nodes along the row if they overlap with a
 // previous node, or the edge of the diagram area.
-function sweepLeftToRight(level: Node[][], infields: Map<Node, number>,
-                          outfields: Map<Node, number>, options: Options) {
+function sweepLeftToRight(level: Node[][], inPos: Map<Node, number>, outPos: Map<Node, number>,
+                          options: Options) {
   let minX = 0;
   level.forEach(group => {
     group.forEach((node, nodeIdx) => {
-      const x = infields.get(node);
+      const x = inPos.get(node);
       const newX = x === undefined || x <= minX ? minX : x;
       minX = nodeIdx === group.length - 1 ?
           newX + 1 + options.minimumCousinGap : newX + 1 + options.siblingGap;
-      outfields.set(node, newX);
+      outPos.set(node, newX);
     });
   });
 }
 
 // Sweep from the right to the left along a level, moving nodes along the row if they overlap with a
 // previous node, or the edge of the diagram area (specified).
-function sweepRightToLeft(level: Node[][], infields: Map<Node, number>,
-                          outfields: Map<Node, number>, maxWidth: number, options: Options) {
+function sweepRightToLeft(level: Node[][], inPos: Map<Node, number>,
+                          outPos: Map<Node, number>, maxWidth: number, options: Options) {
   let maxX = maxWidth - 1;
   for (let memberIdx = level.length - 1; memberIdx >= 0; memberIdx--) {
     const group = level[memberIdx];
     for (let nodeIdx = group.length - 1; nodeIdx >= 0; nodeIdx--) {
       const node = group[nodeIdx];
-      const x = infields.get(node);
+      const x = inPos.get(node);
       const newX = x === undefined || x >= maxX ? maxX : x;
       maxX = nodeIdx === 0 ? newX - 1 - options.minimumCousinGap : newX - 1 - options.siblingGap;
-      outfields.set(node, newX);
+      outPos.set(node, newX);
     }
   }
 }
