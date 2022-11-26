@@ -25,10 +25,8 @@ function makeLevels(tree: Node, drawRoot: boolean) {
 function sweepLeftToRight(level: Node[][], infields: Map<Node, number>,
                           outfields: Map<Node, number>, options: Options) {
   let minX = 0;
-  for (let memberIdx = 0; memberIdx !== level.length; memberIdx++) {
-    const group = level[memberIdx];
-    for (let nodeIdx = 0; nodeIdx !== group.length; nodeIdx++) {
-      const node = group[nodeIdx];
+  level.forEach(group => {
+    group.forEach((node, nodeIdx) =>  {
       let newX;
       const x = infields.get(node);
       if (x !== undefined && x > minX) {
@@ -42,8 +40,8 @@ function sweepLeftToRight(level: Node[][], infields: Map<Node, number>,
         minX = newX + 1 + options.siblingGap;
       }
       outfields.set(node, newX);
-    }
-  }
+    });
+  });
 }
 
 // Sweep from the right to the left along a level, moving nodes along the row if they overlap with a
