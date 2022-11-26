@@ -7,13 +7,10 @@ import {Options} from './options';
 function makeLevels(tree: Node, drawRoot: boolean) {
   let groups: Node[][] = drawRoot ? [[tree]] : tree.children.map(node => [node]);
   const levels = [];
-  while (true) {
+  while (groups.length) {
     levels.push(groups);
     groups = groups.map(group =>
         group.filter(member => member.children.length).map(member => member.children)).flat();
-    if (groups.length === 0) {
-      break;
-    }
   }
   return levels;
 }
