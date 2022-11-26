@@ -4,7 +4,6 @@ export function textToTree(text: string): Node {
   const lines = text.split(/\n/);
   const rootNode: Node = {
     label: 'root',
-    parent: undefined,
     children: []
   };
 
@@ -24,7 +23,6 @@ export function textToTree(text: string): Node {
     const parent = stackParents[stackParents.length - 1];
     const node: Node = {
       label: content,
-      parent: parent,
       children: []
     };
     parent.children.push(node);

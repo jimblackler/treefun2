@@ -3,28 +3,21 @@ import {layoutText} from './layoutText';
 import {Node} from './node';
 import {Options} from './options';
 
-// Converts the tree structure into an array of levels 0... n of cousin and sibling nodes.
-function makeLevels(tree: Node, drawRoot: boolean) {
-  let groups: Node[][] = drawRoot ? [[tree]] : tree.children.map(node => [node]);
-  const levels = [];
-  while (groups.length) {
-    levels.push(groups);
-    groups = groups.map(group =>
-        group.filter(member => member.children.length).map(member => member.children)).flat();
-  }
-  return levels;
+interface Group {
+  parent: Node | undefined;
+  members: Node[];
 }
 
 // Sweep from the left to the right along a level, moving nodes along the row if they overlap with a
 // previous node, or the edge of the diagram area.
-function sweepLeftToRight(level: Node[][], inPos: Map<Node, number>, outPos: Map<Node, number>,
+function sweepLeftToRight(level: Group[], inPos: Map<Node, number>, outPos: Map<Node, number>,
                           options: Options) {
   let minX = 0;
   level.forEach(group => {
-    group.forEach((node, nodeIdx) => {
+    group.members.forEach((node, nodeIdx) => {
       const x = inPos.get(node);
       const newX = x === undefined || x <= minX ? minX : x;
-      minX = nodeIdx === group.length - 1 ?
+      minX = nodeIdx === group.members.length - 1 ?
           newX + 1 + options.minimumCousinGap : newX + 1 + options.siblingGap;
       outPos.set(node, newX);
     });
@@ -33,13 +26,13 @@ function sweepLeftToRight(level: Node[][], inPos: Map<Node, number>, outPos: Map
 
 // Sweep from the right to the left along a level, moving nodes along the row if they overlap with a
 // previous node, or the edge of the diagram area (specified).
-function sweepRightToLeft(level: Node[][], inPos: Map<Node, number>,
+function sweepRightToLeft(level: Group[], inPos: Map<Node, number>,
                           outPos: Map<Node, number>, maxWidth: number, options: Options) {
   let maxX = maxWidth - 1;
   for (let memberIdx = level.length - 1; memberIdx >= 0; memberIdx--) {
     const group = level[memberIdx];
-    for (let nodeIdx = group.length - 1; nodeIdx >= 0; nodeIdx--) {
-      const node = group[nodeIdx];
+    for (let nodeIdx = group.members.length - 1; nodeIdx >= 0; nodeIdx--) {
+      const node = group.members[nodeIdx];
       const x = inPos.get(node);
       const newX = x === undefined || x >= maxX ? maxX : x;
       maxX = nodeIdx === 0 ? newX - 1 - options.minimumCousinGap : newX - 1 - options.siblingGap;
@@ -50,7 +43,7 @@ function sweepRightToLeft(level: Node[][], inPos: Map<Node, number>,
 
 // Positions the nodes on a level in a position that is guaranteed not to overlap with other nodes
 // on that level, but as close as possible to the ideal position (if one is set).
-function sweepAndAverage(x: Map<Node, number>, level: Node[][], maxWidth: number,
+function sweepAndAverage(x: Map<Node, number>, level: Group[], maxWidth: number,
                          options: Options) {
   const x0 = new Map<Node, number>();
   sweepLeftToRight(level, x, x0, options);
@@ -60,22 +53,36 @@ function sweepAndAverage(x: Map<Node, number>, level: Node[][], maxWidth: number
   sweepRightToLeft(level, x, x1, maxWidth, options);
   sweepLeftToRight(level, x1, x1, options);
 
-  level.forEach(group => group.forEach(
+  level.forEach(group => group.members.forEach(
       node => x.set(node, (assertDefined(x0.get(node)) + assertDefined(x1.get(node))) / 2)));
 }
 
 // Converts the specified tree to a diagram under diagramGroup in the SVG diagramSvg. Options are
 // configured in the specified options object.
 export function treeToDiagram(tree: Node, options: Options, css: string) {
-  const levels = makeLevels(tree, options.drawRoot);
+  // Convert the tree structure into an array of levels 0... n of cousin and sibling nodes.
+  let groups: Group[] = options.drawRoot ? [{
+    parent: undefined,
+    members: [tree]
+  }] : tree.children.map(node => ({parent: tree, members: [node]}));
+  const levels = [];
+  while (groups.length) {
+    levels.push(groups);
+    groups = groups.map(group =>
+        group.members.filter(member => member.children.length).map(member => ({
+          parent: member,
+          members: member.children
+        }))).flat();
+  }
 
   // Decide which level should be fixed.
   let fixedLevel: number | undefined;
   let fixedLevelWidth: number | undefined;
 
   levels.forEach((level, levelIdx) => {
-    const width = level.map(group => group.length + (group.length - 1) * options.siblingGap +
-        options.minimumCousinGap).reduce((a, b) => a + b, -options.minimumCousinGap);
+    const width = level.map(
+        group => group.members.length + (group.members.length - 1) * options.siblingGap +
+            options.minimumCousinGap).reduce((a, b) => a + b, -options.minimumCousinGap);
     if (fixedLevelWidth === undefined || width > fixedLevelWidth) {
       fixedLevel = levelIdx;
       fixedLevelWidth = width;
@@ -108,7 +115,7 @@ export function treeToDiagram(tree: Node, options: Options, css: string) {
 
   // Position fixed level.
   level.forEach(group => {
-    group.forEach((node, nodeIdx) => {
+    group.members.forEach((node, nodeIdx) => {
       if (nodeIdx > 0) {
         x += options.siblingGap;
       }
@@ -123,7 +130,7 @@ export function treeToDiagram(tree: Node, options: Options, css: string) {
     const level = levels[levelIdx];
     // Find positions
     level.forEach(group => {
-      group.forEach(node => {
+      group.members.forEach(node => {
         if (node.children.length === 0) {
           return;
         }
@@ -140,11 +147,11 @@ export function treeToDiagram(tree: Node, options: Options, css: string) {
     const level = levels[levelIdx];
     // Find positions.
     level.forEach(group => {
-      const parent = assertDefined(group[0].parent);
+      const parent = assertDefined(group.parent);
 
-      const groupWidth = (group.length - 1) * (1 + options.idealSiblingGap) + 1;
+      const groupWidth = (group.members.length - 1) * (1 + options.idealSiblingGap) + 1;
       let x = assertDefined(x_.get(parent)) - groupWidth / 2 + 0.5;
-      group.forEach(node => {
+      group.members.forEach(node => {
         x_.set(node, x);
         x += 1 + options.idealSiblingGap;
       });
@@ -201,7 +208,7 @@ export function treeToDiagram(tree: Node, options: Options, css: string) {
   const namespace = 'http://www.w3.org/2000/svg';
   levels.forEach((level, levelIdx) => {
     level.forEach(group => {
-      group.forEach((node, nodeIdx) => {
+      group.members.forEach((node, nodeIdx) => {
         const rect = document.createElementNS(namespace, 'rect');
         diagramGroup.appendChild(rect);
 
@@ -242,7 +249,7 @@ export function treeToDiagram(tree: Node, options: Options, css: string) {
         // Draw lines to parents.
         const line = document.createElementNS(namespace, 'line');
         diagramGroup.appendChild(line);
-        const parentOffset = (nodeIdx + 1) / (group.length + 1);
+        const parentOffset = (nodeIdx + 1) / (group.members.length + 1);
         const parentY = (levelIdx - 1) * (1 + options.levelsGap);
         let first;
         let second;
@@ -254,7 +261,7 @@ export function treeToDiagram(tree: Node, options: Options, css: string) {
           second = '2';
         }
         line.setAttribute(xAttribute + first, Math.floor((assertDefined(
-            x_.get(assertDefined(node.parent))) + parentOffset) * xMultiplier) + 'px');
+            x_.get(assertDefined(group.parent))) + parentOffset) * xMultiplier) + 'px');
         line.setAttribute(yAttribute + first, Math.floor((parentY + 1) * yMultiplier) + 'px');
         line.setAttribute(xAttribute + second,
             Math.floor((assertDefined(x_.get(node)) + 0.5) * xMultiplier) + 'px');
