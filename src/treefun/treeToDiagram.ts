@@ -5,9 +5,7 @@ import {Options} from './options';
 
 // Converts the tree structure into an array of levels 0... n of cousin and sibling nodes.
 function makeLevels(tree: Node, drawRoot: boolean) {
-
   let groups: Node[][] = drawRoot ? [[tree]] : tree.children.map(node => [node]);
-
   const levels = [];
   while (true) {
     levels.push(groups);
