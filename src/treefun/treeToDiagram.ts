@@ -107,18 +107,16 @@ export function treeToDiagram(tree: Node, diagramSvg: SVGSVGElement, diagramGrou
   // ... any left is used to center the fixed group.
   let x = spare / 2;
 
-  for (let memberIdx = 0; memberIdx !== level.length; memberIdx++) {
-    const group = level[memberIdx];
-    let nodeSpacing = 0;
-    for (let nodeIdx = 0; nodeIdx !== group.length; nodeIdx++) {
-      x += nodeSpacing;
-      const node = group[nodeIdx];
+  level.forEach(group => {
+    group.forEach((node, nodeIdx) => {
+      if (nodeIdx > 0) {
+        x += options.siblingGap;
+      }
       x_.set(node, x);
       x += 1;
-      nodeSpacing = options.siblingGap;
-    }
+    });
     x += useCousinGap;
-  }
+  });
 
   // Fixed to top; parent to average of children.
   for (let levelIdx = fixedLevel - 1; levelIdx >= 0; levelIdx--) {
