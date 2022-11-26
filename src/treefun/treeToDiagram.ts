@@ -89,10 +89,10 @@ export function treeToDiagram(tree: Node, diagramSvg: SVGSVGElement, diagramGrou
 
   const maxWidth = Math.max(fixedLevelWidth, options.minimumBreadth * (1 + options.levelsGap));
 
-  // Position and make elements
+  // Position and make elements.
   const level = levels[fixedLevel];
 
-  // Use any extra space to increase group gap up to ideal gap...
+  // Use any extra space to increase group gap up to ideal gap.
   let spare = maxWidth - fixedLevelWidth;
   let useCousinGap = options.minimumCousinGap;
   if (level.length > 1) {
