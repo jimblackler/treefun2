@@ -97,7 +97,7 @@ export function treeToDiagram(tree: Node, diagramSvg: SVGSVGElement, diagramGrou
   let useCousinGap = options.minimumCousinGap;
   if (level.length > 1) {
     const spareForGroupGaps =
-        Math.min(spare / (level.length - 1), (options.idealCousinGap - options.minimumCousinGap));
+        Math.min(spare / (level.length - 1), options.idealCousinGap - options.minimumCousinGap);
     spare -= spareForGroupGaps * (level.length - 1);
     useCousinGap += spareForGroupGaps;
   }
