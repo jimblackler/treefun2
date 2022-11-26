@@ -156,7 +156,7 @@ export function treeToDiagram(tree: Node, diagramSvg: SVGSVGElement, diagramGrou
   // Now render the tree.
   diagramSvg.getElementById('arrowHead').setAttribute('markerHeight', `${options.arrowHeadSize}`);
 
-  // Find height ratio
+  // Find height ratio.
   const useLevels = Math.max(levels.length, options.minimumDepth);
   const height = useLevels + (useLevels - 1) * options.levelsGap;
 
