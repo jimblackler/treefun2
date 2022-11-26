@@ -59,7 +59,7 @@ function sweepAndAverage(x: Map<Node, number>, level: Group[], maxWidth: number,
 
 // Converts the specified tree to a diagram under diagramGroup in the SVG diagramSvg. Options are
 // configured in the specified options object.
-export function treeToDiagram(tree: Node, options: Options, css: string) {
+export function treeToDiagram(parent: Element, tree: Node, options: Options, css: string) {
   // Convert the tree structure into an array of levels 0... n of cousin and sibling nodes.
   let groups: Group[] = options.drawRoot ? [{
     parent: undefined,
@@ -162,6 +162,7 @@ export function treeToDiagram(tree: Node, options: Options, css: string) {
   // Now render the tree.
   const svgNs = 'http://www.w3.org/2000/svg';
   const svg = document.createElementNS(svgNs, 'svg');
+  parent.append(svg);
 
   const styleSheet = document.createElementNS(svgNs, 'style');
   svg.append(styleSheet);
@@ -271,5 +272,4 @@ export function treeToDiagram(tree: Node, options: Options, css: string) {
       });
     });
   });
-  return svg;
 }

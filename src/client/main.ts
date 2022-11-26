@@ -107,7 +107,7 @@ layout.registerComponentFactoryFunction('diagram', container => {
     while (container.element.firstChild) {
       container.element.firstChild.remove();
     }
-    container.element.append(treeToDiagram(textToTree(state.treeText), state.options, state.css));
+    treeToDiagram(container.element, textToTree(state.treeText), state.options, state.css);
   })
 });
 
