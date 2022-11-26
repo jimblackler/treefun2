@@ -160,10 +160,10 @@ export function treeToDiagram(tree: Node, diagramSvg: SVGSVGElement, diagramGrou
   const useLevels = Math.max(levels.length, options.minimumDepth);
   const height = useLevels + (useLevels - 1) * options.levelsGap;
 
-  let xAttribute;
-  let yAttribute;
-  let widthAttribute;
-  let heightAttribute;
+  let xAttribute: string;
+  let yAttribute: string;
+  let widthAttribute: string;
+  let heightAttribute: string;
   let diagramWidth;
   let diagramHeight;
 
@@ -191,13 +191,9 @@ export function treeToDiagram(tree: Node, diagramSvg: SVGSVGElement, diagramGrou
 
   // Add visual elements.
   const namespace = 'http://www.w3.org/2000/svg';
-  for (let levelIdx = 0; levelIdx !== levels.length; levelIdx++) {
-    const level = levels[levelIdx];
-    for (let memberIdx = 0; memberIdx !== level.length; memberIdx++) {
-      const group = level[memberIdx];
-      for (let nodeIdx = 0; nodeIdx !== group.length; nodeIdx++) {
-        const node = group[nodeIdx];
-
+  levels.forEach((level, levelIdx) => {
+    level.forEach(group => {
+      group.forEach((node, nodeIdx) => {
         const rect = document.createElementNS(namespace, 'rect');
         diagramGroup.appendChild(rect);
 
@@ -232,7 +228,7 @@ export function treeToDiagram(tree: Node, diagramSvg: SVGSVGElement, diagramGrou
         }
 
         if (levelIdx === 0) {
-          continue;  // Level 0 nodes don't have parents.
+          return;  // Level 0 nodes don't have parents.
         }
 
         // Draw lines to parents.
@@ -257,7 +253,7 @@ export function treeToDiagram(tree: Node, diagramSvg: SVGSVGElement, diagramGrou
         line.setAttribute(yAttribute + second, Math.floor(yValue * yMultiplier) + 'px');
 
         line.setAttribute('marker-end', 'url(#arrowHead)');
-      }
-    }
-  }
+      });
+    });
+  });
 }
