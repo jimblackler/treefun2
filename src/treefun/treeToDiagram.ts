@@ -143,8 +143,8 @@ export function treeToDiagram(tree: Node, diagramSvg: SVGSVGElement, diagramGrou
       const group = level[memberIdx];
       const parent = assertDefined(group[0].parent);
 
-      const groupWidth = (group.length - 1) * (1 + options.idealSiblingGap);
-      let x = assertDefined(x_.get(parent)) - groupWidth / 2;
+      const groupWidth = (group.length - 1) * (1 + options.idealSiblingGap) + 1;
+      let x = assertDefined(x_.get(parent)) - groupWidth / 2 + 0.5;
       for (let nodeIdx = 0; nodeIdx !== group.length; nodeIdx++) {
         const node = group[nodeIdx];
         x_.set(node, x);
