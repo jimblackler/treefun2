@@ -160,28 +160,12 @@ export function treeToDiagram(tree: Node, diagramSvg: SVGSVGElement, diagramGrou
   const useLevels = Math.max(levels.length, options.minimumDepth);
   const height = useLevels + (useLevels - 1) * options.levelsGap;
 
-  let xAttribute: string;
-  let yAttribute: string;
-  let widthAttribute: string;
-  let heightAttribute: string;
-  let diagramWidth;
-  let diagramHeight;
-
-  if (options.flipXY) {
-    xAttribute = 'y';
-    yAttribute = 'x';
-    diagramWidth = options.height;
-    diagramHeight = options.width;
-    widthAttribute = 'height';
-    heightAttribute = 'width';
-  } else {
-    xAttribute = 'x';
-    yAttribute = 'y';
-    diagramWidth = options.width;
-    diagramHeight = options.height;
-    widthAttribute = 'width';
-    heightAttribute = 'height';
-  }
+  const xAttribute = options.flipXY ? 'y' : 'x';
+  const yAttribute = options.flipXY ? 'x' : 'y';
+  const diagramWidth = options.flipXY ? options.height : options.width;
+  const diagramHeight = options.flipXY ? options.width : options.height;
+  const widthAttribute = options.flipXY ? 'height' : 'width';
+  const heightAttribute = options.flipXY ? 'width' : 'height';
 
   diagramSvg.style.width = options.width + 'px';
   diagramSvg.style.height = options.height + 'px';
