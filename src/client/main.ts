@@ -103,13 +103,9 @@ layout.registerComponentFactoryFunction('diagram', container => {
   container.setTitle('Diagram');
   container.element.classList.add('diagramContainer');
 
-  const wrapper = document.createElement('div');
-  container.element.append(wrapper);
-  wrapper.setAttribute('class', 'diagramWrapper');
-
   const svgNs = 'http://www.w3.org/2000/svg';
   const svg = document.createElementNS(svgNs, 'svg');
-  wrapper.append(svg);
+  container.element.append(svg);
 
   const styleSheet = document.createElementNS(svgNs, 'style');
   svg.append(styleSheet);

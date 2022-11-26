@@ -14,18 +14,9 @@ section#container {
 }
 
 div.diagramContainer {
-  display: flex;
-  justify-content: center;
   overflow: scroll;
 }
 
-div.diagramWrapper {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  overflow: scroll;
-}
-
-div.diagramWrapper svg {
+div.diagramContainer svg {
   background: white;
 }
