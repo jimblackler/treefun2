@@ -72,7 +72,7 @@ export function treeToDiagram(tree: Node, diagramSvg: SVGSVGElement, diagramGrou
 
   // Decide which level should be fixed.
   let fixedLevel: number | undefined;
-  const widths: number[] = [];
+  let fixedLevelWidth: number | undefined;
 
   levels.forEach((level, levelIdx) => {
     let spacing = 0;
@@ -85,24 +85,24 @@ export function treeToDiagram(tree: Node, diagramSvg: SVGSVGElement, diagramGrou
       groupSpacing = options.minimumCousinGap;
     });
     const width = spacing + nodesWidth;
-    if (fixedLevel === undefined || width > widths[fixedLevel]) {
+    if (fixedLevelWidth === undefined || width > fixedLevelWidth) {
       fixedLevel = levelIdx;
+      fixedLevelWidth = width;
     }
-    widths.push(width);
   });
 
-  if (fixedLevel === undefined) {
+  if (fixedLevel === undefined || fixedLevelWidth === undefined) {
     throw new Error();
   }
 
-  const maxWidth = Math.max(widths[fixedLevel], options.minimumBreadth * (1 + options.levelsGap));
+  const maxWidth = Math.max(fixedLevelWidth, options.minimumBreadth * (1 + options.levelsGap));
 
   // Position and make elements
   const level = levels[fixedLevel];
 
   // Use any extra space to increase group gap up to ideal gap...
   const usesiblingGap = options.siblingGap;
-  let spare = (maxWidth - widths[fixedLevel]);
+  let spare = maxWidth - fixedLevelWidth;
   let useCousinGap = options.minimumCousinGap;
   if (level.length > 1) {
     const spareForGroupGaps =
