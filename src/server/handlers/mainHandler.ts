@@ -3,8 +3,6 @@ import {DomStream} from '../domStream';
 import {addScripts} from '../manifest';
 
 export const mainHandler: RequestHandler = async (req, res, next) => {
-  res.setHeader('Content-Type', 'text/html');
-
   const domStream = new DomStream(res);
   const document = domStream.document;
 
