@@ -22,7 +22,7 @@ export const multilineLayoutText: LayoutText = (document, textNode, text, width,
   let previousFit = '';
   let tspan = document.createElementNS(namespace, 'tspan');
   tspan.setAttributeNS(null, 'x', `${x}`);
-  textNode.appendChild(tspan);
+  textNode.append(tspan);
   tspan.textContent = '!';
   height -= dy;
   tspan.textContent = '';
@@ -57,7 +57,7 @@ export const multilineLayoutText: LayoutText = (document, textNode, text, width,
       }
       tspan.textContent = word;
 
-      textNode.appendChild(tspan);
+      textNode.append(tspan);
       while (tspan.getComputedTextLength() > width) {
         tspan.textContent = tspan.textContent.substring(0, tspan.textContent.length - 1);
       }
