@@ -1,5 +1,5 @@
 import {assertDefined} from '../common/check/defined';
-import {LayoutText} from './layoutText';
+import {layoutText} from './layoutText';
 import {Node} from './node';
 import {Options} from './options';
 
@@ -60,7 +60,7 @@ function sweepAndAverage(x: Map<Node, number>, level: Group[], maxWidth: number,
 // Converts the specified tree to a diagram under diagramGroup in the SVG diagramSvg. Options are
 // configured in the specified options object.
 export function treeToDiagram(document: Document, parent: HTMLElement, tree: Node, options: Options,
-                              css: string, layoutText: LayoutText) {
+                              css: string) {
   // Convert the tree structure into an array of levels 0... n of cousin and sibling nodes.
   let groups: Group[] = options.drawRoot ? [{
     parent: undefined,
@@ -232,13 +232,13 @@ export function treeToDiagram(document: Document, parent: HTMLElement, tree: Nod
           const yPos = Math.floor((yValue + 0.5) * yMultiplier);
           text.setAttribute(xAttribute, xPos + 'px');
           text.setAttribute(yAttribute, Math.floor(yValue * yMultiplier) + 'px');
-          layoutText(text, node.label, yMultiplier - options.labelPadding, yPos,
+          layoutText(document, text, node.label, yMultiplier - options.labelPadding, yPos,
               xMultiplier, options.labelLineSpacing);
         } else {
           const xPos = Math.floor((assertDefined(x_.get(node)) + 0.5) * xMultiplier);
           text.setAttribute(xAttribute, xPos + 'px');
           text.setAttribute(yAttribute, Math.floor(yValue * yMultiplier) + 'px');
-          layoutText(text, node.label, xMultiplier - options.labelPadding, xPos,
+          layoutText(document, text, node.label, xMultiplier - options.labelPadding, xPos,
               yMultiplier, options.labelLineSpacing);
         }
 

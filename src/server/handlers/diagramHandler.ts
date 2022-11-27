@@ -1,7 +1,6 @@
 import {RequestHandler} from 'express';
 import {JSDOM} from 'jsdom';
-import {assertString} from '../../common/check/string';
-import {basicLayoutText} from '../../treefun/basicLayoutText';
+import {assertString} from '../../common/check/string'
 import {treeToDiagram} from '../../treefun/treeToDiagram';
 
 export const diagramHandler: RequestHandler = async (req, res, next) => {
@@ -14,7 +13,7 @@ export const diagramHandler: RequestHandler = async (req, res, next) => {
   const options = JSON.parse(assertString(req.query['options']));
   const css = assertString(req.query['css']);
 
-  treeToDiagram(document, document.body, tree, options, css, basicLayoutText(document));
+  treeToDiagram(document, document.body, tree, options, css);
   res.write(document.body.innerHTML);
   res.end();
 };
