@@ -12,6 +12,7 @@ import {assertNotNull} from '../common/check/null';
 import {assertString} from '../common/check/string';
 import {Options} from '../treefun/options';
 import {treeToDiagram} from '../treefun/treeToDiagram';
+import {multilineLayoutText} from './multilineLayoutText';
 import {listen, setState, State} from './state';
 import './style.css'
 import {textToTree} from './textToTree';
@@ -108,7 +109,8 @@ layout.registerComponentFactoryFunction('diagram', container => {
     while (container.element.firstChild) {
       container.element.firstChild.remove();
     }
-    treeToDiagram(document, container.element, textToTree(state.treeText), state.options, state.css);
+    treeToDiagram(document, container.element, textToTree(state.treeText), state.options, state.css,
+        multilineLayoutText);
   })
 });
 

@@ -1,5 +1,5 @@
 import {assertDefined} from '../common/check/defined';
-import {layoutText} from './layoutText';
+import {LayoutText} from './layoutText';
 import {Node} from './node';
 import {Options} from './options';
 
@@ -60,7 +60,7 @@ function sweepAndAverage(x: Map<Node, number>, level: Group[], maxWidth: number,
 // Converts the specified tree to a diagram under diagramGroup in the SVG diagramSvg. Options are
 // configured in the specified options object.
 export function treeToDiagram(document: Document, parent: HTMLElement, tree: Node, options: Options,
-                              css: string) {
+                              css: string, layoutText: LayoutText) {
   // Convert the tree structure into an array of levels 0... n of cousin and sibling nodes.
   let groups: Group[] = options.drawRoot ? [{
     parent: undefined,
