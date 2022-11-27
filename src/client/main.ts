@@ -6,7 +6,7 @@ import '@vaadin/menu-bar';
 import {MenuBarItem} from '@vaadin/menu-bar';
 import axios from 'axios';
 import {basicLight} from 'cm6-theme-basic-light'
-import {ComponentContainer, GoldenLayout, LayoutConfig} from 'golden-layout';
+import {ComponentContainer, GoldenLayout, JsonValue, LayoutConfig} from 'golden-layout';
 import {JSONEditor, JSONValue, Mode, toJSONContent} from 'vanilla-jsoneditor'
 import {assertNotNull} from '../common/check/null';
 import {assertString} from '../common/check/string';
@@ -15,6 +15,7 @@ import {treeToDiagram} from '../treefun/treeToDiagram';
 import {listen, setState, State} from './state';
 import './style.css'
 import {textToTree} from './textToTree';
+import isJson = JsonValue.isJson;
 
 const container = assertNotNull(document.getElementById('container'));
 
@@ -73,7 +74,8 @@ const exampleItems: MenuBarItem[] = [];
 
 interface View {
   name: string;
-  componentType: string,
+  componentType: string;
+  componentState?: JsonValue;
 }
 
 const views: View[] = [
@@ -81,14 +83,16 @@ const views: View[] = [
   {componentType: 'textEditorCss', name: 'Style'},
   {componentType: 'jsonEditor', name: 'Options'},
   {componentType: 'diagram', name: 'Diagram'},
-  {componentType: 'diagramServer', name: 'Diagram (Server)'}
+  {componentType: 'diagramServer', name: 'Diagram SVG (Server)', componentState: {mode: 'svg'}},
+  {componentType: 'diagramServer', name: 'Diagram PNG (Server)', componentState: {mode: 'png'}},
 ];
 
 const viewItems: MenuBarItem[] = [];
 views.forEach(view => {
   const item = {text: view.name};
   viewItems.push(item);
-  actions.set(item, () => layout.addItem({type: 'component', componentType: view.componentType}));
+  actions.set(item, () => layout.addItem(
+      {type: 'component', componentType: view.componentType, componentState: view.componentState}));
 });
 
 menuBar.items = [
@@ -113,7 +117,11 @@ layout.registerComponentFactoryFunction('diagram', container => {
   })
 });
 
-layout.registerComponentFactoryFunction('diagramServer', container => {
+layout.registerComponentFactoryFunction('diagramServer', (container, componentState) => {
+  if (!componentState || !isJson(componentState)) {
+    throw new Error();
+  }
+
   container.setTitle('Diagram (Server)');
   container.element.classList.add('diagramServerContainer');
 
@@ -126,6 +134,7 @@ layout.registerComponentFactoryFunction('diagramServer', container => {
     url.searchParams.set('tree', JSON.stringify(textToTree(state.treeText)));
     url.searchParams.set('options', JSON.stringify(state.options));
     url.searchParams.set('css', state.css);
+    url.searchParams.set('mode', assertString(componentState.mode));
     img.setAttribute('src', url.toString());
     img.width = state.options.width;
     img.height = state.options.height;
