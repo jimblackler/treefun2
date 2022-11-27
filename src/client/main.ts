@@ -9,6 +9,7 @@ import {ComponentContainer, GoldenLayout, JsonValue, LayoutConfig} from 'golden-
 import {JSONEditor, JSONValue, Mode, toJSONContent} from 'vanilla-jsoneditor'
 import {assertNotNull} from '../common/check/null';
 import {assertString} from '../common/check/string';
+import {Node} from '../treefun/node';
 import {Options} from '../treefun/options';
 import {treeToDiagram} from '../treefun/treeToDiagram';
 import {listen, setState, State} from './state';
@@ -85,6 +86,7 @@ const views: View[] = [
   {componentType: 'diagram', name: 'Diagram'},
   {componentType: 'diagramServer', name: 'Diagram SVG (Server)', componentState: {mode: 'svg'}},
   {componentType: 'diagramServer', name: 'Diagram PNG (Server)', componentState: {mode: 'png'}},
+  {componentType: 'jsonEditorData', name: 'Tree (JSON)'},
 ];
 
 const viewItems: MenuBarItem[] = [];
@@ -181,6 +183,52 @@ layout.registerComponentFactoryFunction('jsonEditor', container => {
       jsonEditor.update({
         text: undefined,
         json: state.options as unknown as JSONValue
+      })
+    }
+  });
+});
+
+layout.registerComponentFactoryFunction('jsonEditorData', container => {
+  container.setTitle('Tree (JSON)');
+  let lastState: State | undefined;
+  const jsonEditor = new JSONEditor({
+    target: container.element,
+    props: {
+      mode: Mode.text,
+      mainMenuBar: true,
+      content: {
+        text: '',
+        json: undefined
+      },
+      onChange: (content, previousContent, status) => {
+        let json;
+        try {
+          json = toJSONContent(content).json;
+        } catch (e) {
+          return;
+        }
+        if (!lastState) {
+          return;
+        }
+        if (JSON.stringify(json) !== JSON.stringify(lastState.tree)) {
+          setState({...lastState, tree: json as unknown as Node});
+        }
+      }
+    }
+  });
+
+  listen(state => {
+    lastState = state;
+    let oldJson;
+    try {
+      oldJson = toJSONContent(jsonEditor.get()).json;
+    } catch (e) {
+      // Invalid JSON.
+    }
+    if (JSON.stringify(state.tree) !== JSON.stringify(oldJson)) {
+      jsonEditor.update({
+        text: undefined,
+        json: state.tree as unknown as JSONValue
       })
     }
   });
