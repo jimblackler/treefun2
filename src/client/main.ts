@@ -110,7 +110,7 @@ layout.registerComponentFactoryFunction('diagram', container => {
       container.element.firstChild.remove();
     }
     treeToDiagram(document, container.element, textToTree(state.treeText), state.options, state.css,
-        multilineLayoutText);
+        multilineLayoutText(document));
   })
 });
 

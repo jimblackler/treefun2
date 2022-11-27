@@ -232,13 +232,13 @@ export function treeToDiagram(document: Document, parent: HTMLElement, tree: Nod
           const yPos = Math.floor((yValue + 0.5) * yMultiplier);
           text.setAttribute(xAttribute, xPos + 'px');
           text.setAttribute(yAttribute, Math.floor(yValue * yMultiplier) + 'px');
-          layoutText(document, text, node.label, yMultiplier - options.labelPadding, yPos,
+          layoutText(text, node.label, yMultiplier - options.labelPadding, yPos,
               xMultiplier, options.labelLineSpacing);
         } else {
           const xPos = Math.floor((assertDefined(x_.get(node)) + 0.5) * xMultiplier);
           text.setAttribute(xAttribute, xPos + 'px');
           text.setAttribute(yAttribute, Math.floor(yValue * yMultiplier) + 'px');
-          layoutText(document, text, node.label, xMultiplier - options.labelPadding, xPos,
+          layoutText(text, node.label, xMultiplier - options.labelPadding, xPos,
               yMultiplier, options.labelLineSpacing);
         }
 

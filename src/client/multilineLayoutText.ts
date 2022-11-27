@@ -17,54 +17,56 @@ function splitBy(array: string[], char: string) {
 
 // Creates text arranged in rows, with the maximum specified width and height, centered around the
 // 'x' coordinate, and with the specified line spacing. Adds to the specified text node.
-export const multilineLayoutText: LayoutText = (document, textNode, text, width, x, height, dy) => {
-  const namespace = 'http://www.w3.org/2000/svg';
-  let previousFit = '';
-  let tspan = document.createElementNS(namespace, 'tspan');
-  tspan.setAttributeNS(null, 'x', `${x}`);
-  textNode.append(tspan);
-  tspan.textContent = '!';
-  height -= dy;
-  tspan.textContent = '';
+export function multilineLayoutText(document: Document) : LayoutText {
+  return (textNode, text, width, x, height, dy) => {
+    const namespace = 'http://www.w3.org/2000/svg';
+    let previousFit = '';
+    let tspan = document.createElementNS(namespace, 'tspan');
+    tspan.setAttributeNS(null, 'x', `${x}`);
+    textNode.append(tspan);
+    tspan.textContent = '!';
+    height -= dy;
+    tspan.textContent = '';
 
-  const firstTspan = tspan;
+    const firstTspan = tspan;
 
-  // Split by split characters.
-  let words = text.split(/\s/);
-  const splitChars = '.-';
-  for (let j = 0; j !== splitChars.length; j++) {
-    words = splitBy(words, splitChars[j]);
-  }
-
-  for (let i = 0; i < words.length; i++) {
-    const word = words[i];
-    if (tspan.textContent &&
-        splitChars.indexOf(tspan.textContent[tspan.textContent.length - 1]) === -1) {
-      tspan.textContent += ' ';
+    // Split by split characters.
+    let words = text.split(/\s/);
+    const splitChars = '.-';
+    for (let j = 0; j !== splitChars.length; j++) {
+      words = splitBy(words, splitChars[j]);
     }
-    tspan.textContent += word;
 
-    if (tspan.getComputedTextLength() > width) {
-      if (previousFit) {
-        tspan.textContent = previousFit;
-        if (height < dy) {
-          break;
+    for (let i = 0; i < words.length; i++) {
+      const word = words[i];
+      if (tspan.textContent &&
+          splitChars.indexOf(tspan.textContent[tspan.textContent.length - 1]) === -1) {
+        tspan.textContent += ' ';
+      }
+      tspan.textContent += word;
+
+      if (tspan.getComputedTextLength() > width) {
+        if (previousFit) {
+          tspan.textContent = previousFit;
+          if (height < dy) {
+            break;
+          }
+          height -= dy;
+          tspan = document.createElementNS(namespace, 'tspan');
+          tspan.setAttributeNS(null, 'x', `${x}`);
+          tspan.setAttributeNS(null, 'dy', `${dy}`);
         }
-        height -= dy;
-        tspan = document.createElementNS(namespace, 'tspan');
-        tspan.setAttributeNS(null, 'x', `${x}`);
-        tspan.setAttributeNS(null, 'dy', `${dy}`);
-      }
-      tspan.textContent = word;
+        tspan.textContent = word;
 
-      textNode.append(tspan);
-      while (tspan.getComputedTextLength() > width) {
-        tspan.textContent = tspan.textContent.substring(0, tspan.textContent.length - 1);
+        textNode.append(tspan);
+        while (tspan.getComputedTextLength() > width) {
+          tspan.textContent = tspan.textContent.substring(0, tspan.textContent.length - 1);
+        }
       }
+      previousFit = tspan.textContent;
     }
-    previousFit = tspan.textContent;
-  }
 
-  const baselineShift = -2;
-  firstTspan.setAttributeNS(null, 'dy', `${dy + baselineShift + height / 2}`);
-};
+    const baselineShift = -2;
+    firstTspan.setAttributeNS(null, 'dy', `${dy + baselineShift + height / 2}`);
+  };
+}

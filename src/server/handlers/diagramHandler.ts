@@ -14,7 +14,7 @@ export const diagramHandler: RequestHandler = async (req, res, next) => {
   const options = JSON.parse(assertString(req.query['options']));
   const css = assertString(req.query['css']);
 
-  treeToDiagram(document, document.body, tree, options, css, basicLayoutText);
+  treeToDiagram(document, document.body, tree, options, css, basicLayoutText(document));
   res.write(document.body.innerHTML);
   res.end();
 };
