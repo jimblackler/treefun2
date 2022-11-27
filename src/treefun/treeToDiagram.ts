@@ -59,7 +59,7 @@ function sweepAndAverage(x: Map<Node, number>, level: Group[], maxWidth: number,
 
 // Converts the specified tree to a diagram under diagramGroup in the SVG diagramSvg. Options are
 // configured in the specified options object.
-export function treeToDiagram(document: Document, parent: Element, tree: Node, options: Options,
+export function treeToDiagram(document: Document, parent: HTMLElement, tree: Node, options: Options,
                               css: string) {
   // Convert the tree structure into an array of levels 0... n of cousin and sibling nodes.
   let groups: Group[] = options.drawRoot ? [{
@@ -179,7 +179,7 @@ export function treeToDiagram(document: Document, parent: Element, tree: Node, o
   marker.setAttribute('viewBox', '-10 -5 10 10');
   marker.setAttribute('markerUnits', 'strokeWidth');
   marker.setAttribute('markerWidth', '6');
-  marker.setAttribute('markerHeight', '5');
+  marker.setAttribute('markerHeight', `${options.arrowHeadSize}`);
   marker.setAttribute('orient', 'auto');
 
   const path = document.createElementNS(svgNs, 'path');
@@ -188,7 +188,6 @@ export function treeToDiagram(document: Document, parent: Element, tree: Node, o
 
   const diagramGroup = document.createElementNS(svgNs, 'g');
   svg.append(diagramGroup);
-  svg.getElementById('arrowHead').setAttribute('markerHeight', `${options.arrowHeadSize}`);
 
   // Find height ratio.
   const useLevels = Math.max(levels.length, options.minimumDepth);
@@ -201,8 +200,7 @@ export function treeToDiagram(document: Document, parent: Element, tree: Node, o
   const widthAttribute = options.flipXY ? 'height' : 'width';
   const heightAttribute = options.flipXY ? 'width' : 'height';
 
-  svg.style.width = options.width + 'px';
-  svg.style.height = options.height + 'px';
+  svg.setAttribute('style', `width:${options.width}px; height:${options.height}px`);
 
   const xMultiplier = diagramWidth / maxWidth;
   const yMultiplier = diagramHeight / height;
@@ -213,7 +211,7 @@ export function treeToDiagram(document: Document, parent: Element, tree: Node, o
     level.forEach(group => {
       group.members.forEach((node, nodeIdx) => {
         const rect = document.createElementNS(namespace, 'rect');
-        diagramGroup.appendChild(rect);
+        diagramGroup.append(rect);
 
         const yValue = levelIdx * (1 + options.levelsGap);
 
@@ -227,7 +225,7 @@ export function treeToDiagram(document: Document, parent: Element, tree: Node, o
         }
 
         const text = document.createElementNS(namespace, 'text');
-        diagramGroup.appendChild(text);
+        diagramGroup.append(text);
 
         // Arrange text; method is different for horizontal diagrams.
         if (options.flipXY) {
@@ -251,7 +249,7 @@ export function treeToDiagram(document: Document, parent: Element, tree: Node, o
 
         // Draw lines to parents.
         const line = document.createElementNS(namespace, 'line');
-        diagramGroup.appendChild(line);
+        diagramGroup.append(line);
         const parentOffset = (nodeIdx + 1) / (group.members.length + 1);
         const parentY = (levelIdx - 1) * (1 + options.levelsGap);
         let first;
