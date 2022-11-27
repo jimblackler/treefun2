@@ -3,8 +3,7 @@ import {Node} from '../treefun/node';
 export function textToTree(text: string): Node {
   const lines = text.split(/\n/);
   const rootNode: Node = {
-    label: 'root',
-    children: []
+    label: 'root'
   };
 
   const stackParents = [rootNode];
@@ -22,9 +21,11 @@ export function textToTree(text: string): Node {
     }
     const parent = stackParents[stackParents.length - 1];
     const node: Node = {
-      label: content,
-      children: []
+      label: content
     };
+    if (!parent.children) {
+      parent.children = [];
+    }
     parent.children.push(node);
     stackParents.push(node);
     stackIndents.push(indent);

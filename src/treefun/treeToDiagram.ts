@@ -65,14 +65,14 @@ export function treeToDiagram(document: Document, parent: HTMLElement, tree: Nod
   let groups: Group[] = options.drawRoot ? [{
     parent: undefined,
     members: [tree]
-  }] : tree.children.map(node => ({parent: tree, members: [node]}));
+  }] : (tree.children || []).map(node => ({parent: tree, members: [node]}));
   const levels = [];
   while (groups.length) {
     levels.push(groups);
     groups = groups.map(group =>
-        group.members.filter(member => member.children.length).map(member => ({
+        group.members.filter(member => member.children?.length).map(member => ({
           parent: member,
-          members: member.children
+          members: assertDefined(member.children)
         }))).flat();
   }
 
@@ -132,12 +132,13 @@ export function treeToDiagram(document: Document, parent: HTMLElement, tree: Nod
     // Find positions
     level.forEach(group => {
       group.members.forEach(node => {
-        if (node.children.length === 0) {
+        const children = node.children;
+        if (!children || children.length === 0) {
           return;
         }
         const totalX =
-            node.children.map(child => assertDefined(x_.get(child))).reduce((a, b) => a + b, 0);
-        x_.set(node, totalX / node.children.length);
+            children.map(child => assertDefined(x_.get(child))).reduce((a, b) => a + b, 0);
+        x_.set(node, totalX / children.length);
       });
     });
     sweepAndAverage(x_, level, maxWidth, options);
