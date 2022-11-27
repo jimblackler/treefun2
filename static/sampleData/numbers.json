@@ -1,5 +1,61 @@
 {
-  "tree": "10\n 20\n  80\n   90\n 30\n 40\n  50\n  55\n   61\n  60\n   62\n   64\n    65\n  70 \n 45",
+  "tree": {
+    "label": "root",
+    "children": [
+      {
+        "label": "10",
+        "children": [
+          {
+            "label": "20",
+            "children": [
+              {
+                "label": "80",
+                "children": [
+                  {
+                    "label": "90"
+                  }
+                ]
+              }
+            ]
+          }, {
+            "label": "30"
+          }, {
+            "label": "40",
+            "children": [
+              {
+                "label": "50"
+              }, {
+                "label": "55",
+                "children": [
+                  {
+                    "label": "61"
+                  }
+                ]
+              }, {
+                "label": "60",
+                "children": [
+                  {
+                    "label": "62"
+                  }, {
+                    "label": "64",
+                    "children": [
+                      {
+                        "label": "65"
+                      }
+                    ]
+                  }
+                ]
+              }, {
+                "label": "70"
+              }
+            ]
+          }, {
+            "label": "45"
+          }
+        ]
+      }
+    ]
+  },
   "options": {
     "flipXY": 0,
     "width": 320,

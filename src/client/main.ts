@@ -1,6 +1,5 @@
 import {defaultKeymap} from "@codemirror/commands"
 import {css} from '@codemirror/lang-css';
-import {Extension} from '@codemirror/state';
 import {EditorView, keymap, lineNumbers} from "@codemirror/view"
 import '@vaadin/menu-bar';
 import {MenuBarItem} from '@vaadin/menu-bar';
@@ -15,6 +14,7 @@ import {treeToDiagram} from '../treefun/treeToDiagram';
 import {listen, setState, State} from './state';
 import './style.css'
 import {textToTree} from './textToTree';
+import {treeToText} from './treeToText';
 import isJson = JsonValue.isJson;
 
 const container = assertNotNull(document.getElementById('container'));
@@ -64,7 +64,7 @@ const exampleItems: MenuBarItem[] = [];
   actions.set(item, () => {
     axios.get(`/sampleData/${name}.json`).then(response => response.data).then(data => {
       setState({
-        treeText: data.tree,
+        tree: data.tree,
         css: data.styles,
         options: data.options
       });
@@ -112,8 +112,7 @@ layout.registerComponentFactoryFunction('diagram', container => {
     while (container.element.firstChild) {
       container.element.firstChild.remove();
     }
-    treeToDiagram(
-        document, container.element, textToTree(state.treeText), state.options, state.css);
+    treeToDiagram(document, container.element, state.tree, state.options, state.css);
   })
 });
 
@@ -131,7 +130,7 @@ layout.registerComponentFactoryFunction('diagramServer', (container, componentSt
   const url = new URL(`${window.location.origin}/diagram`);
 
   listen(state => {
-    url.searchParams.set('tree', JSON.stringify(textToTree(state.treeText)));
+    url.searchParams.set('tree', JSON.stringify(state.tree));
     url.searchParams.set('options', JSON.stringify(state.options));
     url.searchParams.set('css', state.css);
     url.searchParams.set('mode', assertString(componentState.mode));
@@ -187,45 +186,68 @@ layout.registerComponentFactoryFunction('jsonEditor', container => {
   });
 });
 
-function getTextEditorComponent(title: string, extensions: Extension[],
-                                textFromState: (state: State) => string,
-                                updateStateFromText: (text: string) => Partial<State>) {
-  return (container: ComponentContainer) => {
-    container.setTitle(title);
-    let lastState: State | undefined;
-    container.element.style.overflow = 'scroll';
+layout.registerComponentFactoryFunction('textEditorTree', (container: ComponentContainer) => {
+  container.setTitle('Data (text)');
+  let lastState: State | undefined;
+  container.element.style.overflow = 'scroll';
 
-    const editorView = new EditorView({
-      extensions: [keymap.of(defaultKeymap), lineNumbers(), basicLight,
-        EditorView.updateListener.of(update => {
-          if (!update.docChanged || !lastState) {
-            return;
-          }
-          const text = editorView.state.doc.toString();
-          if (text !== textFromState(lastState)) {
-            setState({...lastState, ...updateStateFromText(assertString(text))});
-          }
-        }), ...extensions],
-      parent: container.element
-    });
+  const editorView = new EditorView({
+    extensions: [keymap.of(defaultKeymap), lineNumbers(), basicLight,
+      EditorView.updateListener.of(update => {
+        if (!update.docChanged || !lastState) {
+          return;
+        }
+        const text = editorView.state.doc.toString();
+        const tree = textToTree(text);
+        if (JSON.stringify(lastState.tree) !== JSON.stringify(tree)) {
+          setState({...lastState, tree});
+        }
+      })],
+    parent: container.element
+  });
 
-    listen(state => {
-      lastState = state;
-      const newText = assertString(textFromState(state));
-      if (editorView.state.doc.toString() !== newText) {
-        editorView.dispatch({
-          changes: {from: 0, to: editorView.state.doc.length, insert: newText}
-        });
-      }
-    });
-  };
-}
-
-layout.registerComponentFactoryFunction('textEditorTree',
-    getTextEditorComponent('Data (text)', [], state => state.treeText, text => ({treeText: text})));
+  listen(state => {
+    lastState = state;
+    if (JSON.stringify(state.tree) !==
+        JSON.stringify(textToTree(editorView.state.doc.toString()))) {
+      const newText = treeToText(state.tree);
+      editorView.dispatch({
+        changes: {from: 0, to: editorView.state.doc.length, insert: newText}
+      });
+    }
+  });
+});
 
 layout.registerComponentFactoryFunction('textEditorCss',
-    getTextEditorComponent('CSS', [css()], state => state.css, text => ({css: text})));
+    (container: ComponentContainer) => {
+      container.setTitle('CSS');
+      let lastState: State | undefined;
+      container.element.style.overflow = 'scroll';
+
+      const editorView = new EditorView({
+        extensions: [keymap.of(defaultKeymap), lineNumbers(), basicLight,
+          EditorView.updateListener.of(update => {
+            if (!update.docChanged || !lastState) {
+              return;
+            }
+            const text = editorView.state.doc.toString();
+            if (text !== lastState.css) {
+              setState({...lastState, css: text});
+            }
+          }), css()],
+        parent: container.element
+      });
+
+      listen(state => {
+        lastState = state;
+        const newText = state.css;
+        if (editorView.state.doc.toString() !== newText) {
+          editorView.dispatch({
+            changes: {from: 0, to: editorView.state.doc.length, insert: newText}
+          });
+        }
+      });
+    });
 
 layout.loadLayout(layoutConfig);
 

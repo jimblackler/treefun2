@@ -1,5 +1,98 @@
 {
-  "tree": "/bin\n/boot\n/dev\n/etc\n\topt\n\tsgml\n\tX11\n\txml\n/home\n/lib\n/media\n/mnt\n/opt\n/proc\n/root\n/run\n/sbin\n/srv\n/tmp\n/usr\n\tbin\n\tinclude\n\tlib\n\tlocal\n\tsbin\n\tshare\n\tsrc\n/var\n\tcache\n\tlib\n\tlock\n\tlog\n\tmail\n\topt\n\trun\n\tspool\n\t\tmail\n\ttmp",
+  "tree": {
+    "label": "root",
+    "children": [
+      {
+        "label": "/bin"
+      }, {
+        "label": "/boot"
+      }, {
+        "label": "/dev"
+      }, {
+        "label": "/etc",
+        "children": [
+          {
+            "label": "opt"
+          }, {
+            "label": "sgml"
+          }, {
+            "label": "X11"
+          }, {
+            "label": "xml"
+          }
+        ]
+      }, {
+        "label": "/home"
+      }, {
+        "label": "/lib"
+      }, {
+        "label": "/media"
+      }, {
+        "label": "/mnt"
+      }, {
+        "label": "/opt"
+      }, {
+        "label": "/proc"
+      }, {
+        "label": "/root"
+      }, {
+        "label": "/run"
+      }, {
+        "label": "/sbin"
+      }, {
+        "label": "/srv"
+      }, {
+        "label": "/tmp"
+      }, {
+        "label": "/usr",
+        "children": [
+          {
+            "label": "bin"
+          }, {
+            "label": "include"
+          }, {
+            "label": "lib"
+          }, {
+            "label": "local"
+          }, {
+            "label": "sbin"
+          }, {
+            "label": "share"
+          }, {
+            "label": "src"
+          }
+        ]
+      }, {
+        "label": "/var",
+        "children": [
+          {
+            "label": "cache"
+          }, {
+            "label": "lib"
+          }, {
+            "label": "lock"
+          }, {
+            "label": "log"
+          }, {
+            "label": "mail"
+          }, {
+            "label": "opt"
+          }, {
+            "label": "run"
+          }, {
+            "label": "spool",
+            "children": [
+              {
+                "label": "mail"
+              }
+            ]
+          }, {
+            "label": "tmp"
+          }
+        ]
+      }
+    ]
+  },
   "options": {
     "flipXY": 0,
     "width": 950,

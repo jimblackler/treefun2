@@ -1,5 +1,92 @@
 {
-  "tree": "Human deities\n Faerûnian pantheon\n  Greater deities\n  Intermediate deities\n  Lesser deities\n  Demideities\n  Quasi-deities\n  Kara-Turan pantheon\n  Maztican pantheon\n  Mulhorandi pantheon\n  Zakharan pantheon\nNonhuman racial deities\n Former Archdevil\n Dragon deities\n Drow deities\n Dwarven deities\n Elven deities\n Giant deities\n Gnome deities\n Halfling deities\n Orc deities\n Other races\nNondeity powers\n Archdevils\n Demon princes\n Paragons\n  Archon\n  Eladrin\n  Guardinal\nDead deities\n Untheric pantheon\n Others",
+  "tree": {
+    "label": "root",
+    "children": [
+      {
+        "label": "Human deities",
+        "children": [
+          {
+            "label": "Faerûnian pantheon",
+            "children": [
+              {
+                "label": "Greater deities"
+              }, {
+                "label": "Intermediate deities"
+              }, {
+                "label": "Lesser deities"
+              }, {
+                "label": "Demideities"
+              }, {
+                "label": "Quasi-deities"
+              }, {
+                "label": "Kara-Turan pantheon"
+              }, {
+                "label": "Maztican pantheon"
+              }, {
+                "label": "Mulhorandi pantheon"
+              }, {
+                "label": "Zakharan pantheon"
+              }
+            ]
+          }
+        ]
+      }, {
+        "label": "Nonhuman racial deities",
+        "children": [
+          {
+            "label": "Former Archdevil"
+          }, {
+            "label": "Dragon deities"
+          }, {
+            "label": "Drow deities"
+          }, {
+            "label": "Dwarven deities"
+          }, {
+            "label": "Elven deities"
+          }, {
+            "label": "Giant deities"
+          }, {
+            "label": "Gnome deities"
+          }, {
+            "label": "Halfling deities"
+          }, {
+            "label": "Orc deities"
+          }, {
+            "label": "Other races"
+          }
+        ]
+      }, {
+        "label": "Nondeity powers",
+        "children": [
+          {
+            "label": "Archdevils"
+          }, {
+            "label": "Demon princes"
+          }, {
+            "label": "Paragons",
+            "children": [
+              {
+                "label": "Archon"
+              }, {
+                "label": "Eladrin"
+              }, {
+                "label": "Guardinal"
+              }
+            ]
+          }
+        ]
+      }, {
+        "label": "Dead deities",
+        "children": [
+          {
+            "label": "Untheric pantheon"
+          }, {
+            "label": "Others"
+          }
+        ]
+      }
+    ]
+  },
   "options": {
     "flipXY": 0,
     "width": 900,

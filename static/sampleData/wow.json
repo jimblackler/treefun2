@@ -1,5 +1,68 @@
 {
-  "tree": "Aqir\n Mantid\n  Mantid queen\n  Mantid vizier\n Nerubian\n  Nerubian spiderlord\n   Hazu'Asnab\n   Majis'Tomon\n   Ul'Tomon\n  Nerubian flyer\n  Nerubian queen\n  Nerubian spiderling\n  Nerubian vizier\n Qiraji\n  Qiraji prophet\n   The Prophet Skeram\n   Harbinger Skyriss\n   Qiraji Brainwasher\n   Qiraji Mindslayer\n  Qiraji emperor",
+  "tree": {
+    "label": "root",
+    "children": [
+      {
+        "label": "Aqir",
+        "children": [
+          {
+            "label": "Mantid",
+            "children": [
+              {
+                "label": "Mantid queen"
+              }, {
+                "label": "Mantid vizier"
+              }
+            ]
+          }, {
+            "label": "Nerubian",
+            "children": [
+              {
+                "label": "Nerubian spiderlord",
+                "children": [
+                  {
+                    "label": "Hazu'Asnab"
+                  }, {
+                    "label": "Majis'Tomon"
+                  }, {
+                    "label": "Ul'Tomon"
+                  }
+                ]
+              }, {
+                "label": "Nerubian flyer"
+              }, {
+                "label": "Nerubian queen"
+              }, {
+                "label": "Nerubian spiderling"
+              }, {
+                "label": "Nerubian vizier"
+              }
+            ]
+          }, {
+            "label": "Qiraji",
+            "children": [
+              {
+                "label": "Qiraji prophet",
+                "children": [
+                  {
+                    "label": "The Prophet Skeram"
+                  }, {
+                    "label": "Harbinger Skyriss"
+                  }, {
+                    "label": "Qiraji Brainwasher"
+                  }, {
+                    "label": "Qiraji Mindslayer"
+                  }
+                ]
+              }, {
+                "label": "Qiraji emperor"
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  },
   "options": {
     "flipXY": 0,
     "width": 800,

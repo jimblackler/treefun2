@@ -1,8 +1,9 @@
+import {Node} from '../treefun/node';
 import {Options} from '../treefun/options';
 import {transactionToPromise} from './transactionToPromise';
 
 export interface State {
-  treeText: string;
+  tree: Node;
   css: string;
   options: Options;
 }

@@ -1,5 +1,129 @@
 {
-  "tree": "Subkingdom Parazoa\n Porifera\n Placozoa\nSubkingdom Eumetazoa\n Radiata\n  Ctenophora\n  Cnidaria\n Bilateria\n  Orthonectida\n  Rhombozoa\n  Acoelomorpha\n  Chaetognatha\n  Superphylum Deuterostomia\n   Chordata\n   Hemichordata\n   Echinodermata\n   Xenoturbellida\n   Vetulicolia\n  Protostomia\n   Superphylum Ecdysozoa\n    Kinorhyncha\n    Loricifera\n    Priapulida\n    Nematoda\n    Nematomorpha\n    Onychophora\n    Tardigrada\n    Arthropoda\n   Superphylum Platyzoa\n    Platyhelminthes\n    Gastrotricha\n    Rotifera\n    Acanthocephala\n    Gnathostomulida\n    Micrognathozoa\n    Cycliophora\n   Superphylum Lophotrochozoa\n    Sipuncula\n    Hyolitha\n    Nemertea\n    Phoronida\n    Bryozoa\n    Entoprocta\n    Brachiopoda\n    Mollusca\n    Annelida",
+  "tree": {
+    "label": "root",
+    "children": [
+      {
+        "label": "Subkingdom Parazoa",
+        "children": [
+          {
+            "label": "Porifera"
+          }, {
+            "label": "Placozoa"
+          }
+        ]
+      }, {
+        "label": "Subkingdom Eumetazoa",
+        "children": [
+          {
+            "label": "Radiata",
+            "children": [
+              {
+                "label": "Ctenophora"
+              }, {
+                "label": "Cnidaria"
+              }
+            ]
+          }, {
+            "label": "Bilateria",
+            "children": [
+              {
+                "label": "Orthonectida"
+              }, {
+                "label": "Rhombozoa"
+              }, {
+                "label": "Acoelomorpha"
+              }, {
+                "label": "Chaetognatha"
+              }, {
+                "label": "Superphylum Deuterostomia",
+                "children": [
+                  {
+                    "label": "Chordata"
+                  }, {
+                    "label": "Hemichordata"
+                  }, {
+                    "label": "Echinodermata"
+                  }, {
+                    "label": "Xenoturbellida"
+                  }, {
+                    "label": "Vetulicolia"
+                  }
+                ]
+              }, {
+                "label": "Protostomia",
+                "children": [
+                  {
+                    "label": "Superphylum Ecdysozoa",
+                    "children": [
+                      {
+                        "label": "Kinorhyncha"
+                      }, {
+                        "label": "Loricifera"
+                      }, {
+                        "label": "Priapulida"
+                      }, {
+                        "label": "Nematoda"
+                      }, {
+                        "label": "Nematomorpha"
+                      }, {
+                        "label": "Onychophora"
+                      }, {
+                        "label": "Tardigrada"
+                      }, {
+                        "label": "Arthropoda"
+                      }
+                    ]
+                  }, {
+                    "label": "Superphylum Platyzoa",
+                    "children": [
+                      {
+                        "label": "Platyhelminthes"
+                      }, {
+                        "label": "Gastrotricha"
+                      }, {
+                        "label": "Rotifera"
+                      }, {
+                        "label": "Acanthocephala"
+                      }, {
+                        "label": "Gnathostomulida"
+                      }, {
+                        "label": "Micrognathozoa"
+                      }, {
+                        "label": "Cycliophora"
+                      }
+                    ]
+                  }, {
+                    "label": "Superphylum Lophotrochozoa",
+                    "children": [
+                      {
+                        "label": "Sipuncula"
+                      }, {
+                        "label": "Hyolitha"
+                      }, {
+                        "label": "Nemertea"
+                      }, {
+                        "label": "Phoronida"
+                      }, {
+                        "label": "Bryozoa"
+                      }, {
+                        "label": "Entoprocta"
+                      }, {
+                        "label": "Brachiopoda"
+                      }, {
+                        "label": "Mollusca"
+                      }, {
+                        "label": "Annelida"
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  },
   "options": {
     "flipXY": 1,
     "width": 900,
