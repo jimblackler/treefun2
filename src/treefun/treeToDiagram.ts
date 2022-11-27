@@ -165,6 +165,7 @@ export function treeToDiagram(document: Document, parent: HTMLElement, tree: Nod
   const svg = document.createElementNS(svgNs, 'svg');
   parent.append(svg);
   svg.setAttribute('xmlns', svgNs);
+  svg.setAttribute('style', `width:${options.width}px; height:${options.height}px`);
 
   const styleSheet = document.createElementNS(svgNs, 'style');
   svg.append(styleSheet);
@@ -199,8 +200,6 @@ export function treeToDiagram(document: Document, parent: HTMLElement, tree: Nod
   const diagramHeight = options.flipXY ? options.width : options.height;
   const widthAttribute = options.flipXY ? 'height' : 'width';
   const heightAttribute = options.flipXY ? 'width' : 'height';
-
-  svg.setAttribute('style', `width:${options.width}px; height:${options.height}px`);
 
   const xMultiplier = diagramWidth / maxWidth;
   const yMultiplier = diagramHeight / height;
