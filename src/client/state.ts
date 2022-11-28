@@ -26,13 +26,16 @@ let activeState: State | undefined;
 
 type StateListener = (state: State) => void;
 
-const listeners: StateListener[] = [];
+const listeners = new Set<StateListener>();
 
-export function listen(listener: StateListener) {
-  listeners.push(listener);
+export function listen(listener: StateListener): () => void {
+  listeners.add(listener);
   if (activeState) {
     const _activeState = activeState;
     requestAnimationFrame(() => listener(_activeState));
+  }
+  return () => {
+    listeners.delete(listener);
   }
 }
 

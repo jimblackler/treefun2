@@ -127,12 +127,13 @@ layout.registerComponentFactoryFunction('diagram', container => {
   container.setTitle('Diagram');
   container.element.classList.add('diagramContainer');
 
-  listen(state => {
+  const close = listen(state => {
     while (container.element.firstChild) {
       container.element.firstChild.remove();
     }
     treeToDiagram(document, container.element, state.tree, state.options, state.css);
-  })
+  });
+  container.on('destroy', close);
 });
 
 layout.registerComponentFactoryFunction('diagramServer', (container, componentState) => {
@@ -148,7 +149,7 @@ layout.registerComponentFactoryFunction('diagramServer', (container, componentSt
 
   const url = new URL(`${window.location.origin}/diagram`);
 
-  listen(state => {
+  const close = listen(state => {
     url.searchParams.set('tree', JSON.stringify(state.tree));
     url.searchParams.set('options', JSON.stringify(state.options));
     url.searchParams.set('css', state.css);
@@ -156,7 +157,8 @@ layout.registerComponentFactoryFunction('diagramServer', (container, componentSt
     img.setAttribute('src', url.toString());
     img.width = state.options.width;
     img.height = state.options.height;
-  })
+  });
+  container.on('destroy', close);
 });
 
 layout.registerComponentFactoryFunction('jsonEditor', container => {
@@ -188,7 +190,7 @@ layout.registerComponentFactoryFunction('jsonEditor', container => {
     }
   });
 
-  listen(state => {
+  const close = listen(state => {
     lastState = state;
     let oldJson;
     try {
@@ -203,6 +205,7 @@ layout.registerComponentFactoryFunction('jsonEditor', container => {
       })
     }
   });
+  container.on('destroy', close);
 });
 
 layout.registerComponentFactoryFunction('jsonEditorData', container => {
@@ -234,7 +237,7 @@ layout.registerComponentFactoryFunction('jsonEditorData', container => {
     }
   });
 
-  listen(state => {
+  const close = listen(state => {
     lastState = state;
     let oldJson;
     try {
@@ -249,6 +252,7 @@ layout.registerComponentFactoryFunction('jsonEditorData', container => {
       })
     }
   });
+  container.on('destroy', close);
 });
 
 layout.registerComponentFactoryFunction('jsonEditorData2', container => {
@@ -281,7 +285,7 @@ layout.registerComponentFactoryFunction('jsonEditorData2', container => {
     }
   });
 
-  listen(state => {
+  const close = listen(state => {
     lastState = state;
     let oldJson;
     try {
@@ -298,6 +302,7 @@ layout.registerComponentFactoryFunction('jsonEditorData2', container => {
       })
     }
   });
+  container.on('destroy', close);
 });
 
 layout.registerComponentFactoryFunction('textEditorTree', (container: ComponentContainer) => {
@@ -320,7 +325,7 @@ layout.registerComponentFactoryFunction('textEditorTree', (container: ComponentC
     parent: container.element
   });
 
-  listen(state => {
+  const close = listen(state => {
     lastState = state;
     if (JSON.stringify(state.tree) !==
         JSON.stringify(textToTree(editorView.state.doc.toString()))) {
@@ -330,6 +335,7 @@ layout.registerComponentFactoryFunction('textEditorTree', (container: ComponentC
       });
     }
   });
+  container.on('destroy', close);
 });
 
 layout.registerComponentFactoryFunction('textEditorCss',
@@ -352,7 +358,7 @@ layout.registerComponentFactoryFunction('textEditorCss',
         parent: container.element
       });
 
-      listen(state => {
+      const close = listen(state => {
         lastState = state;
         const newText = state.css;
         if (editorView.state.doc.toString() !== newText) {
@@ -361,6 +367,7 @@ layout.registerComponentFactoryFunction('textEditorCss',
           });
         }
       });
+      container.on('destroy', close);
     });
 
 layout.on('stateChanged', function () {
