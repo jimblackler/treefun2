@@ -9,18 +9,20 @@ export function textToTree(text: string): Node[] {
   const stackParents = [rootNode];
   const stackIndents = [-1];
   for (const line of lines) {
-    const content = line.trim();
-    if (!content.length) {
-      continue;
+    let indent = 0;
+    while (indent < line.length) {
+      if (line[indent] !== ' ') {
+        break;
+      }
+      indent++;
     }
-    const indent = line.indexOf(content);
     while (stackIndents[stackIndents.length - 1] >= indent) {
       stackIndents.pop();
       stackParents.pop();
     }
     const parent = stackParents[stackParents.length - 1];
     const node: Node = {
-      label: content
+      label: line.substring(indent)
     };
     if (!parent.children) {
       parent.children = [];
