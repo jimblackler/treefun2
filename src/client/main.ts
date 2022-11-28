@@ -12,6 +12,7 @@ import {assertString} from '../common/check/string';
 import {Node} from '../treefun/node';
 import {Options} from '../treefun/options';
 import {treeToDiagram} from '../treefun/treeToDiagram';
+import {Format2, fromJsonFormat2, toJsonFormat2} from './format2';
 import {listen, setState, State} from './state';
 import './style.css'
 import {textToTree} from './textToTree';
@@ -87,6 +88,7 @@ const views: View[] = [
   {componentType: 'diagramServer', name: 'Diagram SVG (Server)', componentState: {mode: 'svg'}},
   {componentType: 'diagramServer', name: 'Diagram PNG (Server)', componentState: {mode: 'png'}},
   {componentType: 'jsonEditorData', name: 'Tree (JSON)'},
+  {componentType: 'jsonEditorData2', name: 'Tree (JSON format 2)'},
 ];
 
 const viewItems: MenuBarItem[] = [];
@@ -229,6 +231,55 @@ layout.registerComponentFactoryFunction('jsonEditorData', container => {
       jsonEditor.update({
         text: undefined,
         json: state.tree as unknown as JSONValue
+      })
+    }
+  });
+});
+
+
+layout.registerComponentFactoryFunction('jsonEditorData2', container => {
+  container.setTitle('Tree (JSON format 2)');
+  let lastState: State | undefined;
+  const jsonEditor = new JSONEditor({
+    target: container.element,
+    props: {
+      mode: Mode.text,
+      mainMenuBar: true,
+      content: {
+        text: '',
+        json: undefined
+      },
+      onChange: (content, previousContent, status) => {
+        let json;
+        try {
+          json = toJSONContent(content).json;
+        } catch (e) {
+          return;
+        }
+        if (!lastState) {
+          return;
+        }
+        const tree = fromJsonFormat2(json as unknown as Format2);
+        if (JSON.stringify(tree) !== JSON.stringify(lastState.tree)) {
+          setState({...lastState, tree});
+        }
+      }
+    }
+  });
+
+  listen(state => {
+    lastState = state;
+    let oldJson;
+    try {
+      oldJson = toJSONContent(jsonEditor.get()).json;
+    } catch (e) {
+      // Invalid JSON.
+    }
+    const s2 = toJsonFormat2(state.tree);
+    if (JSON.stringify(s2) !== JSON.stringify(oldJson)) {
+      jsonEditor.update({
+        text: undefined,
+        json: s2 as unknown as JSONValue
       })
     }
   });
