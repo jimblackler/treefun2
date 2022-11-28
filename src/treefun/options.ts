@@ -14,5 +14,4 @@ export interface Options {
   levelsGap: number;
   minimumDepth: number;
   minimumBreadth: number;
-  drawRoot: boolean;
 }

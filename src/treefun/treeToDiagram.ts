@@ -62,10 +62,7 @@ function sweepAndAverage(x: Map<Node, number>, level: Group[], maxWidth: number,
 export function treeToDiagram(document: Document, parent: HTMLElement, tree: Node[],
                               options: Options, css: string) {
   // Convert the tree structure into an array of levels 0... n of cousin and sibling nodes.
-  let groups: Group[] = options.drawRoot ? [{
-    parent: undefined,
-    members: tree
-  }] : tree.map(node => ({parent: undefined, members: [node]}));
+  let groups: Group[] = tree.map(node => ({parent: undefined, members: [node]}));
   const levels = [];
   while (groups.length) {
     levels.push(groups);

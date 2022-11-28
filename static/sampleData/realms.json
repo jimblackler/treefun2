@@ -99,8 +99,7 @@
     "idealCousinGap": 1.2,
     "levelsGap": 1.2,
     "minimumDepth": 6,
-    "minimumBreadth": 6,
-    "drawRoot": false
+    "minimumBreadth": 6
   },
   "styles": "text {\n  text-anchor: middle;\n  font-size: small;\n  fill: white;\n\n}\n\nrect {\n  fill: blue;\n  stroke: black;\n  opacity: 1;\n  stroke-width: 1.5;\n}\n\nline {\n  stroke: black;\n  opacity: 0.5;\n  stroke-width: 1.5;\n}\n  "
 }
