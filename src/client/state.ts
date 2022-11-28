@@ -8,7 +8,7 @@ export interface State {
   options: Options;
 }
 
-export const stateDb: Promise<IDBDatabase> = new Promise((resolve, reject) => {
+const stateDb: Promise<IDBDatabase> = new Promise((resolve, reject) => {
   const request = indexedDB.open('state-store', 1);
   request.addEventListener('upgradeneeded', event => {
     if (event.oldVersion < 1) {
