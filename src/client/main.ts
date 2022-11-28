@@ -69,6 +69,9 @@ const defaultLayout: LayoutConfig = {
   }
 };
 const layout = new GoldenLayout(container);
+window.addEventListener('resize', () => {
+  layout.setSize(container.clientWidth, container.clientHeight);
+});
 
 const menuBar = assertNotNull(document.querySelector('vaadin-menu-bar'));
 
