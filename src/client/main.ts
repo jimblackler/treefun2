@@ -176,7 +176,7 @@ layout.registerComponentFactoryFunction('jsonEditor', container => {
         text: '',
         json: undefined
       },
-      onChange: (content, previousContent, status) => {
+      onChange: content => {
         let json;
         try {
           json = toJSONContent(content).json;
@@ -223,7 +223,7 @@ layout.registerComponentFactoryFunction('jsonEditorData', container => {
         text: '',
         json: undefined
       },
-      onChange: (content, previousContent, status) => {
+      onChange: content => {
         let json;
         try {
           json = toJSONContent(content).json;
@@ -270,7 +270,7 @@ layout.registerComponentFactoryFunction('jsonEditorData2', container => {
         text: '',
         json: undefined
       },
-      onChange: (content, previousContent, status) => {
+      onChange: content => {
         let json;
         try {
           json = toJSONContent(content).json;
