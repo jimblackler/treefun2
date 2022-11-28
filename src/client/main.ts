@@ -364,11 +364,12 @@ layout.registerComponentFactoryFunction('textEditorCss',
     });
 
 layout.on('stateChanged', function () {
-  layoutStateDb.then(db => db.transaction('layoutState', 'readwrite').objectStore('layoutState').put(layout.saveLayout(), ''));
+  layoutStateDb.then(db => db.transaction('layoutState', 'readwrite')
+      .objectStore('layoutState').put(layout.saveLayout(), ''));
 });
 
 layoutStateDb.then(db =>
-    db.transaction('layoutState', 'readonly').objectStore('layoutState').get('')) // need 'objectStore'?
+    db.transaction('layoutState', 'readonly').objectStore('layoutState').get(''))
     .then(transactionToPromise).then(layoutState => {
   if (layoutState) {
     layout.loadLayout(LayoutConfig.fromResolved(layoutState));
