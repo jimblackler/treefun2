@@ -28,21 +28,17 @@ export function fromJsonFormat2(data: Format2) {
     label: 'root'
   };
   fromJsonFormat2b(data, root);
-  return assertDefined(root.children)[0];
+  return assertDefined(root.children);
 }
 
-function toJsonFormat2b(tree: Node, addTo: Format2) {
-  addTo.push(tree.label);
-  if (!tree.children) {
-    return;
-  }
-  const p: Format2 = [];
-  tree.children.forEach(node => toJsonFormat2b(node, p));
-  addTo.push(p);
-}
-
-export function toJsonFormat2(tree: Node): Format2 {
+export function toJsonFormat2(tree: Node[]) {
   const out: Format2 = [];
-  toJsonFormat2b(tree, out);
+  tree.forEach(node => {
+    out.push(node.label);
+    if (!node.children) {
+      return;
+    }
+    out.push(toJsonFormat2(node.children));
+  });
   return out;
 }

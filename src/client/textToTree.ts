@@ -1,6 +1,6 @@
 import {Node} from '../treefun/node';
 
-export function textToTree(text: string): Node {
+export function textToTree(text: string): Node[] {
   const lines = text.split(/\n/);
   const rootNode: Node = {
     label: 'root'
@@ -30,5 +30,5 @@ export function textToTree(text: string): Node {
     stackParents.push(node);
     stackIndents.push(indent);
   }
-  return rootNode;
+  return rootNode.children || [];
 }

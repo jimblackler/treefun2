@@ -10,9 +10,9 @@ function* yieldNodes(nodes: Node[], level: number): Generator<{ level: number; l
   }
 }
 
-export function treeToText(tree: Node): string {
+export function treeToText(tree: Node[]): string {
   const lines: string[] = [];
-  for (const {level, label} of yieldNodes(tree.children || [], 0)) {
+  for (const {level, label} of yieldNodes(tree || [], 0)) {
     let indent = '';
     for (let idx = 0; idx !== level; idx++) {
       indent += ' ';

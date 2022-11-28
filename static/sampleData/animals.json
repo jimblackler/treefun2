@@ -1,129 +1,126 @@
 {
-  "tree": {
-    "label": "root",
-    "children": [
-      {
-        "label": "Subkingdom Parazoa",
-        "children": [
-          {
-            "label": "Porifera"
-          }, {
-            "label": "Placozoa"
-          }
-        ]
-      }, {
-        "label": "Subkingdom Eumetazoa",
-        "children": [
-          {
-            "label": "Radiata",
-            "children": [
-              {
-                "label": "Ctenophora"
-              }, {
-                "label": "Cnidaria"
-              }
-            ]
-          }, {
-            "label": "Bilateria",
-            "children": [
-              {
-                "label": "Orthonectida"
-              }, {
-                "label": "Rhombozoa"
-              }, {
-                "label": "Acoelomorpha"
-              }, {
-                "label": "Chaetognatha"
-              }, {
-                "label": "Superphylum Deuterostomia",
-                "children": [
-                  {
-                    "label": "Chordata"
-                  }, {
-                    "label": "Hemichordata"
-                  }, {
-                    "label": "Echinodermata"
-                  }, {
-                    "label": "Xenoturbellida"
-                  }, {
-                    "label": "Vetulicolia"
-                  }
-                ]
-              }, {
-                "label": "Protostomia",
-                "children": [
-                  {
-                    "label": "Superphylum Ecdysozoa",
-                    "children": [
-                      {
-                        "label": "Kinorhyncha"
-                      }, {
-                        "label": "Loricifera"
-                      }, {
-                        "label": "Priapulida"
-                      }, {
-                        "label": "Nematoda"
-                      }, {
-                        "label": "Nematomorpha"
-                      }, {
-                        "label": "Onychophora"
-                      }, {
-                        "label": "Tardigrada"
-                      }, {
-                        "label": "Arthropoda"
-                      }
-                    ]
-                  }, {
-                    "label": "Superphylum Platyzoa",
-                    "children": [
-                      {
-                        "label": "Platyhelminthes"
-                      }, {
-                        "label": "Gastrotricha"
-                      }, {
-                        "label": "Rotifera"
-                      }, {
-                        "label": "Acanthocephala"
-                      }, {
-                        "label": "Gnathostomulida"
-                      }, {
-                        "label": "Micrognathozoa"
-                      }, {
-                        "label": "Cycliophora"
-                      }
-                    ]
-                  }, {
-                    "label": "Superphylum Lophotrochozoa",
-                    "children": [
-                      {
-                        "label": "Sipuncula"
-                      }, {
-                        "label": "Hyolitha"
-                      }, {
-                        "label": "Nemertea"
-                      }, {
-                        "label": "Phoronida"
-                      }, {
-                        "label": "Bryozoa"
-                      }, {
-                        "label": "Entoprocta"
-                      }, {
-                        "label": "Brachiopoda"
-                      }, {
-                        "label": "Mollusca"
-                      }, {
-                        "label": "Annelida"
-                      }
-                    ]
-                  }
-                ]
-              }
-            ]
-          }
-        ]
-      }
-    ]
-  },
+  "tree": [
+    {
+      "label": "Subkingdom Parazoa",
+      "children": [
+        {
+          "label": "Porifera"
+        }, {
+          "label": "Placozoa"
+        }
+      ]
+    }, {
+      "label": "Subkingdom Eumetazoa",
+      "children": [
+        {
+          "label": "Radiata",
+          "children": [
+            {
+              "label": "Ctenophora"
+            }, {
+              "label": "Cnidaria"
+            }
+          ]
+        }, {
+          "label": "Bilateria",
+          "children": [
+            {
+              "label": "Orthonectida"
+            }, {
+              "label": "Rhombozoa"
+            }, {
+              "label": "Acoelomorpha"
+            }, {
+              "label": "Chaetognatha"
+            }, {
+              "label": "Superphylum Deuterostomia",
+              "children": [
+                {
+                  "label": "Chordata"
+                }, {
+                  "label": "Hemichordata"
+                }, {
+                  "label": "Echinodermata"
+                }, {
+                  "label": "Xenoturbellida"
+                }, {
+                  "label": "Vetulicolia"
+                }
+              ]
+            }, {
+              "label": "Protostomia",
+              "children": [
+                {
+                  "label": "Superphylum Ecdysozoa",
+                  "children": [
+                    {
+                      "label": "Kinorhyncha"
+                    }, {
+                      "label": "Loricifera"
+                    }, {
+                      "label": "Priapulida"
+                    }, {
+                      "label": "Nematoda"
+                    }, {
+                      "label": "Nematomorpha"
+                    }, {
+                      "label": "Onychophora"
+                    }, {
+                      "label": "Tardigrada"
+                    }, {
+                      "label": "Arthropoda"
+                    }
+                  ]
+                }, {
+                  "label": "Superphylum Platyzoa",
+                  "children": [
+                    {
+                      "label": "Platyhelminthes"
+                    }, {
+                      "label": "Gastrotricha"
+                    }, {
+                      "label": "Rotifera"
+                    }, {
+                      "label": "Acanthocephala"
+                    }, {
+                      "label": "Gnathostomulida"
+                    }, {
+                      "label": "Micrognathozoa"
+                    }, {
+                      "label": "Cycliophora"
+                    }
+                  ]
+                }, {
+                  "label": "Superphylum Lophotrochozoa",
+                  "children": [
+                    {
+                      "label": "Sipuncula"
+                    }, {
+                      "label": "Hyolitha"
+                    }, {
+                      "label": "Nemertea"
+                    }, {
+                      "label": "Phoronida"
+                    }, {
+                      "label": "Bryozoa"
+                    }, {
+                      "label": "Entoprocta"
+                    }, {
+                      "label": "Brachiopoda"
+                    }, {
+                      "label": "Mollusca"
+                    }, {
+                      "label": "Annelida"
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ],
   "options": {
     "flipXY": 1,
     "width": 900,

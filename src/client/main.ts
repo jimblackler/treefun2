@@ -213,7 +213,7 @@ layout.registerComponentFactoryFunction('jsonEditorData', container => {
           return;
         }
         if (JSON.stringify(json) !== JSON.stringify(lastState.tree)) {
-          setState({...lastState, tree: json as unknown as Node});
+          setState({...lastState, tree: json as unknown as Node[]});
         }
       }
     }
@@ -235,7 +235,6 @@ layout.registerComponentFactoryFunction('jsonEditorData', container => {
     }
   });
 });
-
 
 layout.registerComponentFactoryFunction('jsonEditorData2', container => {
   container.setTitle('Tree (JSON format 2)');
@@ -275,11 +274,12 @@ layout.registerComponentFactoryFunction('jsonEditorData2', container => {
     } catch (e) {
       // Invalid JSON.
     }
-    const s2 = toJsonFormat2(state.tree);
-    if (JSON.stringify(s2) !== JSON.stringify(oldJson)) {
+    const json = toJsonFormat2(state.tree);
+    if (JSON.stringify(json) !== JSON.stringify(oldJson)) {
+      console.log({oldJson, json});
       jsonEditor.update({
         text: undefined,
-        json: s2 as unknown as JSONValue
+        json: json as unknown as JSONValue
       })
     }
   });

@@ -1,98 +1,95 @@
 {
-  "tree": {
-    "label": "root",
-    "children": [
-      {
-        "label": "/bin"
-      }, {
-        "label": "/boot"
-      }, {
-        "label": "/dev"
-      }, {
-        "label": "/etc",
-        "children": [
-          {
-            "label": "opt"
-          }, {
-            "label": "sgml"
-          }, {
-            "label": "X11"
-          }, {
-            "label": "xml"
-          }
-        ]
-      }, {
-        "label": "/home"
-      }, {
-        "label": "/lib"
-      }, {
-        "label": "/media"
-      }, {
-        "label": "/mnt"
-      }, {
-        "label": "/opt"
-      }, {
-        "label": "/proc"
-      }, {
-        "label": "/root"
-      }, {
-        "label": "/run"
-      }, {
-        "label": "/sbin"
-      }, {
-        "label": "/srv"
-      }, {
-        "label": "/tmp"
-      }, {
-        "label": "/usr",
-        "children": [
-          {
-            "label": "bin"
-          }, {
-            "label": "include"
-          }, {
-            "label": "lib"
-          }, {
-            "label": "local"
-          }, {
-            "label": "sbin"
-          }, {
-            "label": "share"
-          }, {
-            "label": "src"
-          }
-        ]
-      }, {
-        "label": "/var",
-        "children": [
-          {
-            "label": "cache"
-          }, {
-            "label": "lib"
-          }, {
-            "label": "lock"
-          }, {
-            "label": "log"
-          }, {
-            "label": "mail"
-          }, {
-            "label": "opt"
-          }, {
-            "label": "run"
-          }, {
-            "label": "spool",
-            "children": [
-              {
-                "label": "mail"
-              }
-            ]
-          }, {
-            "label": "tmp"
-          }
-        ]
-      }
-    ]
-  },
+  "tree": [
+    {
+      "label": "/bin"
+    }, {
+      "label": "/boot"
+    }, {
+      "label": "/dev"
+    }, {
+      "label": "/etc",
+      "children": [
+        {
+          "label": "opt"
+        }, {
+          "label": "sgml"
+        }, {
+          "label": "X11"
+        }, {
+          "label": "xml"
+        }
+      ]
+    }, {
+      "label": "/home"
+    }, {
+      "label": "/lib"
+    }, {
+      "label": "/media"
+    }, {
+      "label": "/mnt"
+    }, {
+      "label": "/opt"
+    }, {
+      "label": "/proc"
+    }, {
+      "label": "/root"
+    }, {
+      "label": "/run"
+    }, {
+      "label": "/sbin"
+    }, {
+      "label": "/srv"
+    }, {
+      "label": "/tmp"
+    }, {
+      "label": "/usr",
+      "children": [
+        {
+          "label": "bin"
+        }, {
+          "label": "include"
+        }, {
+          "label": "lib"
+        }, {
+          "label": "local"
+        }, {
+          "label": "sbin"
+        }, {
+          "label": "share"
+        }, {
+          "label": "src"
+        }
+      ]
+    }, {
+      "label": "/var",
+      "children": [
+        {
+          "label": "cache"
+        }, {
+          "label": "lib"
+        }, {
+          "label": "lock"
+        }, {
+          "label": "log"
+        }, {
+          "label": "mail"
+        }, {
+          "label": "opt"
+        }, {
+          "label": "run"
+        }, {
+          "label": "spool",
+          "children": [
+            {
+              "label": "mail"
+            }
+          ]
+        }, {
+          "label": "tmp"
+        }
+      ]
+    }
+  ],
   "options": {
     "flipXY": 0,
     "width": 950,

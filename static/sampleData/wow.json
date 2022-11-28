@@ -1,68 +1,65 @@
 {
-  "tree": {
-    "label": "root",
-    "children": [
-      {
-        "label": "Aqir",
-        "children": [
-          {
-            "label": "Mantid",
-            "children": [
-              {
-                "label": "Mantid queen"
-              }, {
-                "label": "Mantid vizier"
-              }
-            ]
-          }, {
-            "label": "Nerubian",
-            "children": [
-              {
-                "label": "Nerubian spiderlord",
-                "children": [
-                  {
-                    "label": "Hazu'Asnab"
-                  }, {
-                    "label": "Majis'Tomon"
-                  }, {
-                    "label": "Ul'Tomon"
-                  }
-                ]
-              }, {
-                "label": "Nerubian flyer"
-              }, {
-                "label": "Nerubian queen"
-              }, {
-                "label": "Nerubian spiderling"
-              }, {
-                "label": "Nerubian vizier"
-              }
-            ]
-          }, {
-            "label": "Qiraji",
-            "children": [
-              {
-                "label": "Qiraji prophet",
-                "children": [
-                  {
-                    "label": "The Prophet Skeram"
-                  }, {
-                    "label": "Harbinger Skyriss"
-                  }, {
-                    "label": "Qiraji Brainwasher"
-                  }, {
-                    "label": "Qiraji Mindslayer"
-                  }
-                ]
-              }, {
-                "label": "Qiraji emperor"
-              }
-            ]
-          }
-        ]
-      }
-    ]
-  },
+  "tree": [
+    {
+      "label": "Aqir",
+      "children": [
+        {
+          "label": "Mantid",
+          "children": [
+            {
+              "label": "Mantid queen"
+            }, {
+              "label": "Mantid vizier"
+            }
+          ]
+        }, {
+          "label": "Nerubian",
+          "children": [
+            {
+              "label": "Nerubian spiderlord",
+              "children": [
+                {
+                  "label": "Hazu'Asnab"
+                }, {
+                  "label": "Majis'Tomon"
+                }, {
+                  "label": "Ul'Tomon"
+                }
+              ]
+            }, {
+              "label": "Nerubian flyer"
+            }, {
+              "label": "Nerubian queen"
+            }, {
+              "label": "Nerubian spiderling"
+            }, {
+              "label": "Nerubian vizier"
+            }
+          ]
+        }, {
+          "label": "Qiraji",
+          "children": [
+            {
+              "label": "Qiraji prophet",
+              "children": [
+                {
+                  "label": "The Prophet Skeram"
+                }, {
+                  "label": "Harbinger Skyriss"
+                }, {
+                  "label": "Qiraji Brainwasher"
+                }, {
+                  "label": "Qiraji Mindslayer"
+                }
+              ]
+            }, {
+              "label": "Qiraji emperor"
+            }
+          ]
+        }
+      ]
+    }
+  ],
   "options": {
     "flipXY": 0,
     "width": 800,

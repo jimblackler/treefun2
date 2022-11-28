@@ -1,92 +1,89 @@
 {
-  "tree": {
-    "label": "root",
-    "children": [
-      {
-        "label": "Human deities",
-        "children": [
-          {
-            "label": "Faerûnian pantheon",
-            "children": [
-              {
-                "label": "Greater deities"
-              }, {
-                "label": "Intermediate deities"
-              }, {
-                "label": "Lesser deities"
-              }, {
-                "label": "Demideities"
-              }, {
-                "label": "Quasi-deities"
-              }, {
-                "label": "Kara-Turan pantheon"
-              }, {
-                "label": "Maztican pantheon"
-              }, {
-                "label": "Mulhorandi pantheon"
-              }, {
-                "label": "Zakharan pantheon"
-              }
-            ]
-          }
-        ]
-      }, {
-        "label": "Nonhuman racial deities",
-        "children": [
-          {
-            "label": "Former Archdevil"
-          }, {
-            "label": "Dragon deities"
-          }, {
-            "label": "Drow deities"
-          }, {
-            "label": "Dwarven deities"
-          }, {
-            "label": "Elven deities"
-          }, {
-            "label": "Giant deities"
-          }, {
-            "label": "Gnome deities"
-          }, {
-            "label": "Halfling deities"
-          }, {
-            "label": "Orc deities"
-          }, {
-            "label": "Other races"
-          }
-        ]
-      }, {
-        "label": "Nondeity powers",
-        "children": [
-          {
-            "label": "Archdevils"
-          }, {
-            "label": "Demon princes"
-          }, {
-            "label": "Paragons",
-            "children": [
-              {
-                "label": "Archon"
-              }, {
-                "label": "Eladrin"
-              }, {
-                "label": "Guardinal"
-              }
-            ]
-          }
-        ]
-      }, {
-        "label": "Dead deities",
-        "children": [
-          {
-            "label": "Untheric pantheon"
-          }, {
-            "label": "Others"
-          }
-        ]
-      }
-    ]
-  },
+  "tree": [
+    {
+      "label": "Human deities",
+      "children": [
+        {
+          "label": "Faerûnian pantheon",
+          "children": [
+            {
+              "label": "Greater deities"
+            }, {
+              "label": "Intermediate deities"
+            }, {
+              "label": "Lesser deities"
+            }, {
+              "label": "Demideities"
+            }, {
+              "label": "Quasi-deities"
+            }, {
+              "label": "Kara-Turan pantheon"
+            }, {
+              "label": "Maztican pantheon"
+            }, {
+              "label": "Mulhorandi pantheon"
+            }, {
+              "label": "Zakharan pantheon"
+            }
+          ]
+        }
+      ]
+    }, {
+      "label": "Nonhuman racial deities",
+      "children": [
+        {
+          "label": "Former Archdevil"
+        }, {
+          "label": "Dragon deities"
+        }, {
+          "label": "Drow deities"
+        }, {
+          "label": "Dwarven deities"
+        }, {
+          "label": "Elven deities"
+        }, {
+          "label": "Giant deities"
+        }, {
+          "label": "Gnome deities"
+        }, {
+          "label": "Halfling deities"
+        }, {
+          "label": "Orc deities"
+        }, {
+          "label": "Other races"
+        }
+      ]
+    }, {
+      "label": "Nondeity powers",
+      "children": [
+        {
+          "label": "Archdevils"
+        }, {
+          "label": "Demon princes"
+        }, {
+          "label": "Paragons",
+          "children": [
+            {
+              "label": "Archon"
+            }, {
+              "label": "Eladrin"
+            }, {
+              "label": "Guardinal"
+            }
+          ]
+        }
+      ]
+    }, {
+      "label": "Dead deities",
+      "children": [
+        {
+          "label": "Untheric pantheon"
+        }, {
+          "label": "Others"
+        }
+      ]
+    }
+  ],
   "options": {
     "flipXY": 0,
     "width": 900,

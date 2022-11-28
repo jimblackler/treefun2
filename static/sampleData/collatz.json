@@ -1,453 +1,450 @@
 {
-  "tree": {
-    "label": "root",
-    "children": [
-      {
-        "label": "1",
-        "children": [
-          {
-            "label": "2",
-            "children": [
-              {
-                "label": "4",
-                "children": [
-                  {
-                    "label": "8",
-                    "children": [
-                      {
-                        "label": "16",
-                        "children": [
-                          {
-                            "label": "5",
-                            "children": [
-                              {
-                                "label": "10",
-                                "children": [
-                                  {
-                                    "label": "3",
-                                    "children": [
-                                      {
-                                        "label": "6",
-                                        "children": [
-                                          {
-                                            "label": "12",
-                                            "children": [
-                                              {
-                                                "label": "24",
-                                                "children": [
-                                                  {
-                                                    "label": "48",
-                                                    "children": [
-                                                      {
-                                                        "label": "96",
-                                                        "children": [
-                                                          {
-                                                            "label": "192",
-                                                            "children": [
-                                                              {
-                                                                "label": "384",
-                                                                "children": [
-                                                                  {
-                                                                    "label": "768"
-                                                                  }
-                                                                ]
-                                                              }
-                                                            ]
-                                                          }
-                                                        ]
-                                                      }
-                                                    ]
-                                                  }
-                                                ]
-                                              }
-                                            ]
-                                          }
-                                        ]
-                                      }
-                                    ]
-                                  }, {
-                                    "label": "20",
-                                    "children": [
-                                      {
-                                        "label": "40",
-                                        "children": [
-                                          {
-                                            "label": "13",
-                                            "children": [
-                                              {
-                                                "label": "26",
-                                                "children": [
-                                                  {
-                                                    "label": "52",
-                                                    "children": [
-                                                      {
-                                                        "label": "17",
-                                                        "children": [
-                                                          {
-                                                            "label": "34",
-                                                            "children": [
-                                                              {
-                                                                "label": "11",
-                                                                "children": [
-                                                                  {
-                                                                    "label": "22"
-                                                                  }
-                                                                ]
-                                                              }, {
-                                                                "label": "68",
-                                                                "children": [
-                                                                  {
-                                                                    "label": "136"
-                                                                  }
-                                                                ]
-                                                              }
-                                                            ]
-                                                          }
-                                                        ]
-                                                      }, {
-                                                        "label": "104",
-                                                        "children": [
-                                                          {
-                                                            "label": "208",
-                                                            "children": [
-                                                              {
-                                                                "label": "69",
-                                                                "children": [
-                                                                  {
-                                                                    "label": "138"
-                                                                  }
-                                                                ]
-                                                              }, {
-                                                                "label": "416",
-                                                                "children": [
-                                                                  {
-                                                                    "label": "832"
-                                                                  }
-                                                                ]
-                                                              }
-                                                            ]
-                                                          }
-                                                        ]
-                                                      }
-                                                    ]
-                                                  }
-                                                ]
-                                              }
-                                            ]
-                                          }, {
-                                            "label": "80",
-                                            "children": [
-                                              {
-                                                "label": "160",
-                                                "children": [
-                                                  {
-                                                    "label": "53",
-                                                    "children": [
-                                                      {
-                                                        "label": "106",
-                                                        "children": [
-                                                          {
-                                                            "label": "35",
-                                                            "children": [
-                                                              {
-                                                                "label": "70",
-                                                                "children": [
-                                                                  {
-                                                                    "label": "23"
-                                                                  }, {
-                                                                    "label": "140"
-                                                                  }
-                                                                ]
-                                                              }
-                                                            ]
-                                                          }, {
-                                                            "label": "212",
-                                                            "children": [
-                                                              {
-                                                                "label": "424",
-                                                                "children": [
-                                                                  {
-                                                                    "label": "141"
-                                                                  }, {
-                                                                    "label": "848"
-                                                                  }
-                                                                ]
-                                                              }
-                                                            ]
-                                                          }
-                                                        ]
-                                                      }
-                                                    ]
-                                                  }, {
-                                                    "label": "320",
-                                                    "children": [
-                                                      {
-                                                        "label": "640",
-                                                        "children": [
-                                                          {
-                                                            "label": "213",
-                                                            "children": [
-                                                              {
-                                                                "label": "426",
-                                                                "children": [
-                                                                  {
-                                                                    "label": "852"
-                                                                  }
-                                                                ]
-                                                              }
-                                                            ]
-                                                          }, {
-                                                            "label": "1280",
-                                                            "children": [
-                                                              {
-                                                                "label": "2560",
-                                                                "children": [
-                                                                  {
-                                                                    "label": "853"
-                                                                  }, {
-                                                                    "label": "5120"
-                                                                  }
-                                                                ]
-                                                              }
-                                                            ]
-                                                          }
-                                                        ]
-                                                      }
-                                                    ]
-                                                  }
-                                                ]
-                                              }
-                                            ]
-                                          }
-                                        ]
-                                      }
-                                    ]
-                                  }
-                                ]
-                              }
-                            ]
-                          }, {
-                            "label": "32",
-                            "children": [
-                              {
-                                "label": "64",
-                                "children": [
-                                  {
-                                    "label": "21",
-                                    "children": [
-                                      {
-                                        "label": "42",
-                                        "children": [
-                                          {
-                                            "label": "84",
-                                            "children": [
-                                              {
-                                                "label": "168",
-                                                "children": [
-                                                  {
-                                                    "label": "336",
-                                                    "children": [
-                                                      {
-                                                        "label": "672",
-                                                        "children": [
-                                                          {
-                                                            "label": "1344",
-                                                            "children": [
-                                                              {
-                                                                "label": "2688",
-                                                                "children": [
-                                                                  {
-                                                                    "label": "5376"
-                                                                  }
-                                                                ]
-                                                              }
-                                                            ]
-                                                          }
-                                                        ]
-                                                      }
-                                                    ]
-                                                  }
-                                                ]
-                                              }
-                                            ]
-                                          }
-                                        ]
-                                      }
-                                    ]
-                                  }, {
-                                    "label": "128",
-                                    "children": [
-                                      {
-                                        "label": "256",
-                                        "children": [
-                                          {
-                                            "label": "85",
-                                            "children": [
-                                              {
-                                                "label": "170",
-                                                "children": [
-                                                  {
-                                                    "label": "340",
-                                                    "children": [
-                                                      {
-                                                        "label": "113",
-                                                        "children": [
-                                                          {
-                                                            "label": "226",
-                                                            "children": [
-                                                              {
-                                                                "label": "75",
-                                                                "children": [
-                                                                  {
-                                                                    "label": "150"
-                                                                  }
-                                                                ]
-                                                              }, {
-                                                                "label": "452",
-                                                                "children": [
-                                                                  {
-                                                                    "label": "904"
-                                                                  }
-                                                                ]
-                                                              }
-                                                            ]
-                                                          }
-                                                        ]
-                                                      }, {
-                                                        "label": "680",
-                                                        "children": [
-                                                          {
-                                                            "label": "1360",
-                                                            "children": [
-                                                              {
-                                                                "label": "453",
-                                                                "children": [
-                                                                  {
-                                                                    "label": "906"
-                                                                  }
-                                                                ]
-                                                              }, {
-                                                                "label": "2720",
-                                                                "children": [
-                                                                  {
-                                                                    "label": "5440"
-                                                                  }
-                                                                ]
-                                                              }
-                                                            ]
-                                                          }
-                                                        ]
-                                                      }
-                                                    ]
-                                                  }
-                                                ]
-                                              }
-                                            ]
-                                          }, {
-                                            "label": "512",
-                                            "children": [
-                                              {
-                                                "label": "1024",
-                                                "children": [
-                                                  {
-                                                    "label": "341",
-                                                    "children": [
-                                                      {
-                                                        "label": "682",
-                                                        "children": [
-                                                          {
-                                                            "label": "227",
-                                                            "children": [
-                                                              {
-                                                                "label": "454",
-                                                                "children": [
-                                                                  {
-                                                                    "label": "151"
-                                                                  }, {
-                                                                    "label": "908"
-                                                                  }
-                                                                ]
-                                                              }
-                                                            ]
-                                                          }, {
-                                                            "label": "1364",
-                                                            "children": [
-                                                              {
-                                                                "label": "2728",
-                                                                "children": [
-                                                                  {
-                                                                    "label": "909"
-                                                                  }, {
-                                                                    "label": "5456"
-                                                                  }
-                                                                ]
-                                                              }
-                                                            ]
-                                                          }
-                                                        ]
-                                                      }
-                                                    ]
-                                                  }, {
-                                                    "label": "2048",
-                                                    "children": [
-                                                      {
-                                                        "label": "4096",
-                                                        "children": [
-                                                          {
-                                                            "label": "1365",
-                                                            "children": [
-                                                              {
-                                                                "label": "2730",
-                                                                "children": [
-                                                                  {
-                                                                    "label": "5460"
-                                                                  }
-                                                                ]
-                                                              }
-                                                            ]
-                                                          }, {
-                                                            "label": "8192",
-                                                            "children": [
-                                                              {
-                                                                "label": "16384",
-                                                                "children": [
-                                                                  {
-                                                                    "label": "5461"
-                                                                  }, {
-                                                                    "label": "32768"
-                                                                  }
-                                                                ]
-                                                              }
-                                                            ]
-                                                          }
-                                                        ]
-                                                      }
-                                                    ]
-                                                  }
-                                                ]
-                                              }
-                                            ]
-                                          }
-                                        ]
-                                      }
-                                    ]
-                                  }
-                                ]
-                              }
-                            ]
-                          }
-                        ]
-                      }
-                    ]
-                  }
-                ]
-              }
-            ]
-          }
-        ]
-      }
-    ]
-  },
+  "tree": [
+    {
+      "label": "1",
+      "children": [
+        {
+          "label": "2",
+          "children": [
+            {
+              "label": "4",
+              "children": [
+                {
+                  "label": "8",
+                  "children": [
+                    {
+                      "label": "16",
+                      "children": [
+                        {
+                          "label": "5",
+                          "children": [
+                            {
+                              "label": "10",
+                              "children": [
+                                {
+                                  "label": "3",
+                                  "children": [
+                                    {
+                                      "label": "6",
+                                      "children": [
+                                        {
+                                          "label": "12",
+                                          "children": [
+                                            {
+                                              "label": "24",
+                                              "children": [
+                                                {
+                                                  "label": "48",
+                                                  "children": [
+                                                    {
+                                                      "label": "96",
+                                                      "children": [
+                                                        {
+                                                          "label": "192",
+                                                          "children": [
+                                                            {
+                                                              "label": "384",
+                                                              "children": [
+                                                                {
+                                                                  "label": "768"
+                                                                }
+                                                              ]
+                                                            }
+                                                          ]
+                                                        }
+                                                      ]
+                                                    }
+                                                  ]
+                                                }
+                                              ]
+                                            }
+                                          ]
+                                        }
+                                      ]
+                                    }
+                                  ]
+                                }, {
+                                  "label": "20",
+                                  "children": [
+                                    {
+                                      "label": "40",
+                                      "children": [
+                                        {
+                                          "label": "13",
+                                          "children": [
+                                            {
+                                              "label": "26",
+                                              "children": [
+                                                {
+                                                  "label": "52",
+                                                  "children": [
+                                                    {
+                                                      "label": "17",
+                                                      "children": [
+                                                        {
+                                                          "label": "34",
+                                                          "children": [
+                                                            {
+                                                              "label": "11",
+                                                              "children": [
+                                                                {
+                                                                  "label": "22"
+                                                                }
+                                                              ]
+                                                            }, {
+                                                              "label": "68",
+                                                              "children": [
+                                                                {
+                                                                  "label": "136"
+                                                                }
+                                                              ]
+                                                            }
+                                                          ]
+                                                        }
+                                                      ]
+                                                    }, {
+                                                      "label": "104",
+                                                      "children": [
+                                                        {
+                                                          "label": "208",
+                                                          "children": [
+                                                            {
+                                                              "label": "69",
+                                                              "children": [
+                                                                {
+                                                                  "label": "138"
+                                                                }
+                                                              ]
+                                                            }, {
+                                                              "label": "416",
+                                                              "children": [
+                                                                {
+                                                                  "label": "832"
+                                                                }
+                                                              ]
+                                                            }
+                                                          ]
+                                                        }
+                                                      ]
+                                                    }
+                                                  ]
+                                                }
+                                              ]
+                                            }
+                                          ]
+                                        }, {
+                                          "label": "80",
+                                          "children": [
+                                            {
+                                              "label": "160",
+                                              "children": [
+                                                {
+                                                  "label": "53",
+                                                  "children": [
+                                                    {
+                                                      "label": "106",
+                                                      "children": [
+                                                        {
+                                                          "label": "35",
+                                                          "children": [
+                                                            {
+                                                              "label": "70",
+                                                              "children": [
+                                                                {
+                                                                  "label": "23"
+                                                                }, {
+                                                                  "label": "140"
+                                                                }
+                                                              ]
+                                                            }
+                                                          ]
+                                                        }, {
+                                                          "label": "212",
+                                                          "children": [
+                                                            {
+                                                              "label": "424",
+                                                              "children": [
+                                                                {
+                                                                  "label": "141"
+                                                                }, {
+                                                                  "label": "848"
+                                                                }
+                                                              ]
+                                                            }
+                                                          ]
+                                                        }
+                                                      ]
+                                                    }
+                                                  ]
+                                                }, {
+                                                  "label": "320",
+                                                  "children": [
+                                                    {
+                                                      "label": "640",
+                                                      "children": [
+                                                        {
+                                                          "label": "213",
+                                                          "children": [
+                                                            {
+                                                              "label": "426",
+                                                              "children": [
+                                                                {
+                                                                  "label": "852"
+                                                                }
+                                                              ]
+                                                            }
+                                                          ]
+                                                        }, {
+                                                          "label": "1280",
+                                                          "children": [
+                                                            {
+                                                              "label": "2560",
+                                                              "children": [
+                                                                {
+                                                                  "label": "853"
+                                                                }, {
+                                                                  "label": "5120"
+                                                                }
+                                                              ]
+                                                            }
+                                                          ]
+                                                        }
+                                                      ]
+                                                    }
+                                                  ]
+                                                }
+                                              ]
+                                            }
+                                          ]
+                                        }
+                                      ]
+                                    }
+                                  ]
+                                }
+                              ]
+                            }
+                          ]
+                        }, {
+                          "label": "32",
+                          "children": [
+                            {
+                              "label": "64",
+                              "children": [
+                                {
+                                  "label": "21",
+                                  "children": [
+                                    {
+                                      "label": "42",
+                                      "children": [
+                                        {
+                                          "label": "84",
+                                          "children": [
+                                            {
+                                              "label": "168",
+                                              "children": [
+                                                {
+                                                  "label": "336",
+                                                  "children": [
+                                                    {
+                                                      "label": "672",
+                                                      "children": [
+                                                        {
+                                                          "label": "1344",
+                                                          "children": [
+                                                            {
+                                                              "label": "2688",
+                                                              "children": [
+                                                                {
+                                                                  "label": "5376"
+                                                                }
+                                                              ]
+                                                            }
+                                                          ]
+                                                        }
+                                                      ]
+                                                    }
+                                                  ]
+                                                }
+                                              ]
+                                            }
+                                          ]
+                                        }
+                                      ]
+                                    }
+                                  ]
+                                }, {
+                                  "label": "128",
+                                  "children": [
+                                    {
+                                      "label": "256",
+                                      "children": [
+                                        {
+                                          "label": "85",
+                                          "children": [
+                                            {
+                                              "label": "170",
+                                              "children": [
+                                                {
+                                                  "label": "340",
+                                                  "children": [
+                                                    {
+                                                      "label": "113",
+                                                      "children": [
+                                                        {
+                                                          "label": "226",
+                                                          "children": [
+                                                            {
+                                                              "label": "75",
+                                                              "children": [
+                                                                {
+                                                                  "label": "150"
+                                                                }
+                                                              ]
+                                                            }, {
+                                                              "label": "452",
+                                                              "children": [
+                                                                {
+                                                                  "label": "904"
+                                                                }
+                                                              ]
+                                                            }
+                                                          ]
+                                                        }
+                                                      ]
+                                                    }, {
+                                                      "label": "680",
+                                                      "children": [
+                                                        {
+                                                          "label": "1360",
+                                                          "children": [
+                                                            {
+                                                              "label": "453",
+                                                              "children": [
+                                                                {
+                                                                  "label": "906"
+                                                                }
+                                                              ]
+                                                            }, {
+                                                              "label": "2720",
+                                                              "children": [
+                                                                {
+                                                                  "label": "5440"
+                                                                }
+                                                              ]
+                                                            }
+                                                          ]
+                                                        }
+                                                      ]
+                                                    }
+                                                  ]
+                                                }
+                                              ]
+                                            }
+                                          ]
+                                        }, {
+                                          "label": "512",
+                                          "children": [
+                                            {
+                                              "label": "1024",
+                                              "children": [
+                                                {
+                                                  "label": "341",
+                                                  "children": [
+                                                    {
+                                                      "label": "682",
+                                                      "children": [
+                                                        {
+                                                          "label": "227",
+                                                          "children": [
+                                                            {
+                                                              "label": "454",
+                                                              "children": [
+                                                                {
+                                                                  "label": "151"
+                                                                }, {
+                                                                  "label": "908"
+                                                                }
+                                                              ]
+                                                            }
+                                                          ]
+                                                        }, {
+                                                          "label": "1364",
+                                                          "children": [
+                                                            {
+                                                              "label": "2728",
+                                                              "children": [
+                                                                {
+                                                                  "label": "909"
+                                                                }, {
+                                                                  "label": "5456"
+                                                                }
+                                                              ]
+                                                            }
+                                                          ]
+                                                        }
+                                                      ]
+                                                    }
+                                                  ]
+                                                }, {
+                                                  "label": "2048",
+                                                  "children": [
+                                                    {
+                                                      "label": "4096",
+                                                      "children": [
+                                                        {
+                                                          "label": "1365",
+                                                          "children": [
+                                                            {
+                                                              "label": "2730",
+                                                              "children": [
+                                                                {
+                                                                  "label": "5460"
+                                                                }
+                                                              ]
+                                                            }
+                                                          ]
+                                                        }, {
+                                                          "label": "8192",
+                                                          "children": [
+                                                            {
+                                                              "label": "16384",
+                                                              "children": [
+                                                                {
+                                                                  "label": "5461"
+                                                                }, {
+                                                                  "label": "32768"
+                                                                }
+                                                              ]
+                                                            }
+                                                          ]
+                                                        }
+                                                      ]
+                                                    }
+                                                  ]
+                                                }
+                                              ]
+                                            }
+                                          ]
+                                        }
+                                      ]
+                                    }
+                                  ]
+                                }
+                              ]
+                            }
+                          ]
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ],
   "options": {
     "flipXY": 0,
     "width": 950,

@@ -3,7 +3,7 @@ import {Options} from '../treefun/options';
 import {transactionToPromise} from './transactionToPromise';
 
 export interface State {
-  tree: Node;
+  tree: Node[];
   css: string;
   options: Options;
 }
