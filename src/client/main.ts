@@ -16,12 +16,27 @@ import {Format2, fromJsonFormat2, toJsonFormat2} from './format2';
 import {listen, setState, State} from './state';
 import './style.css'
 import {textToTree} from './textToTree';
+import {transactionToPromise} from './transactionToPromise';
 import {treeToText} from './treeToText';
 import isJson = JsonValue.isJson;
 
+export const layoutStateDb: Promise<IDBDatabase> = new Promise((resolve, reject) => {
+  const request = indexedDB.open('layout-state-store', 1);
+  request.addEventListener('upgradeneeded', event => {
+    if (event.oldVersion < 1) {
+      if (request.result.objectStoreNames.contains('layoutState')) {
+        request.result.deleteObjectStore('layoutState');
+      }
+      request.result.createObjectStore('layoutState');
+    }
+  });
+  request.addEventListener('error', () => reject(request.error));
+  request.addEventListener('success', () => resolve(request.result));
+});
+
 const container = assertNotNull(document.getElementById('container'));
 
-const layoutConfig: LayoutConfig = {
+const defaultLayout: LayoutConfig = {
   root: undefined,
   content: [{
     type: 'row',
@@ -348,5 +363,16 @@ layout.registerComponentFactoryFunction('textEditorCss',
       });
     });
 
-layout.loadLayout(layoutConfig);
+layout.on('stateChanged', function () {
+  layoutStateDb.then(db => db.transaction('layoutState', 'readwrite').objectStore('layoutState').put(layout.saveLayout(), ''));
+});
 
+layoutStateDb.then(db =>
+    db.transaction('layoutState', 'readonly').objectStore('layoutState').get('')) // need 'objectStore'?
+    .then(transactionToPromise).then(layoutState => {
+  if (layoutState) {
+    layout.loadLayout(LayoutConfig.fromResolved(layoutState));
+  } else {
+    layout.loadLayout(defaultLayout);
+  }
+});
