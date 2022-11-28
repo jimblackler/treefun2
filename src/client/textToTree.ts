@@ -8,8 +8,7 @@ export function textToTree(text: string): Node[] {
 
   const stackParents = [rootNode];
   const stackIndents = [-1];
-  for (let idx = 0; idx !== lines.length; idx++) {
-    const line = lines[idx];
+  for (const line of lines) {
     const content = line.trim();
     if (!content.length) {
       continue;
