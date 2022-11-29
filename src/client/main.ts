@@ -5,7 +5,7 @@ import '@vaadin/menu-bar';
 import {MenuBarItem} from '@vaadin/menu-bar';
 import axios from 'axios';
 import {basicLight} from 'cm6-theme-basic-light'
-import {ComponentContainer, GoldenLayout, JsonValue, LayoutConfig} from 'golden-layout';
+import {GoldenLayout, JsonValue, LayoutConfig} from 'golden-layout';
 import {JSONEditor, JSONValue, Mode, toJSONContent} from 'vanilla-jsoneditor'
 import {assertNotNull} from '../common/check/null';
 import {assertString} from '../common/check/string';
@@ -308,7 +308,7 @@ layout.registerComponentFactoryFunction('jsonEditorData2', container => {
   container.on('destroy', close);
 });
 
-layout.registerComponentFactoryFunction('textEditorTree', (container: ComponentContainer) => {
+layout.registerComponentFactoryFunction('textEditorTree', container => {
   container.setTitle('Data (text)');
   let lastState: State | undefined;
   container.element.style.overflow = 'scroll';
@@ -341,37 +341,36 @@ layout.registerComponentFactoryFunction('textEditorTree', (container: ComponentC
   container.on('destroy', close);
 });
 
-layout.registerComponentFactoryFunction('textEditorCss',
-    (container: ComponentContainer) => {
-      container.setTitle('CSS');
-      let lastState: State | undefined;
-      container.element.style.overflow = 'scroll';
+layout.registerComponentFactoryFunction('textEditorCss', container => {
+  container.setTitle('CSS');
+  let lastState: State | undefined;
+  container.element.style.overflow = 'scroll';
 
-      const editorView = new EditorView({
-        extensions: [keymap.of(defaultKeymap), lineNumbers(), basicLight,
-          EditorView.updateListener.of(update => {
-            if (!update.docChanged || !lastState) {
-              return;
-            }
-            const text = editorView.state.doc.toString();
-            if (text !== lastState.css) {
-              setState({...lastState, css: text});
-            }
-          }), css()],
-        parent: container.element
-      });
-
-      const close = listen(state => {
-        lastState = state;
-        const newText = state.css;
-        if (editorView.state.doc.toString() !== newText) {
-          editorView.dispatch({
-            changes: {from: 0, to: editorView.state.doc.length, insert: newText}
-          });
+  const editorView = new EditorView({
+    extensions: [keymap.of(defaultKeymap), lineNumbers(), basicLight,
+      EditorView.updateListener.of(update => {
+        if (!update.docChanged || !lastState) {
+          return;
         }
+        const text = editorView.state.doc.toString();
+        if (text !== lastState.css) {
+          setState({...lastState, css: text});
+        }
+      }), css()],
+    parent: container.element
+  });
+
+  const close = listen(state => {
+    lastState = state;
+    const newText = state.css;
+    if (editorView.state.doc.toString() !== newText) {
+      editorView.dispatch({
+        changes: {from: 0, to: editorView.state.doc.length, insert: newText}
       });
-      container.on('destroy', close);
-    });
+    }
+  });
+  container.on('destroy', close);
+});
 
 layout.on('stateChanged', function () {
   layoutStateDb.then(db => db.transaction('layoutState', 'readwrite')
