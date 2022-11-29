@@ -298,7 +298,6 @@ layout.registerComponentFactoryFunction('jsonEditorData2', container => {
     }
     const json = toJsonFormat2(state.tree);
     if (JSON.stringify(json) !== JSON.stringify(oldJson)) {
-      console.log({oldJson, json});
       jsonEditor.update({
         text: undefined,
         json: json as unknown as JSONValue
