@@ -18,6 +18,7 @@ import './style.css'
 import {textToTree} from './textToTree';
 import {transactionToPromise} from './transactionToPromise';
 import {treeToText} from './treeToText';
+import {addValueSlider} from './valueSlider';
 import isJson = JsonValue.isJson;
 
 export const layoutStateDb: Promise<IDBDatabase> = new Promise((resolve, reject) => {
@@ -107,6 +108,7 @@ const views: View[] = [
   {componentType: 'diagramServer', name: 'Diagram PNG (Server)', componentState: {mode: 'png'}},
   {componentType: 'jsonEditorData', name: 'Tree (JSON)'},
   {componentType: 'jsonEditorData2', name: 'Tree (JSON format 2)'},
+  {componentType: 'visualOptions', name: 'Options (Visual)'}
 ];
 
 const viewItems: MenuBarItem[] = [];
@@ -367,6 +369,22 @@ layout.registerComponentFactoryFunction('textEditorCss', container => {
         changes: {from: 0, to: editorView.state.doc.length, insert: newText}
       });
     }
+  });
+  container.on('destroy', close);
+});
+
+layout.registerComponentFactoryFunction('visualOptions', container => {
+  container.setTitle('Options (visual)');
+  let lastState: State | undefined;
+  container.element.style.overflow = 'scroll';
+
+  const update = addValueSlider(container.element, 'Test Value', 'test', 0, 100, 10, () => {
+  });
+
+  update(25);
+
+  const close = listen(state => {
+    lastState = state;
   });
   container.on('destroy', close);
 });
