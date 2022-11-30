@@ -444,7 +444,7 @@ layout.registerComponentFactoryFunction('visualOptions', container => {
 
   {
     const update = addValueSlider(container.element, 'Arrow head size', 0, 30, 1,
-            value => setOptions({arrowHeadSize: value}));
+        value => setOptions({arrowHeadSize: value}));
 
     container.on('destroy', listen(state => {
       lastState = state;
@@ -474,7 +474,7 @@ layout.registerComponentFactoryFunction('visualOptions', container => {
 
   {
     const update = addValueSlider(container.element, 'Ideal sibling gap', 0, 2, 0.02,
-            value => setOptions({idealSiblingGap: value}));
+        value => setOptions({idealSiblingGap: value}));
 
     container.on('destroy', listen(state => {
       lastState = state;
@@ -524,7 +524,7 @@ layout.registerComponentFactoryFunction('visualOptions', container => {
 
   {
     const update = addValueSlider(container.element, 'Minimum breadth', 0, 5, 0.1,
-            value => setOptions({minimumBreadth: value}));
+        value => setOptions({minimumBreadth: value}));
 
     container.on('destroy', listen(state => {
       lastState = state;
