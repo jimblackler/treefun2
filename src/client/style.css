@@ -1,11 +1,14 @@
 @import '~golden-layout/dist/css/goldenlayout-base.css';
 @import '~golden-layout/dist/css/themes/goldenlayout-light-theme.css';
 
-.lm_header .lm_tab {
-  font-size: 20px;
+body {
+  font-family: system-ui;
 }
 
 .lm_header .lm_tab .lm_title {
+  font-family: system-ui;
+  font-size: initial;
+  font-weight: 500;
   padding-top: 2px;
 }
 
