@@ -27,6 +27,7 @@ div.diagramServerContainer img {
 
 div.visualOptions {
   overflow: scroll;
+  padding: 10px;
 }
 
 div.visualOptions > label {
