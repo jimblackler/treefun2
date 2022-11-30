@@ -58,7 +58,6 @@
     "width": 320,
     "height": 450,
     "labelLineSpacing": 15,
-    "cornerRounding": 0,
     "labelPadding": 2,
     "arrowHeadSize": 5,
     "arrowsUp": 0,

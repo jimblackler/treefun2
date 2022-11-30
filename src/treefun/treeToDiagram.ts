@@ -216,10 +216,6 @@ export function treeToDiagram(document: Document, parent: HTMLElement, tree: Nod
         rect.setAttribute(yAttribute, Math.floor(yValue * yMultiplier) + 'px');
         rect.setAttribute(widthAttribute, Math.floor(xMultiplier) + 'px');
         rect.setAttribute(heightAttribute, Math.floor(yMultiplier) + 'px');
-        if (options.cornerRounding) {
-          rect.setAttribute('rx', options.cornerRounding + 'px');
-          rect.setAttribute('ry', options.cornerRounding + 'px');
-        }
 
         const text = document.createElementNS(namespace, 'text');
         diagramGroup.append(text);

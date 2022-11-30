@@ -3,8 +3,7 @@ export interface Options {
   width: number;
   height: number;
   labelLineSpacing: number;
-  cornerRounding: number;
-  labelPadding:number;
+  labelPadding: number;
   arrowHeadSize: number;
   arrowsUp: boolean;
   siblingGap: number;

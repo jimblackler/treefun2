@@ -126,7 +126,6 @@
     "width": 900,
     "height": 750,
     "labelLineSpacing": 13,
-    "cornerRounding": 8,
     "labelPadding": 4,
     "arrowHeadSize": 5,
     "arrowsUp": 0,
@@ -138,5 +137,5 @@
     "minimumDepth": 5,
     "minimumBreadth": 6
   },
-  "styles": "text {\n  text-anchor: middle;\n  font-size: small;\n  fill: white;\n}\n\nrect {\n  fill: green;\n  stroke: black;\n  opacity: 1;\n  stroke-width: 0;\n}\n\nline {\n  stroke: black;\n  opacity: 0.5;\n  stroke-width: 1.5;\n}\n  "
+  "styles": "text {\n  text-anchor: middle;\n  font-size: small;\n  fill: white;\n}\n\nrect {\n  fill: green;\n  stroke: black;\n  opacity: 1;\n  stroke-width: 0;\n  rx: 8;\n}\n\nline {\n  stroke: black;\n  opacity: 0.5;\n  stroke-width: 1.5;\n}\n  "
 }

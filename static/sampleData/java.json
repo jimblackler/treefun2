@@ -149,7 +149,6 @@
     "width": 1000,
     "height": 650,
     "labelLineSpacing": 12,
-    "cornerRounding": 0,
     "labelPadding": 2,
     "arrowHeadSize": 4,
     "arrowsUp": 0,
