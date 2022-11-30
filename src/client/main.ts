@@ -12,6 +12,7 @@ import {assertString} from '../common/check/string';
 import {Node} from '../treefun/node';
 import {Options} from '../treefun/options';
 import {treeToDiagram} from '../treefun/treeToDiagram';
+import {addBooleanSwitch} from './booleanSwitch';
 import {Format2, fromJsonFormat2, toJsonFormat2} from './format2';
 import {listen, setState, State} from './state';
 import './style.css'
@@ -389,6 +390,16 @@ layout.registerComponentFactoryFunction('visualOptions', container => {
       throw new Error();
     }
     setState({...lastState, options: {...lastState.options, ...options}});
+  }
+
+  {
+    const update = addBooleanSwitch(
+        container.element, 'Flip XY', value => setOptions({flipXY: value}));
+
+    container.on('destroy', listen(state => {
+      lastState = state;
+      update(state.options.flipXY);
+    }));
   }
 
   {
