@@ -24,3 +24,17 @@ div.diagramContainer svg {
 div.diagramServerContainer img {
   background: white;
 }
+
+div.visualOptions {
+  display: table;
+  grid-auto-rows: max-content;
+  overflow: scroll;
+}
+
+div.visualOptions > label {
+  display: table-row;
+}
+
+div.visualOptions > label > * {
+  display: table-cell;
+}

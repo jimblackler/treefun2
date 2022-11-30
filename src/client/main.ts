@@ -376,7 +376,7 @@ layout.registerComponentFactoryFunction('textEditorCss', container => {
 layout.registerComponentFactoryFunction('visualOptions', container => {
   container.setTitle('Options (visual)');
   let lastState: State | undefined;
-  container.element.style.overflow = 'scroll';
+  container.element.classList.add('visualOptions');
 
   {
     const update = addValueSlider(container.element, 'Width', 0, 1024, 1,

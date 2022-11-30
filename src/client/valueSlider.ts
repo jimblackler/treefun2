@@ -3,7 +3,10 @@ export function addValueSlider(parent: HTMLElement, labelText: string, min: numb
 
   const label = document.createElement('label');
   parent.append(label);
-  label.append(labelText);
+
+  const span = document.createElement('span');
+  label.append(span);
+  span.append(labelText);
 
   const rangeInput = document.createElement('input');
   label.append(rangeInput);
