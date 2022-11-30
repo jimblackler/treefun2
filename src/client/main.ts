@@ -378,14 +378,36 @@ layout.registerComponentFactoryFunction('visualOptions', container => {
   let lastState: State | undefined;
   container.element.style.overflow = 'scroll';
 
-  const update = addValueSlider(container.element, 'Levels Gap', 0, 5, 0.1,
-      value => setState({...lastState, options: {...lastState.options, levelsGap: value}}));
+  {
+    const update = addValueSlider(container.element, 'Width', 0, 1024, 1,
+        value => setState({...lastState, options: {...lastState.options, width: value}}));
 
-  const close = listen(state => {
-    lastState = state;
-    update(state.options.levelsGap);
-  });
-  container.on('destroy', close);
+    container.on('destroy', listen(state => {
+      lastState = state;
+      update(state.options.width);
+    }));
+  }
+
+  {
+    const update = addValueSlider(container.element, 'Height', 0, 1024, 1,
+        value => setState({...lastState, options: {...lastState.options, height: value}}));
+
+    container.on('destroy', listen(state => {
+      lastState = state;
+      update(state.options.height);
+    }));
+  }
+
+  {
+    const update = addValueSlider(container.element, 'Levels gap', 0, 5, 0.1,
+        value => setState({...lastState, options: {...lastState.options, levelsGap: value}}));
+
+    container.on('destroy', listen(state => {
+      lastState = state;
+      update(state.options.levelsGap);
+    }));
+  }
+
 });
 
 layout.on('stateChanged', function () {
