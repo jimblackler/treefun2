@@ -378,13 +378,12 @@ layout.registerComponentFactoryFunction('visualOptions', container => {
   let lastState: State | undefined;
   container.element.style.overflow = 'scroll';
 
-  const update = addValueSlider(container.element, 'Test Value', 'test', 0, 100, 10, () => {
-  });
-
-  update(25);
+  const update = addValueSlider(container.element, 'Levels Gap', 'levelsGap', 0, 5, 0.1,
+      value => setState({...lastState, options: {...lastState.options, levelsGap: value}}));
 
   const close = listen(state => {
     lastState = state;
+    update(state.options.levelsGap);
   });
   container.on('destroy', close);
 });
