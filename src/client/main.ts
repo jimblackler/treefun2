@@ -62,7 +62,7 @@ const defaultLayout: LayoutConfig = {
 
   dimensions: {
     borderWidth: 8,
-    headerHeight: 30
+    headerHeight: 36
   },
 
   header: {

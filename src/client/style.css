@@ -9,15 +9,15 @@ body {
   font-family: system-ui;
   font-size: initial;
   font-weight: 500;
-  padding-top: 2px;
+  padding-top: 4px;
 }
 
 .lm_header .lm_tab, .lm_header .lm_tab.lm_active {
-  padding-bottom: 14px;
+  padding-bottom: 20px;
 }
 
 .lm_header .lm_tab .lm_close_tab {
-  top: 8px;
+  top: 10px;
 }
 
 .lm_tab:hover {
