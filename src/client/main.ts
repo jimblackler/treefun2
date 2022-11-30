@@ -423,16 +423,6 @@ layout.registerComponentFactoryFunction('visualOptions', container => {
   }
 
   {
-    const update = addValueSlider(
-        container.element, 'Levels gap', 0, 5, 0.1, value => setOptions({levelsGap: value}));
-
-    container.on('destroy', listen(state => {
-      lastState = state;
-      update(state.options.levelsGap);
-    }));
-  }
-
-  {
     const update = addValueSlider(container.element, 'Label line spacing', 0, 30, 1,
         value => setOptions({labelLineSpacing: value}));
 
@@ -509,6 +499,16 @@ layout.registerComponentFactoryFunction('visualOptions', container => {
     container.on('destroy', listen(state => {
       lastState = state;
       update(state.options.idealCousinGap);
+    }));
+  }
+
+  {
+    const update = addValueSlider(
+        container.element, 'Levels gap', 0, 5, 0.1, value => setOptions({levelsGap: value}));
+
+    container.on('destroy', listen(state => {
+      lastState = state;
+      update(state.options.levelsGap);
     }));
   }
 
