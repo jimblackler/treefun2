@@ -120,13 +120,27 @@ views.forEach(view => {
       {type: 'component', componentType: view.componentType, componentState: view.componentState}));
 });
 
+const saveItem = {
+  text: 'Save diagram'
+};
+actions.set(saveItem, () => {
+  const diagramContainer = document.querySelector('div.diagramContainer');
+  if (diagramContainer) {
+    const link = document.createElement('a');
+    link.href = URL.createObjectURL(
+        new Blob([diagramContainer.innerHTML], {type: 'text/plain;charset=utf-8'}));
+    link.download = 'diagram.svg';
+    link.click();
+  }
+});
+
 const resetItem = {
   text: 'Reset layout'
 };
 actions.set(resetItem, () => layout.loadLayout(defaultLayout));
 
 menuBar.items = [
-  {text: 'Main', children: [resetItem]},
+  {text: 'Main', children: [saveItem, resetItem]},
   {text: 'Examples', children: exampleItems},
   {text: 'View', children: viewItems},
 ];
