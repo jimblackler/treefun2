@@ -36,3 +36,7 @@ div.visualOptions > label {
 div.visualOptions > label > * {
   display: table-cell;
 }
+
+div.visualOptions input[type=text] {
+  width: 48px;
+}

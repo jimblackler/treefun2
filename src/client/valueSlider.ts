@@ -17,6 +17,7 @@ export function addValueSlider(parent: HTMLElement, labelText: string, min: numb
 
   const numericInput = document.createElement('input');
   label.append(numericInput);
+  numericInput.setAttribute('type', 'text');
 
   const update = (value: number) => {
     rangeInput.value = `${value}`;
