@@ -512,6 +512,25 @@ layout.registerComponentFactoryFunction('visualOptions', container => {
     }));
   }
 
+  {
+    const update = addValueSlider(
+        container.element, 'Minimum depth', 0, 5, 0.1, value => setOptions({minimumDepth: value}));
+
+    container.on('destroy', listen(state => {
+      lastState = state;
+      update(state.options.minimumDepth);
+    }));
+  }
+
+  {
+    const update = addValueSlider(container.element, 'Minimum breadth', 0, 5, 0.1,
+            value => setOptions({minimumBreadth: value}));
+
+    container.on('destroy', listen(state => {
+      lastState = state;
+      update(state.options.minimumBreadth);
+    }));
+  }
 });
 
 layout.on('stateChanged', function () {
