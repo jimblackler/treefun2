@@ -119,7 +119,13 @@ views.forEach(view => {
       {type: 'component', componentType: view.componentType, componentState: view.componentState}));
 });
 
+const resetItem = {
+  text: 'Reset layout'
+};
+actions.set(resetItem, () => layout.loadLayout(defaultLayout));
+
 menuBar.items = [
+  {text: 'Main', children: [resetItem]},
   {text: 'Examples', children: exampleItems},
   {text: 'View', children: viewItems},
 ];
