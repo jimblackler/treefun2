@@ -69,5 +69,5 @@
     "minimumDepth": 0,
     "minimumBreadth": 0
   },
-  "styles": "text {\n  text-anchor: middle;\n  font-size: small;\n  font-weight: bold;\n  fill: gray;\n}\n\nrect {\n  fill: white;\n  stroke: black;\n  stroke-width: 1;\n}\n\nline {\n  stroke: black;\n  opacity: 0.5;\n  stroke-width: 1;\n  stroke-dasharray: 3, 2;\n}\n "
+  "styles": "text {\n  text-anchor: middle;\n  font-size: small;\n  font-weight: bold;\n  fill: gray;\n}\n\nrect {\n  fill: white;\n  stroke: black;\n}\n\nline {\n  stroke: black;\n  opacity: 0.5;\n  stroke-dasharray: 3, 2;\n}\n "
 }
