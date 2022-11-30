@@ -26,7 +26,11 @@ export const diagramHandler: RequestHandler = async (req, res, next) => {
     const canvas = createCanvas(options.width, options.height);
     const ctx = canvas.getContext('2d');
     const canvg = new Canvg(ctx, document,
-        {DOMParser: window.DOMParser, fetch:() => {throw new Error()}});
+        {
+          DOMParser: window.DOMParser, fetch: () => {
+            throw new Error()
+          }
+        });
     await canvg.render();
     const buffer = canvas.toBuffer('image/png');
     res.send(buffer);
