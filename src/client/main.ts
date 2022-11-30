@@ -452,6 +452,16 @@ layout.registerComponentFactoryFunction('visualOptions', container => {
     }));
   }
 
+  {
+    const update = addValueSlider(container.element, 'Arrow head size', 0, 30, 1,
+            value => setOptions({arrowHeadSize: value}));
+
+    container.on('destroy', listen(state => {
+      lastState = state;
+      update(state.options.arrowHeadSize);
+    }));
+  }
+
 });
 
 layout.on('stateChanged', function () {
