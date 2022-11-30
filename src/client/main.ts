@@ -472,6 +472,46 @@ layout.registerComponentFactoryFunction('visualOptions', container => {
     }));
   }
 
+  {
+    const update = addValueSlider(container.element, 'Minimum sibling gap', 0, 2, 0.02,
+            value => setOptions({siblingGap: value}));
+
+    container.on('destroy', listen(state => {
+      lastState = state;
+      update(state.options.siblingGap);
+    }));
+  }
+
+  {
+    const update = addValueSlider(container.element, 'Ideal sibling gap', 0, 2, 0.02,
+            value => setOptions({idealSiblingGap: value}));
+
+    container.on('destroy', listen(state => {
+      lastState = state;
+      update(state.options.idealSiblingGap);
+    }));
+  }
+
+  {
+    const update = addValueSlider(container.element, 'Minimum cousin gap', 0, 2, 0.02,
+        value => setOptions({minimumCousinGap: value}));
+
+    container.on('destroy', listen(state => {
+      lastState = state;
+      update(state.options.minimumCousinGap);
+    }));
+  }
+
+  {
+    const update = addValueSlider(container.element, 'Ideal cousin gap', 0, 2, 0.02,
+        value => setOptions({idealCousinGap: value}));
+
+    container.on('destroy', listen(state => {
+      lastState = state;
+      update(state.options.idealCousinGap);
+    }));
+  }
+
 });
 
 layout.on('stateChanged', function () {
