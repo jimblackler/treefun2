@@ -1,16 +1,13 @@
-export function addValueSlider(parent: HTMLElement, labelText: string, name: string,
-                               min: number, max: number, step: number,
-                               listener: (value: number) => void) {
+export function addValueSlider(parent: HTMLElement, labelText: string, min: number, max: number,
+                               step: number, listener: (value: number) => void) {
 
   const label = document.createElement('label');
   parent.append(label);
-  label.setAttribute('for', name);
   label.append(labelText);
 
   const rangeInput = document.createElement('input');
-  parent.append(rangeInput);
+  label.append(rangeInput);
   rangeInput.setAttribute('type', 'range');
-  rangeInput.setAttribute('name', name);
   rangeInput.setAttribute('min', `${min}`);
   rangeInput.setAttribute('max', `${max}`);
   rangeInput.setAttribute('step', `${step}`);
