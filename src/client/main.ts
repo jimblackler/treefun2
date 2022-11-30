@@ -404,7 +404,7 @@ layout.registerComponentFactoryFunction('visualOptions', container => {
 
   {
     const update = addValueSlider(
-        container.element, 'Width', 0, 1024, 1, value => setOptions({width: value}));
+        container.element, 'Width', 0, 2048, 1, value => setOptions({width: value}));
 
     container.on('destroy', listen(state => {
       lastState = state;
@@ -414,7 +414,7 @@ layout.registerComponentFactoryFunction('visualOptions', container => {
 
   {
     const update = addValueSlider(
-        container.element, 'Height', 0, 1024, 1, value => setOptions({height: value}));
+        container.element, 'Height', 0, 2048, 1, value => setOptions({height: value}));
 
     container.on('destroy', listen(state => {
       lastState = state;
