@@ -177,7 +177,7 @@ export function treeToDiagram(document: Document, parent: HTMLElement, tree: Nod
   marker.setAttribute('id', 'arrowHead');
   marker.setAttribute('viewBox', '-10 -5 10 10');
   marker.setAttribute('markerUnits', 'strokeWidth');
-  marker.setAttribute('markerWidth', '6');
+  marker.setAttribute('markerWidth', `${options.arrowHeadSize}`);
   marker.setAttribute('markerHeight', `${options.arrowHeadSize}`);
   marker.setAttribute('orient', 'auto');
 
