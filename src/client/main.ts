@@ -433,8 +433,8 @@ layout.registerComponentFactoryFunction('visualOptions', container => {
   }
 
   {
-    const update = addValueSlider(
-        container.element, 'Label line spacing', 0, 30, 1, value => setOptions({labelLineSpacing: value}));
+    const update = addValueSlider(container.element, 'Label line spacing', 0, 30, 1,
+        value => setOptions({labelLineSpacing: value}));
 
     container.on('destroy', listen(state => {
       lastState = state;
