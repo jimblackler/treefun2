@@ -442,6 +442,16 @@ layout.registerComponentFactoryFunction('visualOptions', container => {
     }));
   }
 
+  {
+    const update = addValueSlider(
+        container.element, 'Label padding', 0, 30, 1, value => setOptions({labelPadding: value}));
+
+    container.on('destroy', listen(state => {
+      lastState = state;
+      update(state.options.labelPadding);
+    }));
+  }
+
 });
 
 layout.on('stateChanged', function () {
