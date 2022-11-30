@@ -76,5 +76,5 @@
     "minimumDepth": 7,
     "minimumBreadth": 6
   },
-  "styles": "text {\n  text-anchor: middle;\n  font-size: small;\n  font-weight: bold;\n}\n\nrect {\n  fill: snow;\n  stroke: black;\n  stroke-width: 0.4;\n  rx: 5;\n}\n\nline {\n  stroke: black;\n  stroke-width: 0.5;\n  stroke-dasharray: 3, 2;\n}\n  "
+  "styles": "text {\n  text-anchor: middle;\n  font-size: small;\n  font-weight: bold;\n}\n\nrect {\n  fill: snow;\n  stroke: black;\n  stroke-width: 0.4;\n  rx: 5px;\n}\n\nline {\n  stroke: black;\n  stroke-width: 0.5;\n  stroke-dasharray: 3, 2;\n}\n  "
 }
