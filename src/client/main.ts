@@ -474,11 +474,11 @@ layout.registerComponentFactoryFunction('visualOptions', container => {
 
   {
     const update = addValueSlider(container.element, 'Minimum sibling gap', 0, 2, 0.02,
-            value => setOptions({siblingGap: value}));
+        value => setOptions({minimumSiblingGap: value}));
 
     container.on('destroy', listen(state => {
       lastState = state;
-      update(state.options.siblingGap);
+      update(state.options.minimumSiblingGap);
     }));
   }
 

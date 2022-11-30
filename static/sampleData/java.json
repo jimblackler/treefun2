@@ -152,7 +152,7 @@
     "labelPadding": 2,
     "arrowHeadSize": 4,
     "arrowsUp": 0,
-    "siblingGap": 0.05,
+    "minimumSiblingGap": 0.05,
     "idealSiblingGap": 0.3,
     "minimumCousinGap": 0.2,
     "idealCousinGap": 1.5,

@@ -18,7 +18,7 @@ function sweepLeftToRight(level: Group[], inPos: Map<Node, number>, outPos: Map<
       const x = inPos.get(node);
       const newX = x === undefined || x <= minX ? minX : x;
       minX = nodeIdx === group.members.length - 1 ?
-          newX + 1 + options.minimumCousinGap : newX + 1 + options.siblingGap;
+          newX + 1 + options.minimumCousinGap : newX + 1 + options.minimumSiblingGap;
       outPos.set(node, newX);
     });
   });
@@ -35,7 +35,8 @@ function sweepRightToLeft(level: Group[], inPos: Map<Node, number>,
       const node = group.members[nodeIdx];
       const x = inPos.get(node);
       const newX = x === undefined || x >= maxX ? maxX : x;
-      maxX = nodeIdx === 0 ? newX - 1 - options.minimumCousinGap : newX - 1 - options.siblingGap;
+      maxX = nodeIdx === 0 ?
+          newX - 1 - options.minimumCousinGap : newX - 1 - options.minimumSiblingGap;
       outPos.set(node, newX);
     }
   }
@@ -79,7 +80,7 @@ export function treeToDiagram(document: Document, parent: HTMLElement, tree: Nod
 
   levels.forEach((level, levelIdx) => {
     const width = level.map(
-        group => group.members.length + (group.members.length - 1) * options.siblingGap +
+        group => group.members.length + (group.members.length - 1) * options.minimumSiblingGap +
             options.minimumCousinGap).reduce((a, b) => a + b, -options.minimumCousinGap);
     if (fixedLevelWidth === undefined || width > fixedLevelWidth) {
       fixedLevel = levelIdx;
@@ -115,7 +116,7 @@ export function treeToDiagram(document: Document, parent: HTMLElement, tree: Nod
   level.forEach(group => {
     group.members.forEach((node, nodeIdx) => {
       if (nodeIdx > 0) {
-        x += options.siblingGap;
+        x += options.minimumSiblingGap;
       }
       x_.set(node, x);
       x += 1;

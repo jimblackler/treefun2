@@ -6,7 +6,7 @@ export interface Options {
   labelPadding: number;
   arrowHeadSize: number;
   arrowsUp: boolean;
-  siblingGap: number;
+  minimumSiblingGap: number;
   idealSiblingGap: number;
   minimumCousinGap: number;
   idealCousinGap: number;
