@@ -21,11 +21,11 @@ body {
 }
 
 .lm_tab:hover {
-  background: #e6f6ff;
+  background: rgba(0, 95, 219, 20%)
 }
 
 .lm_tab.lm_active {
-  background: #d2f0ff;
+  background: rgb(0, 95, 219, 10%)
 }
 
 .lm_header .lm_controls > * {
