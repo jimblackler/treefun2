@@ -85,13 +85,13 @@
     }
   ],
   "options": {
-    "flipXY": 0,
+    "flipXY": false,
     "width": 900,
     "height": 700,
     "labelLineSpacing": 13,
     "labelPadding": 4,
     "arrowHeadSize": 5,
-    "arrowsUp": 0,
+    "arrowsUp": false,
     "minimumSiblingGap": 0.05,
     "idealSiblingGap": 0.3,
     "minimumCousinGap": 0.2,

@@ -91,13 +91,13 @@
     }
   ],
   "options": {
-    "flipXY": 0,
+    "flipXY": false,
     "width": 950,
     "height": 680,
     "labelLineSpacing": 12,
     "labelPadding": 0,
     "arrowHeadSize": 5,
-    "arrowsUp": 0,
+    "arrowsUp": false,
     "minimumSiblingGap": 0.05,
     "idealSiblingGap": 0.3,
     "minimumCousinGap": 0.7,

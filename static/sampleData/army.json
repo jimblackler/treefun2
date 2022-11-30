@@ -292,13 +292,13 @@
     }
   ],
   "options": {
-    "flipXY": 1,
+    "flipXY": true,
     "width": 1500,
     "height": 1300,
     "labelLineSpacing": 12,
     "labelPadding": 0,
     "arrowHeadSize": 0,
-    "arrowsUp": 0,
+    "arrowsUp": false,
     "minimumSiblingGap": 0.15,
     "idealSiblingGap": 0.3,
     "minimumCousinGap": 0.9,

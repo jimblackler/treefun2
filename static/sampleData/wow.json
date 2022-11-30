@@ -61,13 +61,13 @@
     }
   ],
   "options": {
-    "flipXY": 0,
+    "flipXY": false,
     "width": 800,
     "height": 680,
     "labelLineSpacing": 15,
     "labelPadding": 0,
     "arrowHeadSize": 10,
-    "arrowsUp": 0,
+    "arrowsUp": false,
     "minimumSiblingGap": 0.1,
     "idealSiblingGap": 0.1,
     "minimumCousinGap": 0.1,
