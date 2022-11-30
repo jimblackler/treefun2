@@ -462,6 +462,16 @@ layout.registerComponentFactoryFunction('visualOptions', container => {
     }));
   }
 
+  {
+    const update = addBooleanSwitch(
+        container.element, 'Arrows up', value => setOptions({arrowsUp: value}));
+
+    container.on('destroy', listen(state => {
+      lastState = state;
+      update(state.options.arrowsUp);
+    }));
+  }
+
 });
 
 layout.on('stateChanged', function () {
