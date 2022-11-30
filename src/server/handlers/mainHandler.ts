@@ -20,7 +20,7 @@ export const mainHandler: RequestHandler = async (req, res, next) => {
 
   const titleElement = document.createElement('title');
   head.append(titleElement);
-  titleElement.append('Test application');
+  titleElement.append('Diagram generator by Jim Blackler');
 
   const style = document.createElement('link');
   head.append(style);
