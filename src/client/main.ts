@@ -378,9 +378,16 @@ layout.registerComponentFactoryFunction('visualOptions', container => {
   let lastState: State | undefined;
   container.element.classList.add('visualOptions');
 
+  function setOptions(options: Partial<Options>) {
+    if (lastState === undefined) {
+      throw new Error();
+    }
+    setState({...lastState, options: {...lastState.options, ...options}});
+  }
+
   {
-    const update = addValueSlider(container.element, 'Width', 0, 1024, 1,
-        value => setState({...lastState, options: {...lastState.options, width: value}}));
+    const update = addValueSlider(
+        container.element, 'Width', 0, 1024, 1, value => setOptions({width: value}));
 
     container.on('destroy', listen(state => {
       lastState = state;
@@ -389,8 +396,8 @@ layout.registerComponentFactoryFunction('visualOptions', container => {
   }
 
   {
-    const update = addValueSlider(container.element, 'Height', 0, 1024, 1,
-        value => setState({...lastState, options: {...lastState.options, height: value}}));
+    const update = addValueSlider(
+        container.element, 'Height', 0, 1024, 1, value => setOptions({height: value}));
 
     container.on('destroy', listen(state => {
       lastState = state;
@@ -399,8 +406,8 @@ layout.registerComponentFactoryFunction('visualOptions', container => {
   }
 
   {
-    const update = addValueSlider(container.element, 'Levels gap', 0, 5, 0.1,
-        value => setState({...lastState, options: {...lastState.options, levelsGap: value}}));
+    const update = addValueSlider(
+        container.element, 'Levels gap', 0, 5, 0.1, value => setOptions({levelsGap: value}));
 
     container.on('destroy', listen(state => {
       lastState = state;
