@@ -124,18 +124,18 @@
   "options": {
     "flipXY": true,
     "width": 900,
-    "height": 750,
-    "labelLineSpacing": 13,
+    "height": 800,
+    "labelLineSpacing": 12,
     "labelPadding": 4,
-    "arrowHeadSize": 5,
+    "arrowHeadSize": 6,
     "arrowsUp": false,
-    "minimumSiblingGap": 0.03,
+    "minimumSiblingGap": 0.02,
     "idealSiblingGap": 0.3,
-    "minimumCousinGap": 0.3,
-    "idealCousinGap": 1.2,
-    "levelsGap": 0.7,
+    "minimumCousinGap": 0.92,
+    "idealCousinGap": 1.12,
+    "levelsGap": 0.4,
     "minimumDepth": 5,
-    "minimumBreadth": 6
+    "minimumBreadth": 5
   },
   "styles": "text {\n  text-anchor: middle;\n  font-size: small;\n  fill: white;\n}\n\nrect {\n  fill: green;\n  stroke: black;\n  stroke-width: 0;\n  rx: 8px;\n}\n\nline {\n  stroke: black;\n  opacity: 0.5;\n  stroke-width: 1.5;\n}\n  "
 }
