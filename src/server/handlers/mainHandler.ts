@@ -27,6 +27,11 @@ export const mainHandler: RequestHandler = async (req, res, next) => {
   style.setAttribute('rel', 'stylesheet');
   style.setAttribute('href', '/styles/base.css');
 
+  const faviconLink = document.createElement('link');
+  head.append(faviconLink);
+  faviconLink.setAttribute('rel', 'shortcut icon');
+  faviconLink.setAttribute('href', 'favicon.png');
+
   const body = document.body;
   const main = document.createElement('main');
   body.append(main);
