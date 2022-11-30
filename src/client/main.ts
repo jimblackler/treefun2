@@ -22,9 +22,9 @@ import {addValueSlider} from './valueSlider';
 import isJson = JsonValue.isJson;
 
 export const layoutStateDb: Promise<IDBDatabase> = new Promise((resolve, reject) => {
-  const request = indexedDB.open('layout-state-store', 1);
+  const request = indexedDB.open('layout-state-store', 2);
   request.addEventListener('upgradeneeded', event => {
-    if (event.oldVersion < 1) {
+    if (event.oldVersion < 2) {
       if (request.result.objectStoreNames.contains('layoutState')) {
         request.result.deleteObjectStore('layoutState');
       }
