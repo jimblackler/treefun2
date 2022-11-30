@@ -9,7 +9,7 @@ body {
   font-family: system-ui;
   font-size: initial;
   font-weight: 500;
-  padding-top: 4px;
+  padding-top: 6px;
 }
 
 .lm_header .lm_tab, .lm_header .lm_tab.lm_active {
@@ -17,7 +17,7 @@ body {
 }
 
 .lm_header .lm_tab .lm_close_tab {
-  top: 10px;
+  top: 11px;
 }
 
 .lm_tab:hover {
