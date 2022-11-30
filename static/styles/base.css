@@ -26,8 +26,6 @@ div.diagramServerContainer img {
 }
 
 div.visualOptions {
-  display: table;
-  grid-auto-rows: max-content;
   overflow: scroll;
 }
 
