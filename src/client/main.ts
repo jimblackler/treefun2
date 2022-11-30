@@ -514,7 +514,7 @@ layout.registerComponentFactoryFunction('visualOptions', container => {
 
   {
     const update = addValueSlider(
-        container.element, 'Minimum depth', 0, 5, 0.1, value => setOptions({minimumDepth: value}));
+        container.element, 'Minimum depth', 0, 20, 0.1, value => setOptions({minimumDepth: value}));
 
     container.on('destroy', listen(state => {
       lastState = state;
@@ -523,7 +523,7 @@ layout.registerComponentFactoryFunction('visualOptions', container => {
   }
 
   {
-    const update = addValueSlider(container.element, 'Minimum breadth', 0, 5, 0.1,
+    const update = addValueSlider(container.element, 'Minimum breadth', 0, 20, 0.1,
         value => setOptions({minimumBreadth: value}));
 
     container.on('destroy', listen(state => {
