@@ -75,7 +75,7 @@ window.addEventListener('resize', () => {
 });
 
 const menuBar = assertNotNull(document.querySelector('vaadin-menu-bar'));
-
+menuBar.openOnHover = true;
 const actions = new Map<MenuBarItem, () => void>();
 
 const exampleItems: MenuBarItem[] = [];
