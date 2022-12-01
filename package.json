@@ -1,0 +1,15 @@
+{
+  "name": "treefun2",
+  "description": "Tree diagram geneator",
+  "version": "2.0.1",
+  "author": "jimblackler@gmail.com",
+  "main": "dist/treeFun2.js",
+  "types": "dist/treeFun2.d.ts",
+  "scripts": {
+    "build": "tsc"
+  },
+  "devDependencies": {
+    "@types/node": "^18.11.10",
+    "typescript": "^4.9.3"
+  }
+}

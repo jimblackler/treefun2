@@ -1,4 +1,4 @@
-import {assertDefined} from '../common/check/defined';
+import {assertDefined} from './check/defined';
 import {layoutText} from './layoutText';
 import {Node} from './node';
 import {Options} from './options';
