@@ -1,7 +1,16 @@
 {
   "name": "treefun2",
-  "description": "Tree diagram geneator",
-  "version": "2.0.1",
+  "version": "2.0.2",
+  "description": "Tree diagram generator",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/jimblackler/treefun2.git"
+  },
+  "homepage": "https://github.com/jimblackler/treefun2",
+  "bugs": {
+    "url": "https://github.com/jimblackler/treefun2/issues"
+  },
+  "license": "Apache 2.0",
   "author": "jimblackler@gmail.com",
   "main": "dist/treeFun2.js",
   "types": "dist/treeFun2.d.ts",
