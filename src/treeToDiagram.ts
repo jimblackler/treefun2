@@ -8,6 +8,24 @@ interface Group {
   members: Node[];
 }
 
+export const defaultOptions: Options = {
+  flipXY: false,
+  width: 1024,
+  height: 800,
+  labelLineSpacing: 12,
+  labelPadding: 2,
+  arrowHeadWidth: 16,
+  arrowHeadHeight: 10,
+  arrowsUp: false,
+  minimumSiblingGap: 0.1,
+  idealSiblingGap: 0.3,
+  minimumCousinGap: 0.2,
+  idealCousinGap: 1.5,
+  levelsGap: 1,
+  minimumDepth: 5,
+  minimumBreadth: 6
+};
+
 // Sweep from the left to the right along a level, moving nodes along the row if they overlap with a
 // previous node, or the edge of the diagram area.
 function sweepLeftToRight(level: Group[], inPos: Map<Node, number>, outPos: Map<Node, number>,
@@ -61,7 +79,8 @@ function sweepAndAverage(x: Map<Node, number>, level: Group[], maxWidth: number,
 // Converts the specified tree to a diagram under diagramGroup in the SVG diagramSvg. Options are
 // configured in the specified options object.
 export function treeToDiagram(document: Document, parent: HTMLElement, tree: Node[],
-                              options: Options, css: string) {
+                              options: Partial<Options>, css: string) {
+  const options_: Options = {...defaultOptions, ...options};
   // Convert the tree structure into an array of levels 0... n of cousin and sibling nodes.
   let groups: Group[] = tree.map(node => ({parent: undefined, members: [node]}));
   const levels = [];
@@ -80,8 +99,8 @@ export function treeToDiagram(document: Document, parent: HTMLElement, tree: Nod
 
   levels.forEach((level, levelIdx) => {
     const width = level.map(
-        group => group.members.length + (group.members.length - 1) * options.minimumSiblingGap +
-            options.minimumCousinGap).reduce((a, b) => a + b, -options.minimumCousinGap);
+        group => group.members.length + (group.members.length - 1) * options_.minimumSiblingGap +
+            options_.minimumCousinGap).reduce((a, b) => a + b, -options_.minimumCousinGap);
     if (fixedLevelWidth === undefined || width > fixedLevelWidth) {
       fixedLevel = levelIdx;
       fixedLevelWidth = width;
@@ -92,17 +111,17 @@ export function treeToDiagram(document: Document, parent: HTMLElement, tree: Nod
     throw new Error();
   }
 
-  const maxWidth = Math.max(fixedLevelWidth, options.minimumBreadth * (1 + options.levelsGap));
+  const maxWidth = Math.max(fixedLevelWidth, options_.minimumBreadth * (1 + options_.levelsGap));
 
   // Position and make elements.
   const level = levels[fixedLevel];
 
   // Use any extra space to increase group gap up to ideal gap.
   let spare = maxWidth - fixedLevelWidth;
-  let useCousinGap = options.minimumCousinGap;
+  let useCousinGap = options_.minimumCousinGap;
   if (level.length > 1) {
     const spareForGroupGaps =
-        Math.min(spare / (level.length - 1), options.idealCousinGap - options.minimumCousinGap);
+        Math.min(spare / (level.length - 1), options_.idealCousinGap - options_.minimumCousinGap);
     spare -= spareForGroupGaps * (level.length - 1);
     useCousinGap += spareForGroupGaps;
   }
@@ -116,7 +135,7 @@ export function treeToDiagram(document: Document, parent: HTMLElement, tree: Nod
   level.forEach(group => {
     group.members.forEach((node, nodeIdx) => {
       if (nodeIdx > 0) {
-        x += options.minimumSiblingGap;
+        x += options_.minimumSiblingGap;
       }
       x_.set(node, x);
       x += 1;
@@ -139,7 +158,7 @@ export function treeToDiagram(document: Document, parent: HTMLElement, tree: Nod
         x_.set(node, totalX / children.length);
       });
     });
-    sweepAndAverage(x_, level, maxWidth, options);
+    sweepAndAverage(x_, level, maxWidth, options_);
   }
 
   // Below fixed to bottom; children distributed under parent.
@@ -149,14 +168,14 @@ export function treeToDiagram(document: Document, parent: HTMLElement, tree: Nod
     level.forEach(group => {
       const parent = assertDefined(group.parent);
 
-      const groupWidth = (group.members.length - 1) * (1 + options.idealSiblingGap) + 1;
+      const groupWidth = (group.members.length - 1) * (1 + options_.idealSiblingGap) + 1;
       let x = assertDefined(x_.get(parent)) - groupWidth / 2 + 0.5;
       group.members.forEach(node => {
         x_.set(node, x);
-        x += 1 + options.idealSiblingGap;
+        x += 1 + options_.idealSiblingGap;
       });
     });
-    sweepAndAverage(x_, level, maxWidth, options);
+    sweepAndAverage(x_, level, maxWidth, options_);
   }
 
   // Now render the tree.
@@ -164,7 +183,7 @@ export function treeToDiagram(document: Document, parent: HTMLElement, tree: Nod
   const svg = document.createElementNS(svgNs, 'svg');
   parent.append(svg);
   svg.setAttribute('xmlns', svgNs);
-  svg.setAttribute('style', `width:${options.width}px; height:${options.height}px`);
+  svg.setAttribute('style', `width:${options_.width}px; height:${options_.height}px`);
 
   const styleSheet = document.createElementNS(svgNs, 'style');
   svg.append(styleSheet);
@@ -178,8 +197,8 @@ export function treeToDiagram(document: Document, parent: HTMLElement, tree: Nod
   marker.setAttribute('id', 'arrowHead');
   marker.setAttribute('viewBox', '-10 -5 10 10');
   marker.setAttribute('markerUnits', 'strokeWidth');
-  marker.setAttribute('markerWidth', `${options.arrowHeadWidth}`);
-  marker.setAttribute('markerHeight', `${options.arrowHeadHeight}`);
+  marker.setAttribute('markerWidth', `${options_.arrowHeadWidth}`);
+  marker.setAttribute('markerHeight', `${options_.arrowHeadHeight}`);
   marker.setAttribute('orient', 'auto');
   marker.setAttribute('preserveAspectRatio', 'none');
 
@@ -191,15 +210,15 @@ export function treeToDiagram(document: Document, parent: HTMLElement, tree: Nod
   svg.append(diagramGroup);
 
   // Find height ratio.
-  const useLevels = Math.max(levels.length, options.minimumDepth);
-  const height = useLevels + (useLevels - 1) * options.levelsGap;
+  const useLevels = Math.max(levels.length, options_.minimumDepth);
+  const height = useLevels + (useLevels - 1) * options_.levelsGap;
 
-  const xAttribute = options.flipXY ? 'y' : 'x';
-  const yAttribute = options.flipXY ? 'x' : 'y';
-  const diagramWidth = options.flipXY ? options.height : options.width;
-  const diagramHeight = options.flipXY ? options.width : options.height;
-  const widthAttribute = options.flipXY ? 'height' : 'width';
-  const heightAttribute = options.flipXY ? 'width' : 'height';
+  const xAttribute = options_.flipXY ? 'y' : 'x';
+  const yAttribute = options_.flipXY ? 'x' : 'y';
+  const diagramWidth = options_.flipXY ? options_.height : options_.width;
+  const diagramHeight = options_.flipXY ? options_.width : options_.height;
+  const widthAttribute = options_.flipXY ? 'height' : 'width';
+  const heightAttribute = options_.flipXY ? 'width' : 'height';
 
   const xMultiplier = diagramWidth / maxWidth;
   const yMultiplier = diagramHeight / height;
@@ -212,7 +231,7 @@ export function treeToDiagram(document: Document, parent: HTMLElement, tree: Nod
         const rect = document.createElementNS(namespace, 'rect');
         diagramGroup.append(rect);
 
-        const yValue = levelIdx * (1 + options.levelsGap);
+        const yValue = levelIdx * (1 + options_.levelsGap);
 
         rect.setAttribute(xAttribute, Math.floor(assertDefined(x_.get(node)) * xMultiplier) + 'px');
         rect.setAttribute(yAttribute, Math.floor(yValue * yMultiplier) + 'px');
@@ -223,19 +242,19 @@ export function treeToDiagram(document: Document, parent: HTMLElement, tree: Nod
         diagramGroup.append(text);
 
         // Arrange text; method is different for horizontal diagrams.
-        if (options.flipXY) {
+        if (options_.flipXY) {
           const xPos = Math.floor(assertDefined(x_.get(node)) * xMultiplier);
           const yPos = Math.floor((yValue + 0.5) * yMultiplier);
           text.setAttribute(xAttribute, xPos + 'px');
           text.setAttribute(yAttribute, Math.floor(yValue * yMultiplier) + 'px');
-          layoutText(document, text, node.label, yMultiplier - options.labelPadding, yPos,
-              xMultiplier, options.labelLineSpacing);
+          layoutText(document, text, node.label, yMultiplier - options_.labelPadding, yPos,
+              xMultiplier, options_.labelLineSpacing);
         } else {
           const xPos = Math.floor((assertDefined(x_.get(node)) + 0.5) * xMultiplier);
           text.setAttribute(xAttribute, xPos + 'px');
           text.setAttribute(yAttribute, Math.floor(yValue * yMultiplier) + 'px');
-          layoutText(document, text, node.label, xMultiplier - options.labelPadding, xPos,
-              yMultiplier, options.labelLineSpacing);
+          layoutText(document, text, node.label, xMultiplier - options_.labelPadding, xPos,
+              yMultiplier, options_.labelLineSpacing);
         }
 
         if (levelIdx === 0) {
@@ -246,10 +265,10 @@ export function treeToDiagram(document: Document, parent: HTMLElement, tree: Nod
         const line = document.createElementNS(namespace, 'line');
         diagramGroup.append(line);
         const parentOffset = (nodeIdx + 1) / (group.members.length + 1);
-        const parentY = (levelIdx - 1) * (1 + options.levelsGap);
+        const parentY = (levelIdx - 1) * (1 + options_.levelsGap);
         let first;
         let second;
-        if (options.arrowsUp) {
+        if (options_.arrowsUp) {
           first = '2';
           second = '1';
         } else {
