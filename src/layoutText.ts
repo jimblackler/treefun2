@@ -57,7 +57,7 @@ export function layoutText(document: Document, textNode: Element, text: string, 
       tspan.textContent = word;
 
       textNode.append(tspan);
-      while (tspan.getComputedTextLength() > width) {
+      while (tspan.textContent.length && tspan.getComputedTextLength() > width) {
         tspan.textContent = tspan.textContent.substring(0, tspan.textContent.length - 1);
       }
     }
