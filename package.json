@@ -15,7 +15,8 @@
   "main": "dist/treeFun2.js",
   "types": "dist/treeFun2.d.ts",
   "scripts": {
-    "build": "tsc"
+    "build": "tsc",
+    "build:dev": "tsc --watch"
   },
   "devDependencies": {
     "@types/node": "^18.11.10",
