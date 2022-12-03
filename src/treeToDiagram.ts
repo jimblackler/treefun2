@@ -178,9 +178,10 @@ export function treeToDiagram(document: Document, parent: HTMLElement, tree: Nod
   marker.setAttribute('id', 'arrowHead');
   marker.setAttribute('viewBox', '-10 -5 10 10');
   marker.setAttribute('markerUnits', 'strokeWidth');
-  marker.setAttribute('markerWidth', `${options.arrowHeadSize}`);
-  marker.setAttribute('markerHeight', `${options.arrowHeadSize}`);
+  marker.setAttribute('markerWidth', `${options.arrowHeadWidth}`);
+  marker.setAttribute('markerHeight', `${options.arrowHeadHeight}`);
   marker.setAttribute('orient', 'auto');
+  marker.setAttribute('preserveAspectRatio', 'none');
 
   const path = document.createElementNS(svgNs, 'path');
   marker.append(path);

@@ -4,7 +4,8 @@ export interface Options {
   height: number;
   labelLineSpacing: number;
   labelPadding: number;
-  arrowHeadSize: number;
+  arrowHeadWidth: number;
+  arrowHeadHeight: number;
   arrowsUp: boolean;
   minimumSiblingGap: number;
   idealSiblingGap: number;
