@@ -220,8 +220,8 @@ export function treeToDiagram(document: Document, parent: HTMLElement, tree: Nod
   marker.setAttribute('id', 'arrowHead');
   marker.setAttribute('viewBox', '-10 -5 10 10');
   marker.setAttribute('markerUnits', 'strokeWidth');
-  marker.setAttribute('markerWidth', `${options_.arrowHeadWidth}`);
-  marker.setAttribute('markerHeight', `${options_.arrowHeadHeight}`);
+  marker.setAttribute('markerWidth', `${options_.arrowHeadHeight}`);
+  marker.setAttribute('markerHeight', `${options_.arrowHeadWidth}`);
   marker.setAttribute('orient', 'auto');
   marker.setAttribute('preserveAspectRatio', 'none');
 
