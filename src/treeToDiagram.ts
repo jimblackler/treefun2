@@ -12,7 +12,7 @@ export const defaultOptions: Options = {
   flipXY: false,
   width: 1024,
   height: 800,
-  labelLineSpacing: 12,
+  labelLineSpacing: 18,
   labelPadding: 2,
   arrowHeadWidth: 16,
   arrowHeadHeight: 10,
@@ -25,6 +25,23 @@ export const defaultOptions: Options = {
   minimumDepth: 5,
   minimumBreadth: 6
 };
+
+export const defaultCss = `
+  text {
+    text-anchor: middle;
+  }
+  
+  rect {
+    fill: white;
+    stroke-width: 1;
+    stroke: black;
+  }
+  
+  line {
+    stroke-width: 0.5;
+    stroke: black;
+  }
+`;
 
 // Sweep from the left to the right along a level, moving nodes along the row if they overlap with a
 // previous node, or the edge of the diagram area.
@@ -184,6 +201,10 @@ export function treeToDiagram(document: Document, parent: HTMLElement, tree: Nod
   parent.append(svg);
   svg.setAttribute('xmlns', svgNs);
   svg.setAttribute('style', `width:${options_.width}px; height:${options_.height}px`);
+
+  const defaultStyleSheet = document.createElementNS(svgNs, 'style');
+  svg.append(defaultStyleSheet);
+  defaultStyleSheet.append(defaultCss);
 
   const styleSheet = document.createElementNS(svgNs, 'style');
   svg.append(styleSheet);
