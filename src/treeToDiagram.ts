@@ -33,11 +33,13 @@ export const defaultCss = `
   
   rect {
     fill: white;
+    rx: 2;
     stroke-width: 1;
     stroke: black;
   }
   
   line {
+    opacity: 1;
     stroke-width: 0.5;
     stroke: black;
   }
