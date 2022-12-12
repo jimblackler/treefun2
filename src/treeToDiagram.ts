@@ -202,6 +202,7 @@ export function treeToDiagram(document: Document, parent: HTMLElement, tree: Nod
   const svg = document.createElementNS(svgNs, 'svg');
   parent.append(svg);
   svg.setAttribute('xmlns', svgNs);
+  svg.setAttribute('viewBox', `0 0 ${options_.width} ${options_.height}`);
   svg.setAttribute('style', `width:${options_.width}px; height:${options_.height}px`);
 
   const defaultStyleSheet = document.createElementNS(svgNs, 'style');
