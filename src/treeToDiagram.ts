@@ -22,6 +22,7 @@ export const defaultOptions: Options = {
   minimumCousinGap: 0.2,
   idealCousinGap: 1.5,
   levelsGap: 1,
+  cornerRounding: 0,
   minimumDepth: 5,
   minimumBreadth: 6
 };
@@ -33,7 +34,6 @@ export const defaultCss = `
   
   rect {
     fill: white;
-    rx: 2;
     stroke-width: 1;
     stroke: black;
   }
@@ -261,6 +261,10 @@ export function treeToDiagram(document: Document, parent: HTMLElement, tree: Nod
         rect.setAttribute(yAttribute, Math.floor(yValue * yMultiplier) + 'px');
         rect.setAttribute(widthAttribute, Math.floor(xMultiplier) + 'px');
         rect.setAttribute(heightAttribute, Math.floor(yMultiplier) + 'px');
+        if (options_.cornerRounding) {
+          rect.setAttribute('rx', options_.cornerRounding + 'px');
+          rect.setAttribute('ry', options_.cornerRounding + 'px');
+        }
 
         const text = document.createElementNS(namespace, 'text');
         diagramGroup.append(text);

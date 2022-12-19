@@ -12,6 +12,7 @@ export interface Options {
   minimumCousinGap: number;
   idealCousinGap: number;
   levelsGap: number;
+  cornerRounding: number;
   minimumDepth: number;
   minimumBreadth: number;
 }

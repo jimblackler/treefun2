@@ -63,6 +63,7 @@ const options = {
   minimumCousinGap: 0.2,
   idealCousinGap: 1.2,
   levelsGap: 1.2,
+  cornerRounding: 4,
   minimumDepth: 0,
   minimumBreadth: 0
 };
@@ -75,7 +76,6 @@ const css = `
   
   rect {
     fill: ghostwhite;
-    rx: 20;
     stroke: black;
     stroke-width: 0.3px;
   }
