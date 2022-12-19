@@ -1,8 +1,13 @@
 # treefun2
 
-A tree diagram (SVG) generator.
+A tree diagram (SVG) generator. An updated version
+of [treefun](https://github.com/jimblackler/treefun2), a tree builder that was
+delivered as a static JS file. This new version can be installed with NPM, is
+written in ES6 and has Typescript support.
 
 https://www.npmjs.com/package/treefun2
+
+![Simple tree image](doc/simple_tree.png)
 
 ## Use in a node project
 
