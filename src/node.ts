@@ -1,4 +1,4 @@
-export interface Node {
+export type Node = {
   label: string;
   children?: Node[];
 }

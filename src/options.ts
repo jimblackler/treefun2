@@ -1,4 +1,4 @@
-export interface Options {
+export type Options = {
   flipXY: boolean;
   width: number;
   height: number;
