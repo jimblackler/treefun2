@@ -5,6 +5,8 @@ of [treefun](https://github.com/jimblackler/treefun2), a tree builder that was
 delivered as a static JS file. This new version can be installed with NPM, is
 written in ES6 and has Typescript support.
 
+Online demo [https://treefun.appspot.com/](https://treefun.appspot.com/)
+
 https://www.npmjs.com/package/treefun2
 
 ![Simple tree image](doc/simple_tree.png)
