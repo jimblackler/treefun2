@@ -127,7 +127,7 @@ export function treeToDiagram(document: Document, parent: HTMLElement, tree: Nod
   });
 
   if (fixedLevel === undefined || fixedLevelWidth === undefined) {
-    throw new Error();
+    return;  // Nothing to draw.
   }
 
   const maxWidth = Math.max(fixedLevelWidth, options_.minimumBreadth * (1 + options_.levelsGap));
