@@ -19,7 +19,7 @@
     "build:dev": "tsc --watch"
   },
   "devDependencies": {
-    "@types/node": "^18.11.10",
-    "typescript": "^5.0.1-rc"
+    "@types/node": "^22.4.1",
+    "typescript": "^5.5.4"
   }
 }
