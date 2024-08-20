@@ -27,22 +27,21 @@ export const defaultOptions: Options = {
   minimumBreadth: 6
 };
 
-export const defaultCss = `
-  text {
-    text-anchor: middle;
-  }
-  
-  rect {
-    fill: white;
-    stroke-width: 1;
-    stroke: black;
-  }
-  
-  line {
-    opacity: 1;
-    stroke-width: 0.5;
-    stroke: black;
-  }
+export const defaultCss = `text {
+  text-anchor: middle;
+}
+
+rect {
+  fill: white;
+  stroke-width: 1;
+  stroke: black;
+}
+
+line {
+  opacity: 1;
+  stroke-width: 0.5;
+  stroke: black;
+}
 `;
 
 // Sweep from the left to the right along a level, moving nodes along the row if they overlap with a
