@@ -196,10 +196,15 @@ export function treeToDiagram(document: Document, parent: HTMLElement, tree: Nod
     sweepAndAverage(x_, level, maxWidth, options_);
   }
 
+  // Make a shadow DOM, so we can add styles without affecting the parent document.
+  const wrapper = document.createElement('section');
+  parent.append(wrapper);
+  const host = wrapper.attachShadow({mode: 'open'});
+
   // Now render the tree.
   const svgNs = 'http://www.w3.org/2000/svg';
   const svg = document.createElementNS(svgNs, 'svg');
-  parent.append(svg);
+  host.append(svg);
   svg.setAttribute('xmlns', svgNs);
   svg.setAttribute('version', '1.1');
   svg.setAttribute('viewBox', `0 0 ${options_.width} ${options_.height}`);
