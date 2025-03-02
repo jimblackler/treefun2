@@ -66,10 +66,10 @@ function sweepRightToLeft(level: Group[], inPos: Map<Node, number>,
                           outPos: Map<Node, number>, maxWidth: number, options: Options) {
   let maxX = maxWidth - 1;
   for (let memberIdx = level.length - 1; memberIdx >= 0; memberIdx--) {
-    const group = level[memberIdx];
+    const group = assertDefined(level[memberIdx]);
     for (let nodeIdx = group.members.length - 1; nodeIdx >= 0; nodeIdx--) {
-      const node = group.members[nodeIdx];
-      const x = inPos.get(node);
+      const node = assertDefined(group.members[nodeIdx]);
+      const x = assertDefined(inPos.get(node));
       const newX = x === undefined || x >= maxX ? maxX : x;
       maxX = nodeIdx === 0 ?
           newX - 1 - options.minimumCousinGap : newX - 1 - options.minimumSiblingGap;
@@ -132,7 +132,7 @@ export function treeToDiagram(document: Document, parent: HTMLElement, tree: Nod
   const maxWidth = Math.max(fixedLevelWidth, options_.minimumBreadth * (1 + options_.levelsGap));
 
   // Position and make elements.
-  const level = levels[fixedLevel];
+  const level = assertDefined(levels[fixedLevel]);
 
   // Use any extra space to increase group gap up to ideal gap.
   let spare = maxWidth - fixedLevelWidth;
@@ -163,7 +163,7 @@ export function treeToDiagram(document: Document, parent: HTMLElement, tree: Nod
 
   // Fixed to top; parent to average of children.
   for (let levelIdx = fixedLevel - 1; levelIdx >= 0; levelIdx--) {
-    const level = levels[levelIdx];
+    const level = assertDefined(levels[levelIdx]);
     // Find positions
     level.forEach(group => {
       group.members.forEach(node => {
@@ -181,7 +181,7 @@ export function treeToDiagram(document: Document, parent: HTMLElement, tree: Nod
 
   // Below fixed to bottom; children distributed under parent.
   for (let levelIdx = fixedLevel + 1; levelIdx < levels.length; levelIdx++) {
-    const level = levels[levelIdx];
+    const level = assertDefined(levels[levelIdx])
     // Find positions.
     level.forEach(group => {
       const parent = assertDefined(group.parent);

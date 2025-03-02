@@ -4,7 +4,3 @@ export function assertDefined<T>(object: T | undefined) {
   }
   return object;
 }
-
-export function isDefined<T>(object: T | undefined): object is T {
-  return object !== undefined;
-}

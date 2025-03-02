@@ -1,14 +1,17 @@
+import {assertDefined} from './check/defined';
+import {assertNotNull} from './check/null';
+
 // Splits all the strings in the array by the specified character, without removing that character
 // from the strings. Returns an array of all the split strings.
 function splitBy(array: string[], char: string) {
   const out = [];
   for (let i = 0; i !== array.length; i++) {
-    const word = array[i];
+    const word = assertDefined(array[i]);
     const split = word.split(char);
     for (let j = 0; j !== split.length - 1; j++) {
-      out.push(split[j] + char);
+      out.push(assertDefined(split[j]) + char);
     }
-    out.push(split[split.length - 1]);
+    out.push(assertDefined(split[split.length - 1]));
   }
   return out;
 }
@@ -32,13 +35,14 @@ export function layoutText(document: Document, textNode: Element, text: string, 
   let words = text.split(/\s/);
   const splitChars = '.-';
   for (let j = 0; j !== splitChars.length; j++) {
-    words = splitBy(words, splitChars[j]);
+    words = splitBy(words, assertDefined(splitChars[j]));
   }
 
   for (let i = 0; i < words.length; i++) {
-    const word = words[i];
+    const word = assertDefined(words[i]);
     if (tspan.textContent &&
-        splitChars.indexOf(tspan.textContent[tspan.textContent.length - 1]) === -1) {
+        splitChars.indexOf(assertDefined(
+            tspan.textContent[tspan.textContent.length - 1])) === -1) {
       tspan.textContent += ' ';
     }
     tspan.textContent += word;
@@ -61,7 +65,7 @@ export function layoutText(document: Document, textNode: Element, text: string, 
         tspan.textContent = tspan.textContent.substring(0, tspan.textContent.length - 1);
       }
     }
-    previousFit = tspan.textContent;
+    previousFit = assertNotNull(tspan.textContent);
   }
 
   const baselineShift = -2;
