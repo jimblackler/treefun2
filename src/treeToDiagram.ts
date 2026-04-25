@@ -96,7 +96,7 @@ function sweepAndAverage(x: Map<Node, number>, level: Group[], maxWidth: number,
 
 // Converts the specified tree to a diagram under diagramGroup in the SVG diagramSvg. Options are
 // configured in the specified options object.
-export function treeToDiagram(document: Document, parent: HTMLElement, tree: Node[],
+export function treeToDiagram(document: Document, parent: ParentNode, tree: Node[],
                               options: Partial<Options>, css: string) {
   const options_: Options = {...defaultOptions, ...options};
   // Convert the tree structure into an array of levels 0... n of cousin and sibling nodes.
@@ -196,15 +196,10 @@ export function treeToDiagram(document: Document, parent: HTMLElement, tree: Nod
     sweepAndAverage(x_, level, maxWidth, options_);
   }
 
-  // Make a shadow DOM, so we can add styles without affecting the parent document.
-  const wrapper = document.createElement('section');
-  parent.append(wrapper);
-  const host = wrapper.attachShadow({mode: 'open'});
-
   // Now render the tree.
   const svgNs = 'http://www.w3.org/2000/svg';
   const svg = document.createElementNS(svgNs, 'svg');
-  host.append(svg);
+  parent.append(svg);
   svg.setAttribute('xmlns', svgNs);
   svg.setAttribute('version', '1.1');
   svg.setAttribute('viewBox', `0 0 ${options_.width} ${options_.height}`);
