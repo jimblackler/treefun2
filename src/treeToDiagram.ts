@@ -69,7 +69,7 @@ function sweepRightToLeft(level: Group[], inPos: Map<Node, number>,
     const group = assertDefined(level[memberIdx]);
     for (let nodeIdx = group.members.length - 1; nodeIdx >= 0; nodeIdx--) {
       const node = assertDefined(group.members[nodeIdx]);
-      const x = assertDefined(inPos.get(node));
+      const x = inPos.get(node);
       const newX = x === undefined || x >= maxX ? maxX : x;
       maxX = nodeIdx === 0 ?
           newX - 1 - options.minimumCousinGap : newX - 1 - options.minimumSiblingGap;
